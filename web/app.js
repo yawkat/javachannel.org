@@ -1,5 +1,2 @@
-import hljs from 'highlight.js/lib/common';
-import 'highlight.js/styles/github.css';
+// highlight.js is set up by the theme
 import './app.css';
-
-hljs.highlightAll();

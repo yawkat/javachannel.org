@@ -3,20 +3,9 @@ title: "Libera #java"
 description: enthusiasts united
 simple-name: "#java"
 layout: blog
-featured: 0
+wp-id-redirects: true
 paginate:
   collection: posts
   size: 10
   link: /page/:page/
 ---
-<script>
-  // Old WordPress links to /?p=<id> and /?page_id=<id>
-  (function () {
-    var m = /[?&](?:p|page_id)=(\d+)/.exec(location.search);
-    if (!m) return;
-    var ids = {};
-    {#for e in cdi:wp-ids.ids.fieldNames}ids["{=e}"] = "{=cdi:wp-ids.ids.getString(e)}";
-    {/for}
-    if (ids[m[1]]) location.replace(ids[m[1]]);
-  })();
-</script>

@@ -297,32 +297,34 @@ def main():
         }))
     out.write(DATA / 'categories.yml', categories_yml)
 
-    # Menu, rebuilt from the WordPress nav menu (two levels: top-level items, and the children of the custom
-    # "Channel Rules" / "Channel Data" headings which become their own sidebar sections).
+    # Menu, rebuilt from the WordPress nav menu: links, and custom items without URL ("Channel Rules",
+    # "Channel Data") that only hold a submenu.
     items = sorted((p for p in posts if p['post_type'] == 'nav_menu_item'), key=lambda p: p['menu_order'])
     titles = {p['ID']: p for p in posts}
-    sections = {'main': [{'title': 'Home', 'path': '/', 'icon': 'fa fa-house'}]}
-    headings = {}
+    menu = []
+    submenus = {}
     for item in items:
         m = {k: v[0] for k, v in meta_by_post[item['ID']].items()}
         parent = int(m['_menu_item_menu_item_parent'])
         if m['_menu_item_type'] == 'custom' and not m['_menu_item_url']:
-            headings[item['ID']] = item['post_title']
-            sections[item['post_title']] = []
-            continue
-        if m['_menu_item_type'] == 'custom':
-            entry = {'title': item['post_title'], 'path': m['_menu_item_url'], 'icon': 'fa fa-arrow-up-right-from-square'}
+            entry = {'title': item['post_title'], 'children': []}
+            submenus[item['ID']] = entry['children']
+        elif m['_menu_item_type'] == 'custom':
+            entry = {'title': item['post_title'], 'path': m['_menu_item_url']}
         else:
             target = titles[int(m['_menu_item_object_id'])]
             entry = {'title': item['post_title'] or html.unescape(target['post_title']),
-                     'path': url_by_id[target['ID']], 'icon': 'fa fa-file-lines'}
-        sections[headings[parent] if parent else 'main'].append(entry)
-    menu_yml = '# Generated from the WordPress navigation menu by migration/convert.py\n'
-    for key, name in (('items', 'main'), ('rules', 'Channel Rules'), ('data', 'Channel Data')):
-        menu_yml += f'{key}:\n'
-        for e in sections[name]:
-            menu_yml += (f'  - title: {yaml_str(e["title"])}\n    path: {yaml_str(e["path"])}\n'
-                         f'    icon: {yaml_str(e["icon"])}\n')
+                     'path': url_by_id[target['ID']]}
+        (submenus[parent] if parent else menu).append(entry)
+    menu_yml = '# Generated from the WordPress navigation menu by migration/convert.py\nitems:\n'
+    for e in menu:
+        menu_yml += f'  - title: {yaml_str(e["title"])}\n'
+        if 'children' in e:
+            menu_yml += '    children:\n'
+            for c in e['children']:
+                menu_yml += f'      - title: {yaml_str(c["title"])}\n        path: {yaml_str(c["path"])}\n'
+        else:
+            menu_yml += f'    path: {yaml_str(e["path"])}\n'
     out.write(DATA / 'menu.yml', menu_yml)
 
     # WordPress post/page IDs, for ?p=<id> / ?page_id=<id> links (resolved client-side, see templates).

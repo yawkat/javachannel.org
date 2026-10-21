@@ -1,39 +1,85 @@
 ---
-theme-layout: post
+layout: main
 ---
-
+{! Replaces the theme's post layout: WordPress-style author and date, categories, podcast player, archived comments !}
 {@io.quarkiverse.roq.frontmatter.runtime.model.DocumentPage page}
 
-{! Podcast episodes whose MP3 was only attached as a feed enclosure !}
-{#if page.data.show-enclosure??}
-<figure class="podcast-audio">
-  <audio controls preload="none" src="{=page.data.enclosure}"></audio>
-  <figcaption><a href="{=page.data.enclosure}">Download episode (MP3)</a></figcaption>
-</figure>
-{/if}
-{#insert /}
+<div class="post-page">
+  <header>
+    <h1>{=page.title}</h1>
+  </header>
 
-{#article-end}
-<section class="wrap-content wp-meta">
-  {#if page.data.categories??}
-  <p class="post-meta">
-    Posted in {#for category in page.data.categories.asStrings}<a href="{=site.url('/category/', category, '/')}">{=cdi:categories.get(category).name ?: category}</a>{#if category_hasNext}, {/if}{/for}
-  </p>
-  {/if}
-  {#if page.data.comments??}
-  <section class="archived-comments">
-    <h2>Comments</h2>
-    <p class="comments-note">Archived from the old site. Comments are closed.</p>
-    {#for comment in page.data.comments}
-    <article class="archived-comment">
-      <header>
-        <strong>{#if comment.url??}<a href="{=comment.url}" rel="nofollow ugc">{=comment.author}</a>{#else}{=comment.author}{/if}</strong>
-        <span class="comment-date">{=comment.date.substring(0, 10)}</span>
-      </header>
-      {=comment.content.raw}
+  <div class="post-layout-wrapper">
+    <article class="post-content-area">
+      <div class="article-content">
+        {! Podcast episodes whose MP3 was only attached as a feed enclosure !}
+        {#if page.data.show-enclosure??}
+        <figure class="podcast-audio">
+          <audio controls preload="none" src="{=page.data.enclosure}"></audio>
+          <figcaption><a href="{=page.data.enclosure}">Download episode (MP3)</a></figcaption>
+        </figure>
+        {/if}
+        {#insert /}
+      </div>
+
+      <div class="metadata-box mt-12">
+        <div class="metadata-row">
+          <span class="metadata-label">Published</span>
+          <span class="metadata-value">{=page.date.format('yyyy-MM-dd')}</span>
+        </div>
+
+        {#if page.data.author??}
+        {#let author=cdi:authors.get(page.data.author)}
+        <div class="metadata-row">
+          <span class="metadata-label">Author</span>
+          <span class="metadata-value">{#if author}<a href="{=site.url('/author/', page.data.author, '/')}">{=author.name}</a>{#else}{=page.data.author}{/if}</span>
+        </div>
+        {/let}
+        {/if}
+
+        {#if page.data.categories??}
+        <div class="metadata-row">
+          <span class="metadata-label">Categories</span>
+          <span class="metadata-value">{#for category in page.data.categories.asStrings}<a href="{=site.url('/category/', category, '/')}">{=cdi:categories.get(category).name ?: category}</a>{#if category_hasNext}, {/if}{/for}</span>
+        </div>
+        {/if}
+
+        {#if page.data.tags??}
+        <div class="metadata-row">
+          <span class="metadata-label">Tags</span>
+          <div class="metadata-tags">
+            {#for tag in page.data.tags.asStrings}
+            <a href="{=site.url('/posts/tag', tag.slugify)}" class="tag-pill">&#35; {=tag.slugify}</a>
+            {/for}
+          </div>
+        </div>
+        {/if}
+      </div>
+
+      {#if page.data.comments??}
+      <section class="archived-comments">
+        <h2>Comments</h2>
+        <p class="comments-note">Archived from the old site. Comments are closed.</p>
+        {#for comment in page.data.comments}
+        <article class="archived-comment">
+          <header>
+            <strong>{#if comment.url??}<a href="{=comment.url}" rel="nofollow ugc">{=comment.author}</a>{#else}{=comment.author}{/if}</strong>
+            <span class="comment-date">{=comment.date.substring(0, 10)}</span>
+          </header>
+          {=comment.content.raw}
+        </article>
+        {/for}
+      </section>
+      {/if}
+
+      {#if page.previous || page.next}
+      <footer>
+        <div>
+          {#if page.previous}<a href="{=page.previous.url}">&larr; {=page.previous.title}</a>{/if}
+          {#if page.next}<a href="{=page.next.url}">{=page.next.title} &rarr;</a>{/if}
+        </div>
+      </footer>
+      {/if}
     </article>
-    {/for}
-  </section>
-  {/if}
-</section>
-{/}
+  </div>
+</div>
