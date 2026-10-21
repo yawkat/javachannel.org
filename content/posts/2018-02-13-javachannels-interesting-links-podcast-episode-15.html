@@ -1,0 +1,54 @@
+---
+title: "JavaChannel’s Interesting Links podcast, episode 15"
+date: "2018-02-13 09:08:54 -0500"
+author: "dreamreal"
+categories:
+  - "podcast"
+tags:
+  - "concurrency"
+  - "gpu"
+  - "graal"
+  - "hibernate"
+  - "hystrix"
+  - "jvmti"
+  - "okhttp"
+  - "podcast"
+  - "podcast-15"
+  - "repl"
+  - "resilience4j"
+  - "retry"
+  - "retry4j"
+  - "specifications"
+enclosure: "/wp-content/uploads/2018/02/javachannel-15.mp3"
+enclosure-length: 54448254
+show-enclosure: true
+wp-id: 1096
+wp-guid: "https://javachannel.org/?p=1096"
+---
+
+<p>Welcome to the fifteenth ##java podcast. Your hosts are Joseph Ottinger, dreamreal on the IRC channel, and <a href="https://twitter.com/kinabalu">Andrew Lombardi</a> (kinabalu on IRC) from <a href="https://mysticcoders.com">Mystic Coders</a>.<br />
+As always, this podcast is basically interesting content pulled from various sources, and funneled through the ##java IRC channel on freenode. You can find the show notes at the channel’s website, at javachannel.org; you can find all of the podcasts using the tag (or even “category”) “podcast”, and each podcast is tagged with its own identifier, too, so you can find this one by searching for the tag “podcast-15”.<br />
+Discussion today centered around specifications: any good ones out there? What would good specifications look like?</p>
+<ol>
+<li>
+<p>A few podcasts ago (podcast 11) we mentioned “<a href="https://github.com/resilience4j/resilience4j">resilience4j</a>” – well, there’s also <a href="https://github.com/elennick/retry4j">retry4j</a> on github. It’s another library that offers retry semantics. <code>retry4j</code>’s semantics are really clean; maybe it’s me (dreamreal), but it seems more in line with what I’d expect a retry library to look like.</p>
+</li>
+<li>
+<p>From Youtube, we have a video showing <a href="https://www.youtube.com/watch?v=yhtrRhNUHvQ">how to use Graal</a> in the JVM. Graal exposes JVMTI internals – which means that theoretically you could write a replacement for the just-in-time compiler, and change some fundamental ways of how Java works. Twitter is using Graal today, and the presenter says that it works fantastically; it’s also slotted to become standard in the next few revisions of Java, so we’ll have it probably next month or so.</p>
+</li>
+<li>
+<p>From the channel blog itself, user yawkat posted a way to <a href="/posts/caching-all-okhttp-responses/">cache HTTP results <em>regardless of response</em></a> with <a href="http://square.github.io/okhttp/">OkHttp</a>. Why is this important? Well, if you’re testing a crawler, it’s handy to not slam the target server – even on results that should give things like “not found.” It’s written in Kotlin; the Java code would be trivial (and maybe we should post it as well just for the sake of example) but it’s still pretty handy.</p>
+</li>
+<li>
+<p>There’s also a <a href="http://openjdk.java.net/jeps/8192920">Java Enhancement Proposal</a> to allow launching single-source-code files like “java File.java”, and it automatically invokes javac; also with support for shebang, so we could be looking at Java scripting before too long. Some people already do this with scripts; they have something that pipes Java source into a temporary file, compiles it, and runs it, but this would be more standardized.</p>
+</li>
+<li>
+<p>We’ve seen a few posts about Hibernate on the channel lately, including some about projections (where an object isn’t represented as such in the data model but is constructed on-the-fly). Vlad Mihalcea actually had an appropriate post about <a href="https://vladmihalcea.com/hibernate-query-cache-dto-projection/">caching such projections</a>.</p>
+</li>
+<li>
+<p>We also have seen references lately to <a href="http://openjdk.java.net/projects/sumatra/">Project Sumatra</a> – GPU enablement for the JVM, which seems abandoned – and then there’s this from the valhalla developer’s list: there IS a <a href="http://mail.openjdk.java.net/pipermail/valhalla-dev/2018-February/003766.html">GPU exploitation</a> thing being worked on. Who knows, we might see highly-GPU-enabled JVMs or libraries innate for Java before long.</p>
+</li>
+<li>
+<p>DZone has an article called “<a href="https://dzone.com/articles/java-phasers-made-simple">Java Phasers Made Simple</a>” – basically a set of limited-scope locks. It’s really well done although quite long; hard for it to go into detail without being fairly long, though, so that’s okay. Worthwhile read.</p>
+</li>
+</ol>

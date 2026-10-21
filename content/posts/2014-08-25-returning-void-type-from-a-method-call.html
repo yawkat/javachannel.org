@@ -1,0 +1,52 @@
+---
+title: "Returning void type from a method call"
+date: "2014-08-25 09:47:16 -0400"
+author: "dreamreal"
+categories:
+  - "java-coding"
+tags:
+  - "methods"
+  - "null"
+  - "void"
+wp-id: 129
+wp-guid: "http://javachannel.org/?p=129"
+---
+
+<p>Someone on <a href="irc://irc.freenode.net/##java">##java</a> asked about how to return a void value. This is a terrible question, but let’s look at it anyway, just because.<br />
+Here’s some example code they asked about, translated:</p>
+<pre>void foo(boolean bar) {
+  if(bar) {
+    return baz();
+  }
+}
+void baz() {
+  // do stuff here
+}</pre>
+<p>The intent was to call <code>baz()</code> as a replacement for <code>foo()</code>‘s execution; the one with the question didn’t include code after the <code>if()</code> block, but further questions indicated that the remaining part of <code>foo()</code> was to be avoided.<br />
+There’s a lot of monstrosity here. The worst is “<code>return baz();</code>“, which won’t compile, and shouldn’t compile; <code>void</code>‘s whole purpose is to avoid being put on the call stack, so “<code>return void</code>” makes no sense.<br />
+One way to rewrite this code is obvious:</p>
+<pre>void foo(boolean bar) {
+  if(bar) {
+    baz();
+    return;
+  }
+  // extra code goes here,
+  // not to be executed if bar is true
+}
+void baz() {
+  // do stuff here
+}</pre>
+<p>This calls <code>baz()</code> and terminates the method execution immediately after. You could also do something else that’s obvious:</p>
+<pre>void foo(boolean bar) {
+  if(bar) {
+    baz();
+  } else {
+    // extra code goes here
+  }
+}</pre>
+<p>This has the advantage of a single termination point for the method. From “<a href="http://www.cc2e.com/Default.aspx">Code Complete</a>:”</p>
+<blockquote>
+<h3>17.1 return</h3>
+<p>Minimize the number of returns in each routine. It’s harder to understand a routine if, reading it at the bottom, you’re unaware of the possibility that it returned somewhere above.<br />
+Use a return when it enhances readability. In certain routines, once you know the answer, you want to return it to the calling routine immediately. If the routine is defined in such a way that it doesn’t require any cleanup, not returning immediately means that you have to write more code.<br />
+(Content copied shamelessly from an <a href="http://stackoverflow.com/questions/36707/should-a-function-have-only-one-return-statement">excellent answer</a> on StackOverflow.)</p></blockquote>

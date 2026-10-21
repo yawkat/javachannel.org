@@ -1,0 +1,37 @@
+---
+title: "Java Multiline Properties"
+date: "2023-04-27 14:25:03 +0000"
+author: "dreamreal"
+categories:
+  - "uncategorized"
+wp-id: 1401
+wp-guid: "https://javachannel.org/?p=1401"
+---
+
+<p>A channel member asked if there was a way to do multiline properties in Java, and if so, how was leading whitespace handled?</p>
+<p>The answers are, respectively, “yes,” and “pretty much as you’d hope it was.”</p>
+<p>The multiline character for Java properties is, as one might expect from every other programming language’s usage, the <code>\</code> character, and the <code>Properties.load()</code> method will trim all leading whitespace from the property value. Here’s a sample:</p>
+<pre>// This is Example.java
+package example;
+
+class Example {
+  public static void main(String[] args) {<br />    // sorry for the gross formatting here, page width!
+    try(var in=Example<br />      .class<br />      .getResourceAsStream("/foo.properties")) {
+      var properties=new Properties();
+      properties.load(in);
+      System.out.println(properties.getProperty("foo"));
+    }
+  }
+}</pre>
+<p>And the properties file, <code>foo.properties</code>, which should be visible in the classpath at the root:</p>
+<pre># this is /foo.properties
+# note how "multiline" is indented more than the rest
+foo = this \
+  is \
+  a \
+    multiline \
+  property
+</pre>
+<p>If this is run and the classpath is set properly, the output should be <code>this is a multiline property</code>. You can embed newlines with <code>\n</code> as desired as well, if you need those in the output.</p>
+
+<p></p>

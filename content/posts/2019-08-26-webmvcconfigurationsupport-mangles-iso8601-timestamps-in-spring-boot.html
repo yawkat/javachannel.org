@@ -1,0 +1,18 @@
+---
+title: "WebMvcConfigurationSupport Mangles ISO8601 Timestamps in Spring Boot"
+date: "2019-08-26 18:30:43 +0000"
+author: "bombe"
+categories:
+  - "java-coding"
+wp-id: 1373
+wp-guid: "https://javachannel.org/?p=1373"
+---
+
+<p>I was working on a test in my Spring-Boot app and noticed that the timestamps in JSON output were sometimes formatted incorrectly. Luckily I was able to identify the issue and fix it.</p>
+<p>During an integration test I noticed that an expected JSON output of <code>"2019-08-26T08:22:21Z"</code> was actually <code>1566807741.000000000</code> even though in other tests in my application the automatic conversion from <code>java.time.Instant</code> to an ISO8601-formatted string was working just fine. As is the default for Spring-Boot, Jackson’s <code>ObjectMapper</code> was used for the conversion. So what could make Jackson work correctly in one case but not another?</p>
+<p>First I thought that I did something wrong with configuring so I did a lot of googling in order to find out <em>what</em> I was doing wrong. I added <code>jackson-datatype-jsr310</code> to my project’s dependencies, I disabled Jackson’s “write dates as timestamps” serializer feature in four different ways but the error would persist. I dug into how the <code>ObjectMapper</code> used by Spring was created; maybe the feature was not disabled correctly? No, it was disabled just fine but Jackson still would not format the <code>Instant</code> properly.</p>
+<p>During my research on how to create your own <code>ObjectMapper</code> and have Spring use it, I stumbled upon <a href="https://stackoverflow.com/questions/37130332/what-is-the-webmvcconfigurationsupport-replacement-in-spring-boot">this question</a>. It had nothing to do with my immediate problem but it mentioned that when using a @Configuration class extending <code>WebMvcConfigurationSupport</code> in conjunction with @EnableWebMvc Spring-Boot’s auto-configuration would be disabled. A disabled auto-configuration could explain an <code>ObjectMapper</code> that can not format <code>Instant</code>s properly!</p>
+<p>As it turns out, I had a <code>SwaggerConfiguration</code> class that extended <code>WebMvcConfigurationSupport</code>. Following the hints in the StackOverflow post I replaced the superclass by <code>WebMvcConfigurerAdapter</code> only to discover that it was deprecated. Fixing that was easy, though, as the interface <code>WebMvcConfigurer</code> could (and should!) be used instead. And this made my integration test work…</p>
+<p>…although at this point I am still not 100% sure why. I am not using @EnableWebMvc anywhere (just @SpringBootApplication) so I do not yet know why the <code>SwaggerConfiguration</code> class extending <code>WebMvcConfigurationSupport</code> would disable Spring-Boot’s auto-configuration mechanisms. Spring’s usually excellent documentation is rather unclear as to what happens if you only do one of those things.</p>
+<p>I also don’t know why the Jackson mapper in the working test had its “write dates as timestamps” serializer feature disabled but the one in the other test had not. From my understanding it must have been disabled so that Jackson’s <code>jackson-datatype-jsr310</code> module was used—it was already a part of my dependencies without me knowing so explicitely adding it to my project’s build file did not actually change anything.</p>
+<p>And even though my mental model of some things involving Spring has been improved by getting this to work I will not investigate this any further. My integration tests work and that shall be good enough for me, for today.</p>

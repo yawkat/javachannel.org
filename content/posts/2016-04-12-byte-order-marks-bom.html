@@ -1,0 +1,44 @@
+---
+title: "Byte Order Marks (BOM)"
+date: "2016-04-12 09:10:32 -0400"
+author: "rzwitserloot"
+categories:
+  - "java-coding"
+tags:
+  - "bom"
+  - "endianness"
+  - "string-bom-unicode"
+  - "unicode"
+wp-id: 598
+wp-guid: "http://javachannel.org/?p=598"
+---
+
+<p>The so-called <em><a href="http://unicode.org/faq/utf_bom.html">Byte Order Mark</a></em> is a special unicode character that has no visual representation. The point of it, is to start your text data with this pseudocharacter; it serves as a way to identify “<a href="https://en.wikipedia.org/wiki/Endianness">Endianness</a>” – that the text is encoded with UTF-16 (Little Endian), or UTF-16 (Big Endian), or UTF-8.<br />
+Java handles it kinda weirdly; this post describes how it works.<br />
+The BOM is the bytes: <code>0xFE 0xFF</code>. That means:</p>
+<table>
+<thead>
+<tr>
+<th>Encoding</th>
+<th>First bytes in the stream</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UTF-16, Little Endian</td>
+<td><code>FF FE</code></td>
+</tr>
+<tr>
+<td>UTF-16, Big Endian</td>
+<td><code>FE FF</code></td>
+</tr>
+<tr>
+<td>UTF-8</td>
+<td><code>EF BB BF</code></td>
+</tr>
+</tbody>
+</table>
+<p>You can use these to identify streams.<br />
+In Java, the BOM is left in the stream data. So, if you for example have a UTF-8 text file that starts with a BOM, and you read it into a String, your string starts with the BOM character. It doesn’t show up when you print it, but it still ‘counts’, in the sense that the <code>.length()</code> call on your string counts the BOM as 1 character, and a string that starts with a BOM is not equal to one that doesn’t start with it, even if they are otherwise the same. You probably want to filter it out!!<br />
+The only exception is the special encoding <code>UTF-16</code>. This encoding will, if it’s there, consume the BOM and use it to configure itself as Little Endian or Big Endian. If there is no BOM, it defaults to big endian. Note that this ‘consume the BOM’ behaviour does not apply to the encodings <code>UTF-16LE</code> and <code>UTF-16BE</code>. They read the BOM as normal.<br />
+NB: Esoteric note: The unicode character 0xFF 0xFE is intentionally defined as not valid, so that the BOM can be used unambiguously as indicating the endianness of a UTF-16 stream. However, in java, reading this special invalid character does not throw an exception. You can therefore read the byte data: <code>FF FE 41 00</code>, which is the string <code>"A"</code> encoded with a BOM as UTF-16 Little Endian using the encoding <code>UTF-16BE</code>. This produces garbage, but does not throw an exception.</p>

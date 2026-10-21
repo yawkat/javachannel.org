@@ -1,0 +1,61 @@
+---
+title: "Symptoms and Solutions"
+date: "2025-11-20 15:06:15 +0000"
+author: "dreamreal"
+categories:
+  - "java-coding"
+  - "news"
+tags:
+  - "bash"
+  - "gradle"
+  - "maven"
+  - "powershell"
+  - "tooling"
+  - "x11"
+wp-id: 1425
+wp-guid: "https://javachannel.org/?p=1425"
+---
+
+<p>I casually watch a lot of forums related to Java: IRC, of course, and Discord, and Slack, and Reddit. On Reddit, on <a href="https://www.reddit.com/r/java">r/java</a>, there’re some occasionally quite interesting projects offered for consideration; they’re usually pet projects for the authors, and that’s healthy and useful for everyone.</p>
+
+<p>However, there’s also a low hum of … tooling. Two really interesting projects showed up recently, for example, that avoided standard tooling: one used PowerShell, another used a bash script to build.</p>
+
+<p>Both of these projects <em>work</em>. They both generated the expected output; the bash script actually went way above and beyond (replicating what a good Gradle script might do), downloading a JVM and manually grabbing the dependencies via <code>wget</code>, then manually calling <code>javac</code> and <code>jlink</code> in a manner that would make Mark Reinhold proud, then building an AppImage for x86_64 using the platform-appropriate tools.</p>
+
+<p>The Reddit discussion on that latter one did not go especially well, however, because the tooling discussion ended up front and center, with what looks like a lot of hurt feelings.</p>
+
+<p>“This looks like a novice project” was the import of one comment, with another being that the tooling might have helped; that went south <em>quickly</em>. It was not a “novice project.” The author was solving a problem they encountered in their own way, including implementing some X11 protocols in <em>Java</em>. Project infrastructure choices don’t make one a “novice,” especially as an insult.</p>
+
+<p>The thing is, the comment about tooling might be pretty apt. My personal thought about the project, based on the discussion, was “why <em>not</em> tooling?” Are the tools insufficient? The project owner built an x86_64 image specifically; that may suit their purposes (and as the primary project consumer, their purposes are most important) but what would it have taken to build an ARM image? Would the tooling have been sufficient for that?</p>
+
+<p>It might not have been. The way I see it, there’re a few reasons the tooling would be avoided:</p>
+
+<ul><li>Lack of awareness. The author said they knew about the tooling and avoided it, but maybe they didn’t check to see if the tooling could create AppImages.</li>
+
+<li>Lack of functionality. Maybe they <em>did</em> check, but the functionality wasn’t there, or wasn’t sufficient.</li>
+
+<li>Lack of documentation. Maybe the functionality was there, but was documented poorly enough that it was easier to do it the straightforward way instead. (Is that OSGi I hear weeping in the distance? It just might be.)</li>
+
+<li>Personal preference. Maybe the OP knew about the tooling and just didn’t care.</li>
+</ul>
+
+<p>If personal preference is involved, well, the discussion’s over. At that point, it’s like arguing that the author’s favorite number should <em>clearly</em> be 18 instead of 11. It’s <em>their</em> project, not anyone else’s, and if they make a decision based on their preference, that’s their right and power.</p>
+
+<p>But the other options, well, those are things that we as a community might be able to help. And I think we should consider helping, even if the “help” might not apply to this specific circumstance.</p>
+
+<p>So: We can help, but we need to consider:</p>
+
+<ul><li>How we approach the help</li>
+
+<li>What use cases are poorly served by the tooling today</li>
+
+<li>How are we evangelizing our practices, and why</li>
+
+<li>What would “better” look like?</li>
+
+<li>Do we even understand each other to understand why people choose different approaches?</li>
+</ul>
+
+<p>These aren’t necessarily idle musings. We want Java to remain vital, we want to do what we can to establish common practices so we can help each other, we want to make sure that we’re not presenting barriers to people whose skills we want in our ecosystem; it’d be nice if we could offer commentary without sneering (and, to be fair, <em>accept</em> commentary without bristling.)</p>
+
+<p>Let’s all be kind to each other, an effort that would make us more effective as well.</p>

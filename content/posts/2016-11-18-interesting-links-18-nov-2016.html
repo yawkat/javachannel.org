@@ -1,0 +1,29 @@
+---
+title: "Interesting Links – 18 Nov 2016"
+date: "2016-11-18 06:58:34 -0500"
+author: "dreamreal"
+categories:
+  - "channel-news"
+tags:
+  - "azul"
+  - "checked-exceptions"
+  - "deprecation"
+  - "exception"
+  - "exceptions"
+  - "java-9"
+  - "jdbc"
+  - "linux"
+  - "microsoft"
+  - "midori"
+  - "sql-server"
+wp-id: 752
+wp-guid: "http://javachannel.org/?p=752"
+---
+
+<p>Today’s apparently a <a href="https://microsoft.com">Microsoft</a> edition of the interesting links! Almost everything relates back to them this time…</p>
+<ul>
+<li>From <a href="https://twitter.com/runswithbricks">wyvern</a>: “<a href="http://joeduffyblog.com/2016/02/07/the-error-model/">The Error Model</a>” is an article discussing… exceptions. Exception handling and the “checked or unchecked” question is (still) controversial in Java; article provides some interesting context on error handling approaches, and explains how error handling evolved in Midori (Microsoft’s experimental research OS). A fundamental decision when choosing to make your API throw a checked or unchecked exception is whether or not a particular error is considered fatal or not. This is frequently a murky question: if you’re writing a one-off script, <code>IOException</code> may be fatal, but for a long-lived daemon, it should be handled safely and not rethrown to the top level. While we obviously can’t use Midori’s exact approach in Java, the thought process exhibited is helpful when deciding how to structure your APIs to allow tidy error handling. The whole <a href="http://joeduffyblog.com/2015/11/03/blogging-about-midori/">Midori blog series</a> is worth reading, if you’re looking for more.</li>
+<li><a href="https://microsoft.com">Microsoft</a> has <a href="https://www.linuxfoundation.org/announcements/microsoft-fortifies-commitment-to-open-source-becomes-linux-foundation-platinum">announced</a> that it is a <a href="https://www.linuxfoundation.org/">Linux Foundation</a> <em><a href="https://www.linuxfoundation.org/members/corporate">platinum</a></em> member. My, how things have changed…</li>
+<li>Speaking <em>even more</em> of Microsoft, it looks like they’ve finally open-sourced their <a href="https://github.com/Microsoft/mssql-jdbc">SQL Server JDBC driver</a>, and it’s hosted in a <a href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22mssql-jdbc%22">Maven repository</a>. Typically, people use <a href="http://jtds.sourceforge.net/">jTDS</a> instead, but this is potentially great news; it’s not clear offhand what the advantages are compared to jTDS, but the more options you have, the better, right? Plus, this is another example of Microsoft actually <a href="https://www.microsoft.com/en-us/sql-server/sql-server-vnext-including-Linux">contributing to the larger ecosystem</a>, something many are still not used to. Now, if they could only make <a href="https://www.microsoft.com/en-us/sql-server/sql-server-2016">SQL Server</a> less of a pain to work with…</li>
+<li>Finally, stepping off the Microsoft train, user asgs pointed out <a href="https://www.azul.com/author/simon_ritter/">Simon Ritter</a>‘s “<a href="https://www.azul.com/20-years-java-deprecation/">20 Years Of Java Deprecation</a>,” which details the list of accumulated deprecated classes and methods in the Java runtime library. It’s actually a really low number given Java’s maturity (maybe that’s a <em>sign</em> of maturity?) — and it also points out that hardly anything is actually removed, although that will change with Java 9, with a whopping <em>six</em> <a href="http://openjdk.java.net/jeps/162">methods being removed</a>.</li>
+</ul>

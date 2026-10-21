@@ -1,0 +1,158 @@
+---
+title: "Junit 4 examples"
+date: "2014-10-23 09:51:11 -0400"
+author: "melkor"
+categories:
+  - "java-coding"
+tags:
+  - "ant"
+  - "junit"
+  - "spring"
+  - "testing"
+wp-id: 220
+wp-guid: "http://javachannel.org/?p=220"
+---
+
+<p>There seems to be some repeated questions about using JUnit. So I made a short example using JUnit 4 with ant.<br />
+First here is the directory structure of my files.</p>
+<pre>
+build
+build/build.sh
+build/build.xml
+lib
+lib/hamcrest-core-1.3.jar
+lib/junit-4.11.jar
+src
+src/org
+src/org/javachannel
+src/org/javachannel/SimulatedSpring.java
+test
+test/org
+test/org/javachannel
+test/org/javachannel/SimulatedSpringTest.java
+</pre>
+<p>The class I want to test is a simulation of a mass on a spring:</p>
+<pre><code class="language-java">package org.javachannel;
+public class SimulatedSpring{
+  public double velocity = 0;
+  public double position = 0;
+  public double time = 0;
+  private double kom;
+  private double bom;
+  private double A,B,omega;
+  public SimulatedSpring(double mass, double friction, double xnot){
+    kom = 1/mass;
+    bom = friction/mass;
+    position = xnot;
+    omega = Math.sqrt(kom - bom*bom*3.0/4.0);
+    B = xnot;
+    A = 0.5*bom/omega*xnot;
+  }
+  public void update(double dt){
+    // ma = -kx - bv
+    double a = -position*kom - bom*velocity;
+    // v_n+1 = v_n + a
+    velocity = velocity + a*dt;
+    position = position + velocity*dt;
+    time+=dt;
+}
+  public double exactPosition(){
+    return Math.exp(-0.5*bom*time)*(A*Math.sin(omega*time) + B*Math.cos(omega*time));
+  }
+  public double exactVelocity(){
+    return -Math.exp(-0.5*bom*time)*(0.5*bom*A+omega*B)*Math.sin(omega*time);
+  }
+  public static void main(String[] args){
+    SimulatedSpring spring = new SimulatedSpring(1, 0.1, 1);
+    SimulatedSpring s2 = new SimulatedSpring(1, 0.1, 1);
+    double dt =0.5;
+    double time = 0;
+    int sub_divisions = 32;
+    for(int j = 0; j&lt;100; j++){
+      System.out.printf("%f\t%f\t%f\t%f\t%f\t%f\t%f",
+        time, spring.position, s2.position, spring.exactPosition(),
+        spring.velocity, s2.velocity, spring.exactVelocity()
+      );
+      spring.update(dt);
+      for(int i = 0; i&lt;sub_divisions; i++){
+        s2.update(dt/sub_divisions);
+      }
+      time+=dt;
+    }
+  }
+}</code></pre>
+<p>The class contains an update method that updates the spring and the exact solutions. The test is to show that the update method improves when a smaller timestep is used.</p>
+<pre><code class="language-java">package org.javachannel;
+import org.junit.Test;
+import org.junit.Assert;
+public class SimulatedSpringTest{
+  @Test
+  public void updateTest(){
+    SimulatedSpring s1 = new SimulatedSpring(1, 1, 1);
+    SimulatedSpring s2 = new SimulatedSpring(1,1,1);
+    double dt = 0.5;
+    int sub = 2;
+    double delta_s1 = 0;
+    double delta_s2 = 0;
+    for(int j = 0; j&lt;10; j++){
+      s1.update(dt);
+      for(int i=0; i&lt;sub; i++){
+        s2.update(dt/sub);
+      }
+      delta_s1 += Math.abs(s1.position - s1.exactPosition()) + Math.abs(s1.velocity - s1.exactVelocity());
+      delta_s2 += Math.abs(s2.position - s2.exactPosition()) + Math.abs(s2.velocity - s2.exactVelocity());
+    }
+    Assert.assertTrue(delta_s2&lt;delta_s1 || (delta_s2==0 &amp;&amp; delta_s1==0));
+  }
+}</code></pre>
+<p>I have two ways to build and test these classes, the first method is using just a bash script:</p>
+<pre>#!/bin/bash
+if [ ! -d "../out" ]; then
+mkdir ../out
+fi
+if [ ! -d "../out/classes" ]; then
+mkdir ../out/classes
+fi
+if [ ! -d "../out/tests" ]; then
+mkdir ../out/tests
+fi
+CLASSPATH="-cp ../out/classes:../out/tests:../lib/hamcrest-core-1.3.jar:../lib/junit-4.11.jar"
+javac -sourcepath ../src -d ../out/classes ../src/org/javachannel/SimulatedSpring.java
+javac -sourcepath ../test  $CLASSPATH -d ../out/tests ../test/org/javachannel/SimulatedSpringTest.java
+java $CLASSPATH org.junit.runner.JUnitCore org.javachannel.SimulatedSpringTest</pre>
+<p>The second way consists of using an ant build.xml file.</p>
+<pre>&lt;project&gt;
+  &lt;property name="lib.dir"     value="../lib"/&gt;
+  &lt;property name="src.dir" value="../src"/&gt;
+  &lt;property name="test.dir" value="../test"/&gt;
+  &lt;property name="out.dir" value="../out"/&gt;
+  &lt;property name="class.dir" value="classes"/&gt;
+  &lt;target name="clean"&gt;
+    &lt;delete dir="${out.dir}"/&gt;
+  &lt;/target&gt;
+  &lt;target name="compile"&gt;
+    &lt;mkdir dir="${out.dir}/${class.dir}"/&gt;
+    &lt;javac srcdir="${src.dir}" destdir="${out.dir}/${class.dir}"/&gt;
+ &lt;/target&gt;
+ &lt;target name="compile.tests" depends="compile"&gt;
+    &lt;mkdir dir="${out.dir}/${test.dir}"/&gt;
+    &lt;javac srcdir="${test.dir}" destdir="${out.dir}/${test.dir}"&gt;
+      &lt;classpath&gt;
+        &lt;pathelement path="${out.dir}/${class.dir}"/&gt;
+      &lt;/classpath&gt;
+    &lt;/javac&gt;
+    &lt;junit&gt;
+      &lt;classpath&gt;
+        &lt;pathelement path="${out.dir}/${class.dir}"/&gt;
+        &lt;pathelement path="${out.dir}/${test.dir}"/&gt;
+      &lt;/classpath&gt;
+      &lt;test name="org.javachannel.SimulatedSpringTest"/&gt;
+    &lt;/junit&gt;
+  &lt;/target&gt;
+&lt;/project&gt;</pre>
+<p>Turns out my version of ant comes with junit 4 and I did not have to use the jar files I included in libs.<br />
+To use the build script navigate to the build folder and run (you would have to make it executable):</p>
+<pre>./build.sh</pre>
+<p>To use the ant build.xml navigate to the build folder and run:</p>
+<pre>ant compile.tests</pre>
+<p>Voila, maybe this could be improved by having a maven example. Also, when the test passes nothing is displayed.</p>

@@ -1,0 +1,46 @@
+---
+title: "JavaChannel's Interesting Links podcast, episode 11"
+date: "2018-01-16 10:05:42 -0500"
+author: "dreamreal"
+categories:
+  - "podcast"
+tags:
+  - "docker"
+  - "hystrix"
+  - "java-9"
+  - "jigsaw"
+  - "meltdown"
+  - "netflix"
+  - "podcast"
+  - "podcast-11"
+  - "resilience4j"
+  - "spectre"
+enclosure: "/wp-content/uploads/2018/01/javachannel-11.mp3"
+enclosure-length: 41271408
+show-enclosure: true
+wp-id: 1031
+wp-guid: "https://javachannel.org/?p=1031"
+---
+
+<p>Welcome to the eleventh ##java podcast. I’m Joseph Ottinger, dreamreal on the IRC channel, and it’s Tuesday, 2018 January 16. <a href="https://twitter.com/kinabalu">Andrew Lombardi</a> (kinabalu on IRC) from <a href="https://mysticcoders.com/">Mystic Coders</a> is also on the podcast, and this episode has a special guest, Kirk Pepperdine from <a href="http://www.kodewerk.com">Kodewerk</a>.<br />
+As always, this podcast is basically interesting content pulled from various sources, and funneled through the ##java IRC channel on freenode. You can find the show notes at the channel’s website, at javachannel.org; you can find all of the podcasts using the tag (or even “category”) “podcast”, and each podcast is tagged with its own identifier, too, so you can find this one by searching for the tag “podcast-11”.<br />
+This podcast has a lot to say about Meltdown, courtesy of Kirk – who’s a performance expert and one of the people you go to when you really need to figure out what your Java application is doing. The short version is this: Meltdown and Spectre are going to affect everything, due to the way modern CPUs work (listen to the podcast to figure out why – it’s fascinating!) – and Java’s reputation as the environment where you can code and let the JVM magically fix everything for you may be in danger. Intel may have revived the importance of data structures for the JVM singlehandedly – not a <em>bad</em> thing, necessarily, but something Java programmers might have to get used to again.<br />
+Kirk also went into the things that make Java 9 worth using – and it’s not modules. It’s the extended APIs and the packaging support, neither of which get mentioned very much because of all the chatter about modules.<br />
+The interesting links for this week:</p>
+<ol>
+<li>
+<p>DZone has been putting out a lot of information regarding Java 9’s modules. Up first is “<a href="https://dzone.com/articles/java-9-modules-introduction-part-1">Java 9 Modules Introduction (Part 1)</a>“, which does a pretty good job of walking through Java 9 modules from the basics on up. It’s all command-line based, so no IDE, no Maven, no Gradle – Part 2 promises integration with tooling. But knowing what the tools <em>do</em> is important, so this article is a good introduction, about as good as any other so far.</p>
+</li>
+<li>
+<p>Another entry from DZone on Java 9 is “<a href="https://dzone.com/articles/java-9-module-services">Java 9 Module Services</a>”, which could be written to be more clear – it refers to a source repository instead of showing lots of relevant code – but does walk through the old ServiceLoader stuff and then walks through the same mechanism in Java 9.</p>
+</li>
+<li>
+<p>Speaking of tooling: Baeldung has done a walkthrough of <a href="http://www.baeldung.com/docker-java-api">docker-java-api</a>, providingi a guide to a Java client that interfaces with the Docker daemon, providing programmatic management of images, volumes, and networks.</p>
+</li>
+<li>
+<p>There’s also <a href="https://github.com/resilience4j/resilience4j">resilience4j</a>, a fault-tolerance library inspired by Netflix Hystrix.It provides features for limited retries, transaction management, a number of other such things; I haven’t run into a situation where I’ve needed this (transaction management has been enough, generally) but it looks like it might be useful; maybe I’ve made architectural decisions that allow me to avoid using libraries like this because I didn’t want to write the features myself. Maybe if I’d known about this, my choices would be different… hard to say.</p>
+</li>
+<li>
+<p>Lastly, there’s <a href="https://github.com/shekhargulati/little-java-functions">little-java-functions</a>, a collection of functions that look pretty useful, although not modular at all. This library covers a <em>lot</em> of ground. The lack of modularity probably works against it; since we’ve mentioned Java 9 so much, it’d be nice if it mentioned Java 9 compatibility with modules, but maybe Java isn’t prepared to go that far down the Scala rabbit-hole yet. In the process of recording this, a potential problem with licenses came up – possibly the subject of a future conversation – and the author ended up explicitly licensing the code under Creative Commons, thanks to Andrew.</p>
+</li>
+</ol>

@@ -1,0 +1,33 @@
+---
+title: "Interesting Links, 15 Sep 2016"
+date: "2016-09-15 06:47:42 -0400"
+author: "dreamreal"
+categories:
+  - "channel-news"
+tags:
+  - "big-data"
+  - "eclipse"
+  - "grunt"
+  - "gulp"
+  - "hashcode"
+  - "mariadb"
+  - "mysql"
+  - "nodejs"
+  - "npm"
+wp-id: 635
+wp-guid: "http://javachannel.org/?p=635"
+---
+
+<ul>
+<li>It may be a little early to suggest that Eclipse is dead, but “<a href="http://movingfulcrum.com/the-fall-of-eclipse/">The Fall of Eclipse</a>” says it anyway, and says why. The Eclipse community would disagree, of course.</li>
+<li>User liste pointed out <a href="https://github.com/vorburger/MariaDB4j">MariaDB4j</a>, which is… MariaDB embedded into a jar, suitable for integration testing with MariaDB in a build tool. Sure, H2 and Derby exist, but this allows you to test against MySQL and MariaDB, because if you have to use MySQL in whatever terrible world you happen to live in, you <em>definitely</em> want to test against it instead of a <em>good</em> database, to help you work out what awful bugs you need to avoid.</li>
+<li>User yawkat also pointed out something that your humble author was unaware of: the hash code of Java Strings isn’t calculated until <code>hashCode()</code> is called. That makes perfect sense, actually. The javadoc for String’s <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#hashCode--"><code>hashCode()</code></a> points out <em>how</em> the hashcode is calculated, but not when.</li>
+<li>User cheeser pointed out O’Reilly’s (legal and free) <a href="http://www.oreilly.com/data/free/archive.html">Data Ebook Archive</a>: “An archive of all O’Reilly data ebooks is available below for free download. Dive deep into the latest in data science and big data, compiled by O’Reilly editors, authors, and Strata speakers.”</li>
+<li>The channel has mentioned tries (pronounced “trees”) as a form of data structure a few times lately; in case you don’t know what a trie is, or how it differs from a tree, see <a href="https://www.topcoder.com/community/data-science/data-science-tutorials/using-tries/">The Trie: A Neglected Data Structure</a>.</li>
+<li>Using <a href="https://www.npmjs.com/">NPM</a> (<a href="https://nodejs.org/">Node.js</a>‘ package manager) as part of a Java build came up one morning. Without any further context, here are a few references show up to integrating NPM into a maven build, none of which has been tried and tested by the person writing this up for you:
+<ul>
+<li><a href="http://blogs.mulesoft.com/dev/mule-dev/introducing-the-npm-maven-plugin/">Introducing the NPM Maven plugin</a> </li>
+<li>The <a href="https://github.com/eirslett/frontend-maven-plugin">front-end maven plugin</a> says it can download and install Node, NPM, Gulp, and/or Grunt for you as well.</li>
+</ul>
+</li>
+</ul>

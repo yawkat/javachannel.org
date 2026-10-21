@@ -1,0 +1,96 @@
+---
+title: "Locale-specific numbers"
+date: "2025-10-28 18:30:46 +0000"
+author: "dreamreal"
+categories:
+  - "java-coding"
+tags:
+  - "locale"
+wp-id: 1421
+wp-guid: "https://javachannel.org/?p=1421"
+---
+
+<p>One of our channel members mentioned a failure in parsing “-1” to an int given a Locale. That’s … fascinating, actually, as I (<code>dreamreal</code>) was unaware of any numbering systems under which that would fail. So, as any programmer would, I wanted a program to show me the locales for which “-1” wasn’t the proper representation for “negative one.”</p>
+
+<p>Being a programmer, I … immediately ran to an AI (Claude, specifically) and had it generate a table of the possibilities, along with the associated locales, that did not fit the “normal” representation of “-1” – where, well, <em>my</em> locale (US English) was “normal.” </p>
+
+<p>If you’re not English, please recognize the humor here – I’m well aware that Urdu readers would think their representation was “normal” and “-1” was not. Or, well, I am aware <em>now</em> and wasn’t before, and my use of “normal” is entirely meant to poke fun at my own English-centric expectations, because it didn’t occur to me that negatives using Arabic sigils might not be the same everywhere.</p>
+
+<p>Anyway, this is what came out of it, for my Java 25 installation. The table shows the representation (the best that I could get WordPress to trivially display it, at least), the Unicode transcription, and then a list of the locales that emitted that particular representation. I didn’t bother including “-1” because, well, it’s a ginormous list and this table is long enough already.</p>
+
+<table class="wp-block-table">
+<thead>
+<tr>
+<th>Representation</th>
+<th>Character Analysis</th>
+<th>Locales (168 total)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-?</code></td>
+<td><code>len:2, chars:U+002D,U+07C1</code></td>
+<td>nqo (N’Ko), nqo_GN (N’Ko (Guinea)), nqo_GN_#Nkoo (N’Ko (N’Ko, Guinea))</td>
+</tr>
+<tr>
+<td><code>-?</code></td>
+<td><code>len:2, chars:U+002D,U+0967</code></td>
+<td>bgc (Haryanvi), bgc_IN (Haryanvi (India)), bgc_IN_#Deva (Haryanvi (Devanagari, India)), bho (Bhojpuri), bho_IN (Bhojpuri (India)), bho_IN_#Deva (Bhojpuri (Devanagari, India)), mr (Marathi), mr_IN (Marathi (India)), mr_IN_#Deva (Marathi (Devanagari, India)), ne (Nepali), ne_IN (Nepali (India)), ne_NP (Nepali (Nepal)), ne_NP_#Deva (Nepali (Devanagari, Nepal)), raj (Rajasthani), raj_IN (Rajasthani (India)), raj_IN_#Deva (Rajasthani (Devanagari, India)), sa (Sanskrit), sa_IN (Sanskrit (India)), sa_IN_#Deva (Sanskrit (Devanagari, India))</td>
+</tr>
+<tr>
+<td><code>-?</code></td>
+<td><code>len:2, chars:U+002D,U+09E7</code></td>
+<td>as (Assamese), as_IN (Assamese (India)), as_IN_#Beng (Assamese (Bangla, India)), bn (Bangla), bn_BD (Bangla (Bangladesh)), bn_BD_#Beng (Bangla (Bangla, Bangladesh)), bn_IN (Bangla (India)), mni (Manipuri), mni_IN (Manipuri (India)), mni_IN_#Beng (Manipuri (Bangla, India)), mni__#Beng (Manipuri (Bangla))</td>
+</tr>
+<tr>
+<td><code>-?</code></td>
+<td><code>len:2, chars:U+002D,U+0E51</code></td>
+<td>th_TH_TH_#u-nu-thai (Thai (Thailand, TH, Thai Digits))</td>
+</tr>
+<tr>
+<td><code>-?</code></td>
+<td><code>len:2, chars:U+002D,U+0F21</code></td>
+<td>dz (Dzongkha), dz_BT (Dzongkha (Bhutan)), dz_BT_#Tibt (Dzongkha (Tibetan, Bhutan))</td>
+</tr>
+<tr>
+<td><code>-?</code></td>
+<td><code>len:2, chars:U+002D,U+1041</code></td>
+<td>my (Burmese), my_MM (Burmese (Myanmar (Burma))), my_MM_#Mymr (Burmese (Myanmar, Myanmar (Burma)))</td>
+</tr>
+<tr>
+<td><code>-?</code></td>
+<td><code>len:2, chars:U+002D,U+1C51</code></td>
+<td>sat (Santali), sat_IN (Santali (India)), sat_IN_#Olck (Santali (Ol Chiki, India)), sat__#Olck (Santali (Ol Chiki))</td>
+</tr>
+<tr>
+<td><code>-?</code></td>
+<td><code>len:3, chars:U+061C,U+002D,U+0661</code></td>
+<td>ar_BH (Arabic (Bahrain)), ar_DJ (Arabic (Djibouti)), ar_EG (Arabic (Egypt)), ar_EG_#Arab (Arabic (Arabic, Egypt)), ar_ER (Arabic (Eritrea)), ar_IL (Arabic (Israel)), ar_IQ (Arabic (Iraq)), ar_JO (Arabic (Jordan)), ar_KM (Arabic (Comoros)), ar_KW (Arabic (Kuwait)), ar_LB (Arabic (Lebanon)), ar_MR (Arabic (Mauritania)), ar_OM (Arabic (Oman)), ar_PS (Arabic (Palestinian Territories)), ar_QA (Arabic (Qatar)), ar_SA (Arabic (Saudi Arabia)), ar_SD (Arabic (Sudan)), ar_SO (Arabic (Somalia)), ar_SS (Arabic (South Sudan)), ar_SY (Arabic (Syria)), ar_TD (Arabic (Chad)), ar_YE (Arabic (Yemen)), sd (Sindhi), sd_IN (Sindhi (India)), sd_PK (Sindhi (Pakistan)), sd_PK_#Arab (Sindhi (Arabic, Pakistan)), sd__#Arab (Sindhi (Arabic))</td>
+</tr>
+<tr>
+<td><code>-1</code></td>
+<td><code>len:3, chars:U+200E,U+002D,U+0031</code></td>
+<td>ar (Arabic), ar_001 (Arabic (world)), ar_AE (Arabic (United Arab Emirates)), ar_DZ (Arabic (Algeria)), ar_EH (Arabic (Western Sahara)), ar_LY (Arabic (Libya)), ar_MA (Arabic (Morocco)), ar_TN (Arabic (Tunisia)), he (Hebrew), he_IL (Hebrew (Israel)), he_IL_#Hebr (Hebrew (Hebrew, Israel)), ur (Urdu), ur_PK (Urdu (Pakistan)), ur_PK_#Arab (Urdu (Arabic, Pakistan))</td>
+</tr>
+<tr>
+<td><code>-?</code></td>
+<td><code>len:4, chars:U+200E,U+002D,U+200E,U+06F1</code></td>
+<td>ks (Kashmiri), ks_IN (Kashmiri (India)), ks_IN_#Arab (Kashmiri (Arabic, India)), ks__#Arab (Kashmiri (Arabic)), lrc (Northern Luri), lrc_IQ (Northern Luri (Iraq)), lrc_IR (Northern Luri (Iran)), lrc_IR_#Arab (Northern Luri (Arabic, Iran)), mzn (Mazanderani), mzn_IR (Mazanderani (Iran)), mzn_IR_#Arab (Mazanderani (Arabic, Iran)), pa_PK_#Arab (Punjabi (Arabic, Pakistan)), pa__#Arab (Punjabi (Arabic)), ps (Pashto), ps_AF (Pashto (Afghanistan)), ps_AF_#Arab (Pashto (Arabic, Afghanistan)), ps_PK (Pashto (Pakistan)), ur_IN (Urdu (India)), uz_AF_#Arab (Uzbek (Arabic, Afghanistan)), uz__#Arab (Uzbek (Arabic))</td>
+</tr>
+<tr>
+<td><code>??</code></td>
+<td><code>len:3, chars:U+200E,U+2212,U+06F1</code></td>
+<td>fa (Persian), fa_AF (Persian (Afghanistan)), fa_IR (Persian (Iran)), fa_IR_#Arab (Persian (Arabic, Iran))</td>
+</tr>
+<tr>
+<td><code>-?</code></td>
+<td><code>len:3, chars:U+200F,U+002D,U+0661</code></td>
+<td>ckb (Central Kurdish), ckb_IQ (Central Kurdish (Iraq)), ckb_IQ_#Arab (Central Kurdish (Arabic, Iraq)), ckb_IR (Central Kurdish (Iran))</td>
+</tr>
+<tr>
+<td><code>?1</code></td>
+<td><code>len:2, chars:U+2212,U+0031</code></td>
+<td>et (Estonian), et_EE (Estonian (Estonia)), et_EE_#Latn (Estonian (Latin, Estonia)), eu (Basque), eu_ES (Basque (Spain)), eu_ES_#Latn (Basque (Latin, Spain)), fi (Finnish), fi_FI (Finnish (Finland)), fi_FI_#Latn (Finnish (Latin, Finland)), fo (Faroese), fo_DK (Faroese (Denmark)), fo_FO (Faroese (Faroe Islands)), fo_FO_#Latn (Faroese (Latin, Faroe Islands)), gsw (Swiss German), gsw_CH (Swiss German (Switzerland)), gsw_CH_#Latn (Swiss German (Latin, Switzerland)), gsw_FR (Swiss German (France)), gsw_LI (Swiss German (Liechtenstein)), hr (Croatian), hr_BA (Croatian (Bosnia &amp; Herzegovina)), hr_HR (Croatian (Croatia)), hr_HR_#Latn (Croatian (Latin, Croatia)), ksh (Colognian), ksh_DE (Colognian (Germany)), ksh_DE_#Latn (Colognian (Latin, Germany)), lt (Lithuanian), lt_LT (Lithuanian (Lithuania)), lt_LT_#Latn (Lithuanian (Latin, Lithuania)), nb (Norwegian Bokmål), nb_NO (Norwegian Bokmål (Norway)), nb_NO_#Latn (Norwegian Bokmål (Latin, Norway)), nb_SJ (Norwegian Bokmål (Svalbard &amp; Jan Mayen)), nn (Norwegian Nynorsk), nn_NO (Norwegian Nynorsk (Norway)), nn_NO_#Latn (Norwegian Nynorsk (Latin, Norway)), no (Norwegian), no_NO (Norwegian (Norway)), no_NO_#Latn (Norwegian (Latin, Norway)), no_NO_NY (Norwegian (Norway, Nynorsk)), rm (Romansh), rm_CH (Romansh (Switzerland)), rm_CH_#Latn (Romansh (Latin, Switzerland)), se (Northern Sami), se_FI (Northern Sami (Finland)), se_NO (Northern Sami (Norway)), se_NO_#Latn (Northern Sami (Latin, Norway)), se_SE (Northern Sami (Sweden)), sl (Slovenian), sl_SI (Slovenian (Slovenia)), sl_SI_#Latn (Slovenian (Latin, Slovenia)), sv (Swedish), sv_AX (Swedish (Åland Islands)), sv_FI (Swedish (Finland)), sv_SE (Swedish (Sweden)), sv_SE_#Latn (Swedish (Latin, Sweden))</td>
+</tr>
+</tbody>
+</table>

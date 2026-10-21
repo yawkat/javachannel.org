@@ -1,0 +1,26 @@
+---
+title: "DropWizard Metrics Advice"
+date: "2017-05-05 09:41:06 -0400"
+author: "dreamreal"
+categories:
+  - "java-coding"
+tags:
+  - "dropwizard"
+  - "howto"
+  - "meter"
+  - "metrics"
+wp-id: 850
+wp-guid: "http://javachannel.org/?p=850"
+---
+
+<p>I was working on an application with <a href="https://dropwizard.io">DropWizard</a>, and I was having trouble getting my own metrics to show up in the display. The <a href="http://metrics.dropwizard.io/3.2.2/getting-started.html">Metrics Getting Started</a> is useful, and it actually showed me what I needed, but didn’t make it obvious enough for me.<br />
+What I needed was, in DropWizard Metrics parlance, a “<a href="http://metrics.dropwizard.io/3.2.2/getting-started.html#meters">meter</a>.” This gives me performance data over time; basically, every time an event happens, I’d <code>mark</code> it and thus be able to see how busy the system was in the last minute, the last five minutes, and the last 15 minutes.<br />
+I followed the Metrics Getting Started:</p>
+<ul>
+<li>I got a <code>MetricsRegistry</code> (by using <code>new MetricsRegistry()</code>)</li>
+<li>I created a <code>Meter</code> by calling <code>register.meter(name)</code> if necessary (and stored the <code>Meter</code> in a map so I could retrieve it again at will)</li>
+<li>I marked an event by calling <code>Meter.mark()</code></li>
+</ul>
+<p>But at no point was I able to see the meter displayed in the DropWizard servlet.<br />
+The reason is because I created my own <code>MetricsRegistry</code>. One right way to do it <em>is</em> documented; it’s to use <code>SharedMetricRegistries.getDefault();</code> instead (which gets you a <code>MetricsRegistry</code> that <em>is</em> displayed automatically).<br />
+Note that the DropWizard documentation <em>is not wrong</em> – it just steps past something that most people probably want by default.</p>

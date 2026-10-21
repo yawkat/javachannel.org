@@ -1,0 +1,226 @@
+---
+title: "Immutability in Java"
+date: "2017-04-19 09:49:21 -0400"
+author: "yawkat"
+categories:
+  - "java-coding"
+tags:
+  - "guava"
+  - "immutability"
+  - "jackson"
+  - "jcip"
+  - "jmm"
+  - "lombok"
+wp-id: 822
+wp-guid: "http://javachannel.org/?p=822"
+---
+
+<p>Recently in ##java, we had a discussion on what constitutes “immutability” and how to implement it in java properly. Immutability is a core concept for functional programming, and as mainstream languages and ecosystems “catch up” with the safer, less error-prone ideas from functional programming, immutability is wanted in Java projects as well.</p>
+<h2>What is immutability?</h2>
+<p>Asking programmers for their definition of immutability, you will usually receive an answer such as this:</p>
+<blockquote><p>
+  An object is immutable if its state never changes.
+</p></blockquote>
+<p>In this article we will look at different interpretations of that statement and see how to implement it in java.</p>
+<h2>Unmodifiable vs. Immutable</h2>
+<p>An <em>unmodifiable</em> object is an object that cannot be mutated. This does not mean it cannot change through other means:</p>
+<pre><code class="language-java">List&lt;String&gt; inner = new ArrayList&lt;&gt;();
+inner.add("foo");
+List&lt;String&gt; unmodifiable = Collections.unmodifiableList(inner);
+System.out.println(unmodifiable); // [foo]
+inner.add("bar");
+System.out.println(unmodifiable); // [foo, bar]</code></pre>
+<p>Unmodifiable objects are generally not considered “truly” immutable. An immutable version of the code above (using <a href="https://github.com/google/guava">Guava</a>‘s <a href="http://google.github.io/guava/releases/21.0/api/docs/com/google/common/collect/ImmutableList.html"><code>ImmutableList</code></a>) would be:</p>
+<pre><code class="language-java">List&lt;String&gt; inner = new ArrayList&lt;&gt;();
+inner.add("foo");
+List&lt;String&gt; immutable = ImmutableList.copyOf(inner);
+System.out.println(immutable); // [foo]
+inner.add("bar");
+System.out.println(immutable); // [foo]</code></pre>
+<h2>Polymorphism</h2>
+<p>Designing an immutable class to be extended is tricky business. The base class must either relax its immutability or make basically all of its methods final which makes polymorphism basically useless. Relaxing immutability guarantees will often lead to only an <em>unmodifiable</em> class:</p>
+<pre><code class="language-java">public class Vec2 {
+    private final int x;
+    private final int y;
+    public Vec2(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+    public int getX() { return x; }
+    public int getY() { return y; }
+    @Override public int hashCode() { return getX() * 31 + getY(); }
+    @Override public boolean equals(Object o) { ... }
+}</code></pre>
+<p>This class appears immutable at first glance, but is it really?</p>
+<pre><code class="language-java">public class MutableVec2 extends Vec2 {
+    // redundant fields because super fields are private and final
+    private int x;
+    private int y;
+    public MutableVec2(int x, int y) {
+        super(x, y);
+        this.x = x;
+        this.y = y;
+    }
+    @Override public int getX() { return x; }
+    @Override public int getY() { return y; }
+    public void setX(int x) { this.x = x; }
+    public void setY(int y) { this.y = y; }
+}</code></pre>
+<p>We’ve suddenly introduced mutability, and not just that, we also override the two getters, so users of the original “immutable” <code>Vec2</code> class cannot rely on instances of <code>Vec2</code> never changing state when using them. This makes <code>Vec2</code> effectively unmodifiable only, not immutable. <strong>Immutable classes should be final.</strong><br />
+Limited polymorphism is possible when necessary, for example through a package-private constructor so immutability can be strictly controlled. This is error-prone and should be reserved for exceptional cases.</p>
+<h2>Defensive copies</h2>
+<p>Immutability itself does not require immutability on class members (in most definitions). However, in many cases where immutability is used, making sure that members also stay unmodified is desired. This can be done through “defensive copies”:</p>
+<pre><code class="language-java">public class ImmutableClass {
+    private final List&lt;String&gt; list;
+    public ImmutableClass(List&lt;String&gt; list) {
+        this.list = Collections.unmodifiableList(new ArrayList&lt;&gt;(list));
+        // when using guava:
+        //this.list = ImmutableList.copyOf(list);
+    }
+    // getter, equals, hashCode
+}</code></pre>
+<h2>Internal state</h2>
+<p>Internal <em>mutable</em> state is allowed in immutable classes. One use case of this is caching. In OpenJDKs <code>java.lang.String</code> class, which is immutable, the <code>hashCode</code> is cached using this method:</p>
+<pre><code>public class String {
+    ...
+    private int hash; // defaults to 0. not explicitly initialized to avoid race condition (see section below)
+    @Override
+    public int hashCode() {
+        int h = hash;
+        if (h == 0) {
+            hash = h = computeHashCode();
+        }
+        return h;
+    }
+}
+</code></pre>
+<p>(This isn’t the actual implementation but it’s the same principle. Want to see this as implemented in an actual Java runtime library? <a href="http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/8-b132/java/lang/String.java?av=f#1452">Here it is</a>.)<br />
+To users of this class, the internal state is never visible – they do not see a change in behavior. Because of this, the class still counts as immutable.</p>
+<h2>Concurrency</h2>
+<p>Java concurrency is a fickle beast, and immutability is an important tool to avoid the shared mutable state that makes concurrency so difficult. However, immutability has to be implemented carefully to work reliably in concurrent applications.<br />
+On top of the basic “state never changes” requirement we must introduce two more requirements: (from <a href="http://jcip.net/">Java Concurrency In Practice</a>. Read it, it’s a great book.)</p>
+<ul>
+<li>All fields must be <code>final</code>.</li>
+<li>The <code>this</code> reference must never escape the constructor. This is called “proper construction”.</li>
+</ul>
+<p>To explore why these requirements are necessary, we will take an example straight from the <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-17.html#jls-17.5">Java Language Specification</a>:</p>
+<pre><code class="language-java">final class MaybeImmutable {
+    private int x;
+    public MaybeImmutable(int x) {
+        this.x = x;
+    }
+    public int getX() { return x; }
+    // the two threads
+    static MaybeImmutable sharedField; // this field isn't volatile
+    static void thread1() {
+        sharedField = new MaybeImmutable(5);
+    }
+    static void thread2() {
+        MaybeImmutable tmp = sharedField;
+        if (tmp != null) {
+            System.out.println(tmp.getX()); // could be 5... but could also be 0!
+        }
+    }
+}</code></pre>
+<p>At first glance the <code>MaybeImmutable</code> class appears immutable – it does not provide any API to modify its state. The problem with this class is that the field <code>x</code> is not final. Let’s take a look at what both threads do:</p>
+<pre><code class="language-java">// thread1
+tmp = allocate MaybeImmutable
+tmp.x = 5
+write sharedField = tmp
+// thread2
+read tmp = sharedField
+check tmp != null
+print tmp.x
+</code></pre>
+<p>In this case, the constructor call is “just” setting the field. If you’re already familiar with the java memory model, you will notice that there is <em>no</em> happens-before ordering between those two threads! This makes the following execution order legal:</p>
+<pre><code>// thread1
+tmp = allocate MaybeImmutable
+write sharedField = tmp
+tmp.x = 5
+// thread2
+// same as above</code></pre>
+<p>In that case, <code>thread2</code> could legally print out “0”.<br />
+(Reordering is only one reason why this could happen – caches are another, for example.)<br />
+This fact makes our <code>MaybeImmutable</code> class not immutable: From <code>thread2</code>, the state of the <em>same exact instance</em> of <code>MaybeImmutable</code> can change over time. How can we fix this? By making the field <code>x</code> final. Looking at the <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-17.html#jls-17.5">JLS</a>, this guarantees that when we can see the <code>MyImmutable</code> instance in the <code>sharedField</code>, we can also see the correctly initialized <code>x</code> field. <code>thread2</code> will always print out <code>5</code>, as we’d expect.<br />
+This visibility guarantee is only given if our class does not leak its <code>this</code> reference before construction is complete, which brings us to our second requirement (“proper construction”):</p>
+<pre><code class="language-java">final class NotImmutable {
+    public static NotImmutable instance;
+    private final int x;
+    public NotImmutable(int x) {
+        this.x = x;
+        instance = this;
+    }
+    public int getX() { return x; }
+    static void thread1() {
+        new NotImmutable(5);
+    }
+    static void thread2() {
+        NotImmutable tmp = instance;
+        if (tmp != null) {
+            System.out.println(tmp.getX()); // could still be 0!
+        }
+    }
+}</code></pre>
+<p>Even though the <code>x</code> field is final in this case, <code>thread2</code> can see an instance of <code>NotImmutable</code> <em>before</em> its constructor completes, meaning it can still see 0 as the value of <code>x</code>.<br />
+Interestingly, setting the <code>x</code> field to <code>volatile</code> in doesn’t help in either example (<code>NotImmutable</code> or <code>MaybeImmutable</code>). The guarantees of final fields are actually different than those of volatile fields here. This is covered in Aleksey Shipilëv’s article “<a href="https://shipilev.net/blog/2016/close-encounters-of-jmm-kind/#wishful-volatiles-are-finals">Close Encounters of The Java Memory Model Kind</a>.” This article, together with “<a href="https://shipilev.net/blog/2014/jmm-pragmatics/">Java Memory Model Pragmatics</a>,” is a great resource to learn more about the Java memory model.</p>
+<h2>Builders</h2>
+<p>Immutable classes, especially those with many fields, can be difficult to construct – the Java language lacks named parameters. This can be made somewhat easier through the builder pattern, which the following example demonstrates (though only with a single field):</p>
+<pre><code class="language-java">public class ImmutableClass {
+    private final String url;
+    private ImmutableClass(String url) {
+        this.url = url;
+    }
+    public String getX() {
+        return url;
+    }
+    public static class Builder {
+        private String url;
+        public Builder url(String url) {
+            this.url = url;
+            return this;
+        }
+        public ImmutableClass build() {
+            return new ImmutableClass(url);
+        }
+    }
+}
+ImmutableClass myInstance = new ImmutableClass.Builder().url("https://yawk.at/").build();</code></pre>
+<p>This pattern provides an easy way of constructing very large immutable classes – builders are infinitely more readable than constructor calls such as <code>new ImmutableClass("GET", 6, true, true, false, 5, null)</code>. Most IDEs also include utilities to quickly generate such builders.</p>
+<h2>Lombok</h2>
+<p>The wonderful <a href="https://projectlombok.org/">project lombok</a> provides a very easy way of writing immutable classes in a few lines of code via the <a href="https://projectlombok.org/features/Value.html">@Value annotation</a>:</p>
+<pre><code class="language-java">@Value
+public class ImmutableClass {
+    private final String url;
+}
+</code></pre>
+<p>This makes the fields private final (if they aren’t already), generates getters and a constructor, and makes the class final. As an added bonus it also generates an <code>equals</code> and <code>hashCode</code> for you. On top of that, you can use the <code>@Builder</code> annotation to also let it generate a builder for you, and the experimental <code>@Wither</code> annotation to generate copy mutators.<br />
+To see what kind of code Lombok can generate you can either view the <a href="https://projectlombok.org/features/index.html">examples on their website</a> or use my <a href="https://javap.yawk.at/#ExGzuK/procyon">javap pastebin</a> to see decompiled lombok-generated code (make sure to select “Procyon” on the bottom-right).</p>
+<h2>Serialization</h2>
+<p>Immutable classes do not follow the traditional Java bean layout: They do not have a zero-argument constructor and they do not have setters. This makes serialization using reflection difficult. There are solutions, though – an immutable class constructor can be annotated with serialization-framework-specific annotations to give the framework information on which parameter corresponds to which object property.<br />
+We will look at the <a href="https://github.com/FasterXML/jackson-databind">jackson-databind</a> annotations first:</p>
+<pre><code class="language-java">public final class Vec2 {
+    private final int x;
+    private final int y;
+    @JsonCreator
+    public Vec2(@JsonProperty("x") int x, @JsonProperty("y") int y) {
+        this.x = x;
+        this.y = y;
+    }
+    public int getX() { return x; }
+    public int getY() { return y; }
+}</code></pre>
+<p>A more framework-agnostic solution exists using the <code>java.beans.ConstructorProperties</code> annotation (not present in android) which is supported by <a href="https://github.com/FasterXML/jackson-core">Jackson</a> since <a href="https://github.com/FasterXML/jackson-databind/issues/905">version 2.7.0</a>:</p>
+<pre><code class="language-java">public final class Vec2 {
+    private final int x;
+    private final int y;
+    @ConstructorProperties({ "x", "y" })
+    public Vec2(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+    public int getX() { return x; }
+    public int getY() { return y; }
+}</code></pre>
+<p>This annotation is also generated on Lombok constructors by default making serializing Lombok-generated immutable classes hassle-free with jackson 2.7+.<br />
+<a href="https://github.com/google/gson">Gson</a> takes another approach to deserialization of objects without a zero-argument constructor: <code>sun.misc.Unsafe</code> provides a method to allocate an instance of a class without calling its constructor. Gson then proceeds to reflectively set fields of the immutable object. However, <code>Unsafe</code> is unsupported API and the OpenJDK project is attempting to phase out the class and may remove it entirely in a future JDK version, so this solution should be avoided.<br />
+Immutability in Java is not as simple in Java as it might appear at first but with the right tools and patterns, it can be very beneficial to your code base, making your application easier to read, debug and extend and making parallelism much simpler. Be careful of accidentally adding mutability and make use of tools like Lombok to reduce boilerplate associated with immutable classes in Java.</p>

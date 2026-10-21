@@ -1,0 +1,78 @@
+---
+title: "Using SQL's \"IN\" in JDBC"
+date: "2016-01-18 08:04:13 -0500"
+author: "dreamreal"
+categories:
+  - "java-coding"
+tags:
+  - "h2"
+  - "in"
+  - "jdbc"
+  - "mysql"
+  - "postgres"
+wp-id: 375
+wp-guid: "http://javachannel.org/?p=375"
+---
+
+<p>In <a href="http://www.w3schools.com/sql/default.asp">SQL</a>, the <a href="http://www.w3schools.com/sql/sql_in.asp"><code>IN</code></a> operator is used to restrict columns to one of a set of values. Using <code>IN</code> in <a href="http://www.oracle.com/technetwork/java/javase/jdbc/index.html">JDBC</a>, though, is sometimes problematic because of the way different databases handle prepared statements.<br />
+With JDBC, prepared statements use <tt>?</tt> to serve as markers for values in a SQL statement. Thus, you might see:</p>
+<pre>PreparedStatement ps=connection.prepareStatement("SELECT * FROM FOO WHERE BAR = ?");</pre>
+<p>This serves to help prevent <a href="https://www.owasp.org/index.php/SQL_Injection">SQL injection</a> attacks; assigning a value of <tt>"'' or 1==1'"</tt> would check that actual value against <tt>BAR</tt> rather than return all rows.<br />
+<img src="http://imgs.xkcd.com/comics/exploits_of_a_mom.png" alt="Exploits of a Mom" /><br />
+The parameter number of each <tt>?</tt> is an index, starting from 1, so to set the value against which to compare <tt>BAR</tt> we might see:</p>
+<pre>ps.setParameter(1, "BAZ");</pre>
+<p>The <tt>IN</tt> operator in SQL allows selection from a set of values. Thus, we might see:</p>
+<pre>SELECT * FROM FOO WHERE BAR IN ('BAZ', 'QUUX', 'CORGE')</pre>
+<p>If <tt>BAR</tt> is one of <tt>BAZ</tt>, <tt>QUUX</tt>, or <tt>CORGE</tt>, then the row matches the query and will be returned.<br />
+It would make sense to see a <tt>PreparedStatement</tt> declared as:</p>
+<pre>PreparedStatement ps=connection.prepareStatement("SELECT * FROM FOO WHERE BAR IN (?)");</pre>
+<p>However, this doesn’t work. (It gives you only one element to use for the <tt>IN</tt> selector.) You have two choices: you can write SQL against your specific database, or you can generate custom SQL for the query.<br />
+Let’s look at the most general form (the SQL customization) first, since that’s going to be supported best. We are assuming a simple table, created with:</p>
+<pre>create table if not exists information (id identity primary key, info integer)</pre>
+<blockquote><p>
+  Note that we’re presuming <a href="http://www.h2database.com/html/main.html">H2</a> at this stage. In <a href="http://www.postgresql.org/">PostgreSQL</a>, an equivalent statement would be <tt>create table if not exists information (id serial primary key, info integer)</tt>. With <a href="http://dev.mysql.com/">MySQL</a>… oh, who cares, <a href="http://grimoire.ca/mysql/choose-something-else">nobody should use MySQL</a>.
+</p></blockquote>
+<p>Given an array of data to use for the <tt>IN</tt> clause of <tt>Integer[] data = {3, 4, 6, 11};</tt>, we can construct a viable (and general) SQL query like this:</p>
+<pre>StringJoiner joiner = new StringJoiner(
+  ",",
+  "select * from information where info in (",
+  ")");
+for (Object ignored : data) {
+  joiner.add("?");
+}
+String query = joiner.toString();
+try (PreparedStatement ps = conn.prepareStatement(query)) {
+  for (int c = 0; c &lt; data.length; c++) {
+    ps.setObject(c + 1, data[c]);
+  }
+  try (ResultSet rs = ps.executeQuery()) {
+    showResults(rs);
+  }
+}</pre>
+<p>This code isn’t complicated, although it looks like a lot for what it does. It first creates a SQL statement with a placeholder for every element in the <tt>data</tt> array, then sets each placeholder to the corresponding value in <tt>data</tt>, and then runs the query. The SQL has to be regenerated for every case where <tt>data</tt> has a different length. (We could potentially reuse the statement if <tt>data</tt> always has the same length.)<br />
+You can also generalize this, depending on your database. It requires custom SQL, though, and the code to use the SQL differs by database as well.</p>
+<h3>H2</h3>
+<p>For H2, we can use the <tt><a href="http://www.h2database.com/html/functions.html#array_contains">ARRAY_CONTAINS</a></tt> function. Our SQL statement will look like <tt>"select * from information where array_contains(?, info)"</tt>, and the code to use this statement looks like this:</p>
+<pre>try (PreparedStatement ps = conn.prepareStatement(query)) {
+  ps.setObject(1,data);
+  try (ResultSet rs = ps.executeQuery()) {
+    showResults(rs);
+  }
+}</pre>
+<p>H2 can use <tt>setObject()</tt> and use that as the input for the ARRAY_CONTAINS function; this way, we have one placeholder and we don’t have to generate custom SQL for every different size of the input array.</p>
+<h3>PostgreSQL</h3>
+<p>In PostgreSQL, we can use the <tt><a href="http://www.postgresql.org/docs/9.4/static/functions-comparisons.html#AEN19745">ANY</a></tt> function. Our SQL looks like <tt>"select * from information where info = ANY(?)"</tt>. Our code to use the statement:</p>
+<pre>try (PreparedStatement ps = conn.prepareStatement(query)) {
+  Array array=conn.createArrayOf("INTEGER", data);
+  ps.setArray(1, array);
+  try (ResultSet rs = ps.executeQuery()) {
+    showResults(rs);
+  }
+}</pre>
+<h3>MySQL</h3>
+<p><a href="http://grimoire.ca/mysql/choose-something-else">Nobody should use MySQL</a>.</p>
+<blockquote><p>
+  This is offered somewhat tongue-in-cheek, for a few reasons: one is that I genuinely dislike MySQL, another is that the SQL technique offered here probably isn’t needed very often in the first place (so doing an exhaustive solution is overkill), and the third is ironic: this site is hosted in WordPress, and uses MySQL as the backend database. Irony ftw, right?
+</p></blockquote>
+<h1>Conclusion</h1>
+<p>We’ve shown a few possibilities for restricting the results of queries, using a general-purpose restriction (<tt>IN</tt>, with custom SQL generated for every query, still protected from SQL injection attacks), and custom SQL queries for both H2 and PostgreSQL. These are definitely not the only possibilities; feel free to show how you’d do it, or discuss potential optimizations. Some sample code for these examples can be found at <a href="https://github.com/jottinger/jdbc_contains">https://github.com/jottinger/jdbc_contains</a> – note that some of the code might require modification for each database, and the project doesn’t describe how to create the PostgreSQL database. (The project was written largely to prove the mechanisms described here, and wasn’t meant to be a one-size-fits-all solution.)</p>

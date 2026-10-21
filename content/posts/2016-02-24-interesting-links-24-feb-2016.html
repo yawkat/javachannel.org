@@ -1,0 +1,28 @@
+---
+title: "Interesting Links, 24 Feb 2016"
+date: "2016-02-24 09:17:44 -0500"
+author: "dreamreal"
+categories:
+  - "channel-news"
+tags:
+  - "autoclosable"
+  - "dependencies"
+  - "maven"
+  - "mute-design"
+  - "patterns"
+  - "refactor"
+wp-id: 532
+wp-guid: "http://javachannel.org/?p=532"
+---
+
+<p>It’s been a while, and I’m pretty sure I missed some fun stuff, but here goes with a few things:</p>
+<ul>
+<li>Blogger Sam Atkinson has a few here, some good, some bad. I admire his proclivity.
+<ul>
+<li>“<a href="https://dzone.com/articles/dont-rewrite-your-old-application-refactor">Don’t Rewrite Your Old Application; Refactor!</a>” has some advice for people migrating to new products. It’s got some good thinking in it (rewriting is going to miss stuff, it’s going to take longer than you think) but not a lot of deep reasoning (and misses some possible points, like the resentment from the original architects <em>which has happened to me</em> when I tried to rewrite rather than refactor). Good post.</li>
+<li>Then there’s “<a href="https://dzone.com/articles/kill-your-dependencies-javamaven-edition">Kill Your Dependencies: Java/Maven Edition</a>“, which says not to introduce dependencies until you have no other choice. That’s not terrible advice on the surface, but … it’s terrible advice. Use what you need. If wasting 3MB of disk space gets you one method from a library that saves you time to write or think or test, well, that 3MB of space is cheaper than you are. YMMV, but it’s not good advice – worth reading, though.</li>
+</ul>
+</li>
+<li><a href="http://blog.jooq.org/">jOOQ</a>‘s “<a href="http://blog.jooq.org/2016/02/18/the-mute-design-pattern/">The Mute Design Pattern</a>” shows how you can use Java 8’s lambdas to hide checked exceptions for situations where you <em>Just Don’t Care</em>, leading to code like <code>mute( () -&gt; { doStuff(); } )</code> — which is actually pretty neat. Very handy to have in your coding toolbox, much like <a href="http://binkley.blogspot.com/">Binkley</a>‘s “<a href="http://binkley.blogspot.com/2014/01/java-8-autocloseable-trick.html">Java 8 AutoCloseable trick</a>“.</li>
+</ul>
+<p>By the way, feel free to <a href="mailto:joseph@autumncode.com">send in stuff</a> you think belongs here!</p>

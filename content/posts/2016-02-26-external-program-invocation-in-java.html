@@ -1,0 +1,119 @@
+---
+title: "External Program Invocation in Java"
+date: "2016-02-26 07:30:31 -0500"
+author: "freeone3000"
+categories:
+  - "java-coding"
+tags:
+  - "process"
+  - "processbuilder"
+  - "runtime"
+  - "zt-exec"
+wp-id: 543
+wp-guid: "http://javachannel.org/?p=543"
+---
+
+<p>Users who wish to shell out a Java program may be tempted to use <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runtime.html#exec-java.lang.String-"><code>Runtime.exec()</code></a>, which yields a <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Process.html"><code>Process</code></a>. They probably should use <a href="https://github.com/zeroturnaround/zt-exec">zt-exec</a> instead. However, for those who think that using a separate library for something so “simple” is overkill, please read on.</p>
+<h2>General Notes</h2>
+<p>Java does not invoke a shell – Java uses <a href="http://linux.die.net/man/2/execve"><code>execve()</code></a>. This means that variables like <code>~</code>, <code>%HOME%</code>, and “<code>$JAVA_HOME</code>” will not be expanded, nor will you be able to use shell built-ins such as <code>cd</code> or <code>while</code>. However, Java can invoke a <code>bash</code> or <code>cmd</code> shell, which can then be fed input and output. For more information on shelling out to an actual shell, please see “<a href="#shell">Invoking A Shell</a>.”</p>
+<h2>Invocation with Runtime</h2>
+<p><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runtime.html"><code>Runtime</code></a> is the most accessible way to execute an external process. Processes are started with <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runtime.html#exec-java.lang.String-"><code>Runtime.exec(String)</code></a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runtime.html#exec-java.lang.String:A-"><code>Runtime.exec(String[])</code></a>, and variants based off of <code>Runtime.exec(String)</code> that accept an environment variable array and an optional directory. The <em>only</em> method that should be used from <code>Runtime.exec()</code> is the <code>String[]</code> variant. Each part of the <code>String[]</code> reflects a separate argument, with the 0th being the command to be run. For the functionality of an environment variable array and a directory, please see “<a href="#processbuilder">Invocation with ProcessBuilder</a>“.<br />
+No variant of <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runtime.html#exec-java.lang.String-"><code>Runtime.exec(String)</code></a> should be used because <code>Runtime.exec(String)</code> splits the incoming string on spaces. This may not sound bad, as the shell also splits on spaces. Take the following:</p>
+<pre><code>sed 's/a b/c d/gi' "My Documents/foo.txt"
+</code></pre>
+<p>A shell would interpret this as <code>["sed", "s/a b/c d/gi", "My Documents/foo.txt"]</code><br />
+<code>Runtime.exec(String)</code> would interpret this as: <code>["sed", "'s/a", "b/c", "d/gi'", "\"My", "Documents/foo.txt\""]</code><br />
+Always use the <code>Runtime.exec(String[])</code> variant.<br />
+After performing the invocation with <code>Runtime</code>, please see “<a href="#process">Using Process</a>“.</p>
+<h2><a name="processbuilder"></a>Invocation with Process Builder</h2>
+<p><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ProcessBuilder.html"><code>ProcessBuilder</code></a> takes a <code>String...</code> or a <code>List&lt;string&gt;</code> as its command argument. Each part of the <code>String[]</code> reflects a separate argument, with the 0th being the command to be run. In order to manipulate the environment, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ProcessBuilder.html#environment--"><code>ProcessBuilder.environment()</code></a> returns a mutable <code>Map&lt;String,String&gt;</code> of environment variables. This should be modified (it is not a read-only view, as pointed out by the summary javadoc). Setting the directory can be done with a <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ProcessBuilder.html#directory--"><code>.directory()</code></a> call.<br />
+Other common operations are setting standard output to a file, with <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ProcessBuilder.html#redirectOutput-java.io.File-"><code>redirectOutput(File)</code></a>, and merging standard input and standard output, with <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ProcessBuilder.html#redirectErrorStream-boolean-"><code>redirectErrorStream(true)</code></a>. Starting the process can be done by calling <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ProcessBuilder.html#start--"><code>.start()</code></a>.<br />
+After performing this invocation, please see “<a href="#process">Using Process</a>“.</p>
+<h2><a name="shell"></a>Invoking a Shell</h2>
+<p>This must be done by actually starting the shell process, and then the shell will interpret variables as normal. Done with ProcessBuilder, with the following algorithm:</p>
+<pre><code class="language-java">List&lt;String&gt; parameters = new ArrayList&lt;&gt;();
+if(System.getProperty("os.name").toLowerCase().contains("windows")) {
+    parameters.add("cmd");
+    parameters.add("/C");
+} else {
+    parameters.add("/bin/bash");
+    parameters.add("-c");
+}</code></pre>
+<p>This will start the OS-specific shell: <code>cmd.exe</code> on Windows, <code>bash</code> on other systems. Other shells may be substituted on linux by changing “<code>bash</code>” to the appropriate shell in the above. Those familiar with <code>cmd</code> may want to switch <code>/C</code> to <code>/X</code> – this is improper unless streams are redirected, with <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ProcessBuilder.html#inheritIO--"><code>ProcessBuilder.inheritIO()</code></a>.</p>
+<blockquote><p>
+  Note that Windows’ <code>PowerShell</code> apparently introduces some difficulties. Apparently how it is invoked is different enough that these instructions aren’t enough.
+</p></blockquote>
+<h2><a name="process"></a>Using Process</h2>
+<p>After a <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Process.html"><code>Process</code></a> is obtained with either of the above methods, the process has been started and will run until its natural death. However, there are several common pitfalls.<br />
+You <em>must</em> cull the process with <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Process.html#waitFor--"><code>Process.waitFor()</code></a>, even if you do not want all input and output from the process. Otherwise, the process will exist as a zombie until the parent process (the JVM) exits.<br />
+You do not have to read the output from the process, but if you read either <code>stdout</code> or <code>stderr</code>, you must read both. On some systems, if there is output in <code>stderr</code>, <code>stdout</code> is blocked until this output is consumed. This must be done in a multithreaded fashion if these streams are not joined.<br />
+If you want to terminate the process before finishing, you can call <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Process.html#destroy--"><code>Process.destroy()</code></a> – this sends the process-equivalent of the <code>KILL</code> signal to the process, not <code>TERM</code>, so use cautiously.<br />
+Putting it all together, the following is a sample of shelling out to an external process:</p>
+<pre><code>import java.io.IOException;
+import java.io.InputStream;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.concurrent.Callable;
+public class Example {
+    public static void main(String[] args) throws Exception {
+        ExecutorService service = Executors.newSingleThreadExecutor();
+        Process p = Runtime.getRuntime().exec(new String[]{"echo", "Hello world"});
+        new Thread(new ErrorConsumer(p.getErrorStream())).start();
+        //java is the center of the universe
+        Future output = service.submit(new OutputConsumer(p.getInputStream()));
+        p.waitFor();
+        System.out.println(output.get());
+    }
+    private static class ErrorConsumer implements Runnable {
+        private final InputStream toDiscard;
+        public ErrorConsumer(final InputStream toDiscard) {
+            this.toDiscard = toDiscard;
+        }
+        @Override
+        public void run() {
+            byte[] buf = new byte[1024];
+            try {
+                while (toDiscard.read(buf) != -1) ;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    private static class OutputConsumer implements Callable&lt;/string&gt;&lt;string&gt; {
+        private final InputStream toRead;
+        public OutputConsumer(final InputStream toRead) {
+            this.toRead = toRead;
+        }
+        @Override
+        public String call() throws Exception {
+            StringBuilder sb = new StringBuilder();
+            byte[] buf = new byte[1024];
+            int read;
+            while ((read = toRead.read(buf)) != -1) {
+                sb.append(new String(buf, 0, read));
+            }
+            return sb.toString();
+        }
+    }
+}
+</code></pre>
+<blockquote><p>
+  Editor’s note: this code may or may not work as expected. It runs, but may block on some operations – consider yourself warned, prepare to hit <code>^C</code>, and use it as a point of emphasis on why you should be using zt-exec, shown immediately below…
+</p></blockquote>
+<p>Or, with zt-exec:</p>
+<pre><code>import org.zeroturnaround.exec.ProcessExecutor;
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
+public class Example2 {
+    public static void main(String[] args)
+        throws InterruptedException, TimeoutException, IOException {
+        String output = new ProcessExecutor()
+                .command("echo", "Hello World")
+                .readOutput(true)
+                .execute()
+                .outputUTF8();
+        System.out.println(output);
+    }
+}
+</code></pre>

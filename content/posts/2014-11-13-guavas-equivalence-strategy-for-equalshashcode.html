@@ -1,0 +1,69 @@
+---
+title: "Guava's Equivalence: strategy for equals()/hashCode()"
+date: "2014-11-13 07:27:23 -0500"
+author: "idletask"
+categories:
+  - "java-coding"
+tags:
+  - "a2"
+  - "equals"
+  - "equalshashcode"
+  - "guava"
+  - "hashcode"
+wp-id: 254
+wp-guid: "http://javachannel.org/?p=254"
+---
+
+<h2>Introduction</h2>
+<p>Given a class C, if you want to implement ordering, you have two choices:</p>
+<ol>
+<li>Have your class implement <code>Comparable&lt;c&gt;</code> (or <code>Comparable&lt;x&gt;</code>, where <code>X</code> is a superclass of <code>C</code>).</li>
+<li>Define a <code>Comparator&lt;c&gt;</code> to use with this class (or a <code>Comparator&lt;x&gt;</code>, where <code>X</code> is a superclass of <code>C</code>).</li>
+</ol>
+<p>In fact, many classes in the JDK will have you supply a <code>Comparator</code> if your class does not implement <code>Comparable</code>; examples include <code>Collections.sort()</code> and <code>Arrays.sort()</code>.<br />
+It can be said that for a given class <code>C</code>, a <code>Comparator</code> defines a strategy for ordering, and that you need to supply a <code>Comparator</code> if the class itself does not define this strategy (that is, does not implement <code>Comparable</code>).<br />
+And while the JDK offers a means to provide different strategies for ordering, it does not do so for a more fundamental contract of <code>Object</code>: <code>equals()</code> and <code>hashCode()</code>.<br />
+And this is where <a href="https://github.com/google/guava">Guava</a> comes in.</p>
+<h2><a href="http://docs.guava-libraries.googlecode.com/git-history/release/javadoc/com/google/common/base/Equivalence.html">Equivalence</a>: a strategy for Object’s `equals()` and `hashCode()`</h2>
+<p>Guava’s <code>Equivalence</code> intends to fill this gap. In the same vein as a Comparator, using an Equivalence allows you to either define a different equals()/hashCode() strategy than the one already defined by your target class, or to define one for a target class which “has none at all” (meaning, in this case, that the class uses <code>Object</code>‘s <code>equals()</code>/<code>hashCode()</code> implementations).</p>
+<h3>Usage part 1: implementing an Equivalence</h3>
+<p><code>Equivalence</code> is a parameterized class; for a class <code>C</code>, you will need to implement two methods:</p>
+<ul>
+<li><code>doEquivalent(C a, C b)</code>: given two instances <code>a</code> and <code>b</code> of class <code>C</code>, are those two classes considered equivalent? This is really like writing an implementation of <code>equals()</code> for class <code>C</code>, except that you don’t have to handle nulls (it is guaranteed that both parameters are non-null) nor casts (it is guaranteed that both arguments are “at least” of type <code>C</code>).</li>
+<li><code>doHash(C t)</code>: given an instance <code>t</code> of class <code>C</code>, compute a hash value. Of course, an implementation must mirror <code>Object</code>‘s <code>hashCode()</code>/<code>equals()</code> contract: if <code>doEquivalent(a, b)</code> is <code>true</code>, then <code>doHash(a) == doHash(b)</code>.</li>
+</ul>
+<p>Note that it is guaranteed that arguments to these methods will never be null.</p>
+<h3>Usage part 2: “out of Collections” usage</h3>
+<p>There is really only one method you will need here: <code>.equivalent()</code>. Provided you want to test equivalence between two instances of a given class <code>C</code>, you will do:</p>
+<pre><code class="language-java">final C a = ...;
+final C b = ...;
+final Equivalence&lt;C&gt; eq = ...;
+// Test equivalence of a and b against equivalence stragey eq
+if (eq.equivalent(a, b)) {
+    // Yup, they are
+}</code></pre>
+<h3>Usage part 3: Collection usage</h3>
+<p>Unlike the <code>Comparable</code>/<code>Comparator</code> relationship, equivalence between objects has to be “engraved” into collections. This unfortunately means that the syntax to initiate a collection is somewhat on the verbose side. Namely, if you want to initiate a <code>Set</code> of elements of class <code>C</code> wrapped into an <code>Equivalence</code>, you will have to initialize it as such:</p>
+<pre><code class="language-java">// Java 7 and better...
+Set&lt;Equivalence.Wrapper&lt;C&gt;&gt; set = new HashSet&lt;&gt;();
+// Java 5 or 6; and since we use Guava...
+Set&lt;Equivalence.Wrapper&lt;C&gt;&gt; set = Sets.newHashSet();
+</code></pre>
+<p>You will also need to rely on an Equivalence implementation in order to interact with this collection (of course, you also need to ensure that you use the same implementation all along!):</p>
+<pre>// Your Equivalence...
+Equivalence&lt;C&gt; eq = ...;
+// Inserting an element c into a Set&lt;Equivalence.Wrapper&lt;C&gt;&gt; set
+set.add(eq.wrap(c));
+// Removing, testing...
+set.remove(eq.wrap(c));
+set.contains(eq.wrap(c));
+// Retrieve the original element
+C element;
+for (final Equivalence.Wrapper&lt;C&gt; wrapped: set) {
+    // get the original element
+    element = wrapped.get();
+    // do something with element
+}</pre>
+<h2>Conclusion</h2>
+<p>Admittedly, having to redefine an equivalence strategy is far less common than having to redefine an ordering strategy. It is, however, a welcome tool to use when you have to deal with a “foreign” class which doesn’t meet your <code>equals()</code>/<code>hashCode()</code> expectations, either because there is no implementation at all for this class, or because the existing implementations don’t suit your needs.<br />
+Happy coding!</p>

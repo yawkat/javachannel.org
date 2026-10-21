@@ -1,0 +1,77 @@
+---
+title: "Javachannel’s interesting links podcast, episode 7"
+date: "2017-11-06 05:45:05 -0500"
+author: "dreamreal"
+categories:
+  - "channel-news"
+  - "podcast"
+tags:
+  - "ai"
+  - "chunking"
+  - "cognition"
+  - "cryptography"
+  - "http"
+  - "http2"
+  - "java-10"
+  - "json"
+  - "kafka"
+  - "kotlin"
+  - "machine-learning"
+  - "osx"
+  - "podcast"
+  - "podcast-7"
+  - "prod"
+  - "staging"
+  - "testing"
+enclosure: "/wp-content/uploads/2017/11/javachannel-7.mp3"
+enclosure-length: 28771030
+show-enclosure: true
+comments:
+  - author: "dreamreal"
+    date: "2017-11-06 11:27:12 +0000"
+    content: "<p>Azul’s had a comment on the version string change: <a href=\"https://www.azul.com/java-version-string-changes/\" rel=\"nofollow ugc\">https://www.azul.com/java-version-string-changes/</a></p>"
+wp-id: 968
+wp-guid: "http://javachannel.org/?p=968"
+---
+
+<p>Welcome to the seventh ##java podcast. I’m Joseph Ottinger, dreamreal on the IRC channel, and it’s Monday, 2017 November 6. Today feels slightly less anonymous than yesterday.<br />
+This week we have a co-host, <a href="http://mysticcoders.com">Andrew Lombardi</a> – kinabalu on ##java – and we also offer our humblest apologies to <a href="http://debbiegibsonofficial.com/">Ms. Debbie Gibson</a>.<br />
+This podcast covers news and interesting things from the ##java IRC channel on Freenode; if you see something interesting that’s related to Java, feel free to submit it to the channel bot, with ~submit and a URL to the interesting thing, or you can also write an article for the channel blog as well; I’m pretty sure that if it’s interesting enough to write about and post on the channel blog, it’s interesting enough to include in the podcast.</p>
+<ol>
+<li>
+<p><a href="https://increment.com/">Increment Development</a> posted “<a href="https://increment.com/development/center-stage-best-practices-for-staging-environments/">Center stage: Best practices for staging environments</a>,” an article by Alice Goldfuss that defends and describes the use of the <em>staging environment</em>. “Staging is where you gain confidence in your systems by consensus,” she writes – pointing out that development and testing are for testing known things (“when I do this, does that happen?”), and staging is for testing those things that you think might happen in production but can’t necessarily anticipate as part of development or explicit testing. The author points out that there’s an ongoing debate about this, with some well-known people saying “just test better!” but I’m on Alice’ side personally – staging is where you validate that all that testing didn’t let something get through before deployment to production.</p>
+</li>
+<li>
+<p>Chase Roberts has written “<a href="https://medium.com/@keeper6928/how-to-unit-test-machine-learning-code-57cf6fd81765">How to unit test machine learning code.</a>” It’s an interesting article – in that it focuses on expected results for a long pipeline of operations for stuff that’s really hard to test well. Machine learning libraries tend to be black-box tested – throw an input at it, pray a bit, hope you get the expected output, suffer for a while if you don’t – and he’s trying to show a way to avoid this cycle. Short summary: testing is hard. Long summary: know what your algorithms are doing, and test every step along the way.</p>
+</li>
+<li>
+<p>One of the changes for Java 9’s release was unlimited strength cryptography. Well, all of you laggards on older JVMs might be <a href="https://www.java.com/en/jre-jdk-cryptoroadmap.html">getting it as well</a>, assuming you update and/or patch – which might be questionable, depending on how far back in the revision cycle you are. If you’re still running Java 6, chances are you don’t update, ever, and this might be a scary process for you because it’s so rare. Do I sound like I’m filled with scorn? I don’t mean to be – pity, maybe, and confusion, but not scorn. (Seriously, folks: update to 8. Or 9. Something moderately current. The pain is coming; putting it off will only make it hurt worse when you run out of time.)</p>
+</li>
+<li>
+<p>The first of multiple DZone articles for this edition of the podcast: “<a href="https://dzone.com/articles/switching-java-versions-on-mac-os">Switching Java Versions on MacOS</a>” shows you how to use the <code>java_home</code> command on OSX to switch between your multiple JVM installations on OSX easily. This is apparently not a perfect process according to some on <code>##java</code>, but it’s always worked for me when I’ve tried it – but that’s a very small sample set, so try it yourself and see. (The context of the failure was apparently Apache Ant, and my “success” was really just kicking the tires of Java 9. I’m not saying that the failure is incorrect or user error, by any means.)</p>
+</li>
+<li>
+<p>Another DZone article: “<a href="https://dzone.com/articles/json-p-api-a-json-processing-primer">The JSON-P API: A JSON Processing Primer</a>” shows you a high level overview of JSON-P, with both an object model and a streaming model. The streaming model is more interesting; the object model is a lot like <code>org.json</code>, which… no. Just no. In the end, though, <a href="https://github.com/FasterXML/jackson">Jackson</a> is probably still your best bet for JSON processing in Java.</p>
+</li>
+<li>
+<p><a href="https://kafka.apache.org/">Kafka</a> has gone to version 1.0, <a href="https://blogs.apache.org/foundation/entry/the-apache-software-foundation-announces21">according to Apache</a>. Kafka is a distributed streaming platform – one way of thinking of it is that it’s a distributed event log, where you can write events that are processed at <em>very</em> high volume by various clients. Every client can have its own offset into the event log, so there’s a lot of flexibility in how you use it. Like most such types of data stores, it’s not a magic bullet for … anything, really, but leveraged properly it really can provide amazing throughput. Administration is great fun; I think I’d rather chew off my own neck than manage a Kafka cluster, but … again, if you need the features, it’s a great product.</p>
+</li>
+<li>
+<p>Yet another DZone article: “<a href="https://dzone.com/articles/an-introduction-to-http2-support-in-java-9">https://dzone.com/articles/an-introduction-to-http2-support-in-java-9</a>” shows us the new HTTP/2 client that’s being incubated in Java 9 – which means it probably won’t be fully realized until the next release of Java (which is itself the subject of another news item.) There are already HTTP/2 libraries for Java: Jetty, Netty, vert.x, OkHttp, and Firefly (among others, probably) – but this one will be part of the Java runtime itself. It looks pretty similar to some of the others already mentioned, but that’s not a bad thing; idiom is good and there probably are only so many ways you can think of building a request and issuing it.</p>
+</li>
+<li>
+<p>Our third entry from DZone this week: “<a href="https://dzone.com/articles/machine-learning-algorithms-which-one-to-choose-fo">Machine Learning Algorithms: Which One to Choose for Your Problem</a>” Tries to provide an overview of some of the core factors involved in choosing a machine learning algorithm: supervised vs. unsupervised (or semi-supervised, or reinforced) models, along with some of the models themselves and their applications. There are some examples of problems and math, but it’s got no code whatsoever (and if it did, would probably use Python) – still, it does a good job of going over some of the models and capabilities.</p>
+</li>
+<li>
+<p>Oh, this seems relevant: Java 10 is coming! … maybe. In an <a href="http://mail.openjdk.java.net/pipermail/jdk-dev/2017-November/000089.html">email to the OpenJDK mailing list</a>, Mark Reinhold has revised the version string for Java again – so we might actually get Java 10 instead of Java 18.3 for the next release. Versions are hard to get right – but I think going to a major release version scheme like this (or, rather, <em>staying with a major version scheme</em>) is a good idea, even if the release frequency is boosted. Of course, I also think a major version every year or two is a good thing, so now I’ll probably be complaining about the frequency, but … first world problems, I guess.</p>
+</li>
+<li>
+<p>Speaking of Java 10, <a href="http://jdk.java.net/10/">early access builds</a> are available. I don’t know if they have variable inference – “<code>var</code>“, in other words – because I haven’t even truly migrated to Java 9 yet, so I’m far from being ready to test an early access build of 10! But if that’s your stimulant of choice, the builds are there for OSX, Linux, Windows, and even Solaris on SPARC, since even that guy Mike needs to play with Java 10 every now and then.</p>
+</li>
+<li>
+<p>The next two entries are from DZone, too; they’re on fire. The first one is “<a href="https://dzone.com/articles/null-safety-calling-java-from-kotlin">Null Safety: Calling Java From Kotlin</a>,” which shows the use of annotations in Java code such that Kotlin doesn’t have to pretend the Java method call can return <code>null</code>. It still can, of course, but in Kotlin, nullable types look and act differently than non-nullable types, so this annotation (<code>@Nonnull(when = When.ALWAYS)</code>, if you’re interested) is really a way to suggest to Kotlin that the result is never <em>expected</em> to be <code>null</code>. Really pretty neat stuff.</p>
+</li>
+<li>
+<p>Lastly, DZone came through with an article about the human mind, applied to programming: “<a href="https://dzone.com/articles/transcending-the-limitations-of-the-human-mind">Transcending the Limitations of the Human Mind</a>.” It’s about cognitive capacity, a subject I’ve <a href="http://www.theserverside.com/news/1374204/Programming-is-Also-Teaching-Your-Team">written about myself</a> in the past; when I wrote about it, I referred to it as “chunking” (<a href="https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two">we manage only so many chunks of information at a time</a>) and here, it’s the same concept with different terminology. The author – Robert Brautigam – walks through some of the tricks we developers use to manage incredibly detailed deployments with limited cognitive capacity through decomposition, generalization, abstract concept management; he also discusses ways in which our development processes work <em>against</em> our cognitive capacity (where our processes make a given mechanism more expensive cognitively than it otherwise should be, perhaps.) Good article.</p>
+</li>
+</ol>

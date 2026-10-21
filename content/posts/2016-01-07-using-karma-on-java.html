@@ -1,0 +1,49 @@
+---
+title: "Using karma on ##java"
+date: "2016-01-07 04:54:23 -0500"
+author: "dreamreal"
+categories:
+  - "channel-news"
+tags:
+  - "javabot"
+  - "karma"
+wp-id: 357
+wp-guid: "http://javachannel.org/?p=357"
+---
+
+<p>Ah, karma:</p>
+<pre><code>me&gt; ~karma
+javabot&gt; All living beings have actions (karma) as their own,
+         their inheritance, their congenital cause, their
+         kinsman, their refuge. It is karma that differentiates
+         beings into low and high states.
+me&gt; ... what?
+</code></pre>
+<p>Karma is normally a way of referring to the kind of person you are. It’s the sum of your actions in Hinduism and Buddhism.<br />
+IRC isn’t Hinduism or Buddhism, but karma in ##java is a way of showing what people think of you; positive karma (and lots of it) means you do a lot of good things, and negative karma (and lots of <em>that</em>) show that people don’t care for you much.<br />
+In ##java, there are a few operations related to karma. You can:</p>
+<ul>
+<li>Add or subtract karma.</li>
+<li>Query for karma.</li>
+<li>Complain about there being no third point.</li>
+</ul>
+<h2>Adding or subtracting karma</h2>
+<p>The grammar for changing karma is pretty simple:</p>
+<pre><code>~ TARGET ( ++ | -- ) COMMENT
+</code></pre>
+<p>Thus, you might see:</p>
+<pre><code>someone&gt; ~ eclipse -- for never working the way I want it to
+</code></pre>
+<p>This means that the user <code>someone</code> is decrementing Eclipse’ karma, which – given Eclipse’ karma of -673 as of this writing – happens a lot.<br />
+The text that follows the operation (the <code>++</code> or <code>--</code>) isn’t significant – it’s just a way to allow people to say <em>why</em> they’re changing karma, without the burden of an extra line.<br />
+There are a few problems with the syntax: note that changing C++’ karma is rather hard, because it looks like an increment of C’s karma…</p>
+<blockquote><p>
+  Note that you can’t positively affect your own karma! Doing so is lame, and attempting to do so lowers your karma… let others sing your praises.
+</p></blockquote>
+<h2>Querying for karma</h2>
+<p>The grammar for querying karma is also simple:</p>
+<pre><code>~ karma TARGET
+</code></pre>
+<p>This will tell you what <code>TARGET</code>‘s present karma score is, much as you’d expect. You can tell if nobody’s ever tried to change something’s karma, based on whether the score is 0 or “neutral” – neutral karma means there are no karma changes for the subject of the query.</p>
+<h2>Conclusion</h2>
+<p>Javabot is, of course, <a href="http://github.com/evanchooly/javabot">open source</a>; if you have suggestions or improvements, feel free to contribute. File issues! Fork the project and submit pull requests; most of the code in Javabot is fairly simple, and we all benefit when things in the bot get smarter.</p>

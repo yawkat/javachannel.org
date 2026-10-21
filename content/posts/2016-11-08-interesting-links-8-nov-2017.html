@@ -1,0 +1,32 @@
+---
+title: "Interesting Links – 8 Nov 2017"
+date: "2016-11-08 10:06:34 -0500"
+author: "dreamreal"
+categories:
+  - "channel-news"
+tags:
+  - "c"
+  - "c64"
+  - "commodore"
+  - "docker"
+  - "eafp"
+  - "findbugs"
+  - "getlocalhost"
+  - "lbyl"
+  - "lifestyle"
+  - "macos"
+  - "network"
+  - "python"
+  - "sierra"
+wp-id: 714
+wp-guid: "http://javachannel.org/?p=714"
+---
+
+<ul>
+<li>From ernimril: a video! <a href="https://www.youtube.com/watch?v=zBkNBP00wJE">CppCon 2016: Jason Turner “Rich Code for Tiny Computers: A Simple Commodore 64 Game in C++17”</a> is an hour and twenty minutes of Jason Turner talking about writing a game for the Commodore 64 using, surprise, C++17 and translating to 6502 assembly. (Play at 1.25x speed to save some time – or 2x speed if you want that Brian Goetz effect.) It’s actually really fascinating to watch, and has nothing to do with Java whatsoever.</li>
+<li>For Mac users, particularly on Sierra: “<a href="https://plumbr.eu/blog/java/macos-sierra-problems-with-java-net-inetaddress-getlocalhost">MacOS Sierra problems with java.net.InetAddress: getLocalHost()</a>” documents some lookup problems on the recent MacOS update. Short form: make sure your <code>/etc/hosts</code> actually has your local domain name resolving to <code>127.0.0.1</code>.</li>
+<li><a href="http://findbugs.sourceforge.net/">FindBugs</a> is apparently <a href="https://mailman.cs.umd.edu/pipermail/findbugs-discuss/2016-November/004321.html">having some problems</a>.</li>
+<li>Non-java, but useful for programmers anyway: <a href="http://marketmeditations.com/navy-seals-mental-resilience/">Bulletproof Mind: 6 Techniques for Mental Resilience from the Navy SEALs</a>. Some adult language, but it’s an excellent article and we’re all adults anyway.</li>
+<li>“<a href="https://thehftguy.wordpress.com/2016/11/01/docker-in-production-an-history-of-failure/">Docker in Production: A History of Failure</a>” is a litany of issues with the popular virtualization technology. It’s worth reading, even if you’ve deployed Docker successfully – if only to keep track of how far there is to go.</li>
+<li>From the <a href="https://www.python.org/">Python</a> world: <a href="https://docs.python.org/3/glossary.html#term-eafp">EAFP</a> and <a href="https://docs.python.org/3/glossary.html#term-lbyl">LBYL</a>. In Python, apparently using the “Easier to Ask For Permission” approach yields <em>massive</em> performance gains; Java, like C and C++, tends to prefer LBYL, which stands for “Look Before You Leap.” Worth keeping in mind, especially as Java adds more functional programming concepts. It’d be interesting to see EAFP and LBYL contrasted well in Java – and note that EAFP tends to prefer <code>try/catch</code> to manual boundary checking, so maybe Java’s already there to a large degree.</li>
+</ul>

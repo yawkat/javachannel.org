@@ -1,0 +1,29 @@
+/* Site title and tagline, as on the old site */
+.header-branding { min-width: 0; }
+.header-branding .header-logo { max-width: none; display: block; }
+.header-tagline { margin: 0.15rem 0 0; font-size: 0.85rem; opacity: 0.7; }
+
+/* "Channel Rules" / "Channel Data" submenus: dropdowns on desktop, indented lists on phones */
+.nav-submenu { position: relative; }
+.nav-submenu-title { cursor: default; }
+.desktop-nav .nav-submenu-title::after { content: " \25BE"; }
+.desktop-nav .nav-submenu-items {
+  display: none; position: absolute; top: 100%; left: -0.75rem; z-index: 50; min-width: 15rem;
+  padding: 0.5rem 0; background: var(--color-card, #fff); border: 1px solid var(--color-border, #ddd);
+  border-radius: 0.5rem; box-shadow: 0 6px 20px rgb(0 0 0 / 0.15);
+}
+.desktop-nav .nav-submenu:hover .nav-submenu-items,
+.desktop-nav .nav-submenu:focus-within .nav-submenu-items { display: block; }
+.desktop-nav .nav-submenu-items a { display: block; padding: 0.3rem 0.9rem; font-size: 0.9rem; white-space: nowrap; }
+.mobile-nav .nav-submenu-items { display: flex; flex-direction: column; padding-left: 1rem; }
+.mobile-nav .nav-submenu-items a { padding: 0.25rem 0; }
+
+.podcast-audio audio { width: 100%; }
+.podcast-audio figcaption { font-size: 0.9em; }
+.archived-comments { margin-top: 2.5em; }
+.archived-comments .comments-note { font-size: 0.85em; opacity: 0.7; }
+.archived-comment { border-left: 3px solid #ccc; padding: 0.25em 1em; margin: 1em 0; }
+.archived-comment .comment-date { margin-left: 0.5em; font-size: 0.85em; opacity: 0.7; }
+.archive-list { list-style: none; padding-left: 0; }
+.archive-list .archive-date { font-family: monospace; opacity: 0.7; margin-right: 0.5em; }
+.metadata-value a { text-decoration: underline; text-underline-offset: 2px; }

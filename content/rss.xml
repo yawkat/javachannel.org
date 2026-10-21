@@ -1,0 +1,37 @@
+---
+link: /rss.xml
+---
+{#let posts=site.collections.get('posts')}
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title><![CDATA[{=site.title.raw}]]></title>
+    <description><![CDATA[{=site.description.raw}]]></description>
+    <link>{=site.url.absolute}</link>
+    <atom:link href="{=site.url('rss.xml').absolute}" rel="self" type="application/rss+xml"/>
+    <language>en-US</language>
+    {#if posts.size > 0}<lastBuildDate>{=posts.get(0).date.rfc822}</lastBuildDate>{/if}
+    {#for post in posts.take(10)}
+    <item>
+      <title><![CDATA[{=post.title.raw}]]></title>
+      <link>{=post.url.absolute}</link>
+      {#let author=(post.data.author?? ? cdi:authors.get(post.data.author) : null)}
+      {#if author}<dc:creator><![CDATA[{=author.name.raw}]]></dc:creator>{/if}
+      {/let}
+      <pubDate>{=post.date.rfc822}</pubDate>
+      {#if post.data.categories??}
+      {#for category in post.data.categories.asStrings}
+      <category><![CDATA[{=cdi:categories.get(category).name ?: category}]]></category>
+      {/for}
+      {/if}
+      {! WordPress GUIDs for migrated posts, so feed readers don't show them again !}
+      {#if post.data.wp-guid??}<guid isPermaLink="false">{=post.data.wp-guid}</guid>{#else}<guid isPermaLink="true">{=post.url.absolute}</guid>{/if}
+      <description><![CDATA[{=post.contentAbstract(55).raw}]]></description>
+      <content:encoded><![CDATA[{=post.content.raw}]]></content:encoded>
+      {#if post.data.enclosure??}
+      <enclosure url="{=site.url(post.data.enclosure).absolute}" length="{=post.data.enclosure-length}" type="audio/mpeg"/>
+      {/if}
+    </item>
+    {/for}
+  </channel>
+</rss>
+{/let}

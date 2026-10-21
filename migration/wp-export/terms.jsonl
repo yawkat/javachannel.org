@@ -1,0 +1,934 @@
+{"object_id": 5, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 6, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 7, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 8, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 18, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 76, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 82, "taxonomy": "post_tag", "name": "bitpacking", "slug": "bitpacking", "term_id": 45, "parent": 0, "description": ""}
+{"object_id": 82, "taxonomy": "post_tag", "name": "compression", "slug": "compression", "term_id": 73, "parent": 0, "description": ""}
+{"object_id": 82, "taxonomy": "post_tag", "name": "java", "slug": "java", "term_id": 199, "parent": 0, "description": ""}
+{"object_id": 82, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 90, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 90, "taxonomy": "post_tag", "name": "java stream function", "slug": "java-stream-function", "term_id": 208, "parent": 0, "description": ""}
+{"object_id": 90, "taxonomy": "post_tag", "name": "java8", "slug": "java8", "term_id": 210, "parent": 0, "description": ""}
+{"object_id": 90, "taxonomy": "post_tag", "name": "streams", "slug": "streams", "term_id": 448, "parent": 0, "description": ""}
+{"object_id": 94, "taxonomy": "post_tag", "name": "classpath", "slug": "classpath", "term_id": 63, "parent": 0, "description": ""}
+{"object_id": 94, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 94, "taxonomy": "post_tag", "name": "resource", "slug": "resource", "term_id": 403, "parent": 0, "description": ""}
+{"object_id": 94, "taxonomy": "post_tag", "name": "resources", "slug": "resources", "term_id": 404, "parent": 0, "description": ""}
+{"object_id": 116, "taxonomy": "post_tag", "name": "arrays", "slug": "arrays", "term_id": 28, "parent": 0, "description": ""}
+{"object_id": 116, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 116, "taxonomy": "post_tag", "name": "populate", "slug": "populate", "term_id": 376, "parent": 0, "description": ""}
+{"object_id": 129, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 129, "taxonomy": "post_tag", "name": "methods", "slug": "methods", "term_id": 295, "parent": 0, "description": ""}
+{"object_id": 129, "taxonomy": "post_tag", "name": "null", "slug": "null", "term_id": 331, "parent": 0, "description": ""}
+{"object_id": 129, "taxonomy": "post_tag", "name": "void", "slug": "void", "term_id": 482, "parent": 0, "description": ""}
+{"object_id": 136, "taxonomy": "post_tag", "name": "executor", "slug": "executor", "term_id": 129, "parent": 0, "description": ""}
+{"object_id": 136, "taxonomy": "post_tag", "name": "java 8", "slug": "java-8", "term_id": 204, "parent": 0, "description": ""}
+{"object_id": 136, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 136, "taxonomy": "post_tag", "name": "multithread", "slug": "multithread", "term_id": 309, "parent": 0, "description": ""}
+{"object_id": 136, "taxonomy": "post_tag", "name": "stream", "slug": "stream", "term_id": 446, "parent": 0, "description": ""}
+{"object_id": 136, "taxonomy": "post_tag", "name": "synchronization", "slug": "synchronization", "term_id": 455, "parent": 0, "description": ""}
+{"object_id": 149, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 149, "taxonomy": "post_tag", "name": "java ee", "slug": "java-ee", "term_id": 206, "parent": 0, "description": ""}
+{"object_id": 149, "taxonomy": "post_tag", "name": "jndi", "slug": "jndi", "term_id": 232, "parent": 0, "description": ""}
+{"object_id": 149, "taxonomy": "post_tag", "name": "servlet", "slug": "servlet", "term_id": 426, "parent": 0, "description": ""}
+{"object_id": 149, "taxonomy": "post_tag", "name": "tomcat", "slug": "tomcat", "term_id": 468, "parent": 0, "description": ""}
+{"object_id": 164, "taxonomy": "post_tag", "name": "EDT", "slug": "edt", "term_id": 110, "parent": 0, "description": ""}
+{"object_id": 164, "taxonomy": "post_tag", "name": "java 8", "slug": "java-8", "term_id": 204, "parent": 0, "description": ""}
+{"object_id": 164, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 164, "taxonomy": "post_tag", "name": "javafx", "slug": "javafx", "term_id": 213, "parent": 0, "description": ""}
+{"object_id": 164, "taxonomy": "post_tag", "name": "JProgressBar", "slug": "jprogressbar", "term_id": 238, "parent": 0, "description": ""}
+{"object_id": 164, "taxonomy": "post_tag", "name": "Swing", "slug": "swing", "term_id": 453, "parent": 0, "description": ""}
+{"object_id": 168, "taxonomy": "post_tag", "name": "benchmark", "slug": "benchmark", "term_id": 42, "parent": 0, "description": ""}
+{"object_id": 168, "taxonomy": "post_tag", "name": "hotspot", "slug": "hotspot", "term_id": 177, "parent": 0, "description": ""}
+{"object_id": 168, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 168, "taxonomy": "post_tag", "name": "optimization", "slug": "optimization", "term_id": 339, "parent": 0, "description": ""}
+{"object_id": 198, "taxonomy": "post_tag", "name": "database", "slug": "database", "term_id": 89, "parent": 0, "description": ""}
+{"object_id": 198, "taxonomy": "post_tag", "name": "graph", "slug": "graph", "term_id": 159, "parent": 0, "description": ""}
+{"object_id": 198, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 198, "taxonomy": "post_tag", "name": "map/reduce", "slug": "mapreduce", "term_id": 280, "parent": 0, "description": ""}
+{"object_id": 198, "taxonomy": "post_tag", "name": "testing", "slug": "testing", "term_id": 462, "parent": 0, "description": ""}
+{"object_id": 216, "taxonomy": "post_tag", "name": "buffered streams", "slug": "buffered-streams", "term_id": 49, "parent": 0, "description": ""}
+{"object_id": 216, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 216, "taxonomy": "post_tag", "name": "streams", "slug": "streams", "term_id": 448, "parent": 0, "description": ""}
+{"object_id": 216, "taxonomy": "post_tag", "name": "system calls", "slug": "system-calls", "term_id": 457, "parent": 0, "description": ""}
+{"object_id": 220, "taxonomy": "post_tag", "name": "ant", "slug": "ant", "term_id": 22, "parent": 0, "description": ""}
+{"object_id": 220, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 220, "taxonomy": "post_tag", "name": "junit", "slug": "junit", "term_id": 244, "parent": 0, "description": ""}
+{"object_id": 220, "taxonomy": "post_tag", "name": "spring", "slug": "spring", "term_id": 439, "parent": 0, "description": ""}
+{"object_id": 220, "taxonomy": "post_tag", "name": "testing", "slug": "testing", "term_id": 462, "parent": 0, "description": ""}
+{"object_id": 224, "taxonomy": "post_tag", "name": "application", "slug": "application", "term_id": 26, "parent": 0, "description": ""}
+{"object_id": 224, "taxonomy": "post_tag", "name": "library", "slug": "library", "term_id": 261, "parent": 0, "description": ""}
+{"object_id": 224, "taxonomy": "post_tag", "name": "morris", "slug": "morris", "term_id": 307, "parent": 0, "description": ""}
+{"object_id": 224, "taxonomy": "post_tag", "name": "odersky", "slug": "odersky", "term_id": 333, "parent": 0, "description": ""}
+{"object_id": 224, "taxonomy": "post_tag", "name": "scala", "slug": "scala", "term_id": 419, "parent": 0, "description": ""}
+{"object_id": 224, "taxonomy": "post_tag", "name": "skill", "slug": "skill", "term_id": 432, "parent": 0, "description": ""}
+{"object_id": 224, "taxonomy": "category", "name": "Uncategorized", "slug": "uncategorized", "term_id": 1, "parent": 0, "description": ""}
+{"object_id": 231, "taxonomy": "post_tag", "name": "a1", "slug": "a1", "term_id": 10, "parent": 0, "description": ""}
+{"object_id": 231, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 231, "taxonomy": "post_tag", "name": "simple code", "slug": "simple-code", "term_id": 431, "parent": 0, "description": ""}
+{"object_id": 243, "taxonomy": "post_tag", "name": "a1", "slug": "a1", "term_id": 10, "parent": 0, "description": ""}
+{"object_id": 243, "taxonomy": "post_tag", "name": "checked exceptions", "slug": "checked-exceptions", "term_id": 60, "parent": 0, "description": ""}
+{"object_id": 243, "taxonomy": "post_tag", "name": "exceptions", "slug": "exceptions", "term_id": 128, "parent": 0, "description": ""}
+{"object_id": 243, "taxonomy": "post_tag", "name": "java", "slug": "java", "term_id": 199, "parent": 0, "description": ""}
+{"object_id": 243, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 243, "taxonomy": "post_tag", "name": "rethrowing exceptions", "slug": "rethrowing-exceptions", "term_id": 406, "parent": 0, "description": ""}
+{"object_id": 243, "taxonomy": "post_tag", "name": "runtime exceptions", "slug": "runtime-exceptions", "term_id": 415, "parent": 0, "description": ""}
+{"object_id": 250, "taxonomy": "post_tag", "name": "exceptions", "slug": "exceptions", "term_id": 128, "parent": 0, "description": ""}
+{"object_id": 250, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 250, "taxonomy": "post_tag", "name": "l1", "slug": "l1", "term_id": 254, "parent": 0, "description": ""}
+{"object_id": 254, "taxonomy": "post_tag", "name": "a2", "slug": "a2", "term_id": 11, "parent": 0, "description": ""}
+{"object_id": 254, "taxonomy": "post_tag", "name": "equals", "slug": "equals", "term_id": 122, "parent": 0, "description": ""}
+{"object_id": 254, "taxonomy": "post_tag", "name": "equals/hashcode", "slug": "equalshashcode", "term_id": 123, "parent": 0, "description": ""}
+{"object_id": 254, "taxonomy": "post_tag", "name": "guava", "slug": "guava", "term_id": 163, "parent": 0, "description": ""}
+{"object_id": 254, "taxonomy": "post_tag", "name": "hashcode", "slug": "hashcode", "term_id": 172, "parent": 0, "description": ""}
+{"object_id": 254, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 255, "taxonomy": "post_tag", "name": "a2", "slug": "a2", "term_id": 11, "parent": 0, "description": ""}
+{"object_id": 255, "taxonomy": "post_tag", "name": "collection", "slug": "collection", "term_id": 67, "parent": 0, "description": ""}
+{"object_id": 255, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 255, "taxonomy": "post_tag", "name": "mutable keys", "slug": "mutable-keys", "term_id": 310, "parent": 0, "description": ""}
+{"object_id": 255, "taxonomy": "post_tag", "name": "priority queue", "slug": "priority-queue", "term_id": 379, "parent": 0, "description": ""}
+{"object_id": 255, "taxonomy": "post_tag", "name": "queue", "slug": "queue", "term_id": 391, "parent": 0, "description": ""}
+{"object_id": 276, "taxonomy": "post_tag", "name": "a1", "slug": "a1", "term_id": 10, "parent": 0, "description": ""}
+{"object_id": 276, "taxonomy": "post_tag", "name": "first-steps source", "slug": "first-steps-source", "term_id": 140, "parent": 0, "description": ""}
+{"object_id": 276, "taxonomy": "post_tag", "name": "java", "slug": "java", "term_id": 199, "parent": 0, "description": ""}
+{"object_id": 276, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 276, "taxonomy": "post_tag", "name": "jcommander", "slug": "jcommander", "term_id": 217, "parent": 0, "description": ""}
+{"object_id": 276, "taxonomy": "post_tag", "name": "main", "slug": "main-2", "term_id": 277, "parent": 0, "description": ""}
+{"object_id": 276, "taxonomy": "post_tag", "name": "static", "slug": "static", "term_id": 445, "parent": 0, "description": ""}
+{"object_id": 280, "taxonomy": "post_tag", "name": "a2", "slug": "a2", "term_id": 11, "parent": 0, "description": ""}
+{"object_id": 280, "taxonomy": "post_tag", "name": "hashcode", "slug": "hashcode", "term_id": 172, "parent": 0, "description": ""}
+{"object_id": 280, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 280, "taxonomy": "post_tag", "name": "string", "slug": "string", "term_id": 449, "parent": 0, "description": ""}
+{"object_id": 280, "taxonomy": "post_tag", "name": "String hashCode", "slug": "string-hashcode", "term_id": 451, "parent": 0, "description": ""}
+{"object_id": 284, "taxonomy": "post_tag", "name": "a2", "slug": "a2", "term_id": 11, "parent": 0, "description": ""}
+{"object_id": 284, "taxonomy": "post_tag", "name": "checked exceptions", "slug": "checked-exceptions", "term_id": 60, "parent": 0, "description": ""}
+{"object_id": 284, "taxonomy": "post_tag", "name": "exceptions", "slug": "exceptions", "term_id": 128, "parent": 0, "description": ""}
+{"object_id": 284, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 284, "taxonomy": "post_tag", "name": "rethrowing exceptions", "slug": "rethrowing-exceptions", "term_id": 406, "parent": 0, "description": ""}
+{"object_id": 284, "taxonomy": "post_tag", "name": "runtime exceptions", "slug": "runtime-exceptions", "term_id": 415, "parent": 0, "description": ""}
+{"object_id": 315, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 315, "taxonomy": "post_tag", "name": "stream terminal intermediate", "slug": "stream-terminal-intermediate", "term_id": 447, "parent": 0, "description": ""}
+{"object_id": 319, "taxonomy": "post_tag", "name": "jenkins", "slug": "jenkins", "term_id": 223, "parent": 0, "description": ""}
+{"object_id": 319, "taxonomy": "post_tag", "name": "l1", "slug": "l1", "term_id": 254, "parent": 0, "description": ""}
+{"object_id": 319, "taxonomy": "post_tag", "name": "policy", "slug": "policy", "term_id": 374, "parent": 0, "description": ""}
+{"object_id": 319, "taxonomy": "category", "name": "security", "slug": "security", "term_id": 6, "parent": 0, "description": ""}
+{"object_id": 319, "taxonomy": "post_tag", "name": "security", "slug": "security", "term_id": 423, "parent": 0, "description": ""}
+{"object_id": 326, "taxonomy": "post_tag", "name": "invokespecial reflection oop", "slug": "invokespecial-reflection-oop", "term_id": 191, "parent": 0, "description": ""}
+{"object_id": 326, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 326, "taxonomy": "post_tag", "name": "l1", "slug": "l1", "term_id": 254, "parent": 0, "description": ""}
+{"object_id": 326, "taxonomy": "post_tag", "name": "polymorphism", "slug": "polymorphism", "term_id": 375, "parent": 0, "description": ""}
+{"object_id": 326, "taxonomy": "post_tag", "name": "reflection", "slug": "reflection", "term_id": 400, "parent": 0, "description": ""}
+{"object_id": 342, "taxonomy": "post_tag", "name": "a1", "slug": "a1", "term_id": 10, "parent": 0, "description": ""}
+{"object_id": 342, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 342, "taxonomy": "post_tag", "name": "testing", "slug": "testing", "term_id": 462, "parent": 0, "description": ""}
+{"object_id": 346, "taxonomy": "category", "name": "Uncategorized", "slug": "uncategorized", "term_id": 1, "parent": 0, "description": ""}
+{"object_id": 347, "taxonomy": "post_tag", "name": "log4j", "slug": "log4j", "term_id": 270, "parent": 0, "description": ""}
+{"object_id": 347, "taxonomy": "post_tag", "name": "logging", "slug": "logging", "term_id": 272, "parent": 0, "description": ""}
+{"object_id": 347, "taxonomy": "category", "name": "news", "slug": "news", "term_id": 4, "parent": 0, "description": ""}
+{"object_id": 347, "taxonomy": "post_tag", "name": "news", "slug": "news", "term_id": 322, "parent": 0, "description": ""}
+{"object_id": 354, "taxonomy": "post_tag", "name": "eclipse", "slug": "eclipse", "term_id": 108, "parent": 0, "description": ""}
+{"object_id": 354, "taxonomy": "post_tag", "name": "java 8", "slug": "java-8", "term_id": 204, "parent": 0, "description": ""}
+{"object_id": 354, "taxonomy": "category", "name": "news", "slug": "news", "term_id": 4, "parent": 0, "description": ""}
+{"object_id": 357, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 357, "taxonomy": "post_tag", "name": "javabot", "slug": "javabot", "term_id": 211, "parent": 0, "description": ""}
+{"object_id": 357, "taxonomy": "post_tag", "name": "karma", "slug": "karma", "term_id": 250, "parent": 0, "description": ""}
+{"object_id": 361, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 361, "taxonomy": "post_tag", "name": "links", "slug": "links", "term_id": 266, "parent": 0, "description": ""}
+{"object_id": 371, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 375, "taxonomy": "post_tag", "name": "h2", "slug": "h2", "term_id": 166, "parent": 0, "description": ""}
+{"object_id": 375, "taxonomy": "post_tag", "name": "in", "slug": "in", "term_id": 187, "parent": 0, "description": ""}
+{"object_id": 375, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 375, "taxonomy": "post_tag", "name": "jdbc", "slug": "jdbc", "term_id": 219, "parent": 0, "description": ""}
+{"object_id": 375, "taxonomy": "post_tag", "name": "mysql", "slug": "mysql", "term_id": 315, "parent": 0, "description": ""}
+{"object_id": 375, "taxonomy": "post_tag", "name": "postgres", "slug": "postgres", "term_id": 377, "parent": 0, "description": ""}
+{"object_id": 416, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 422, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 422, "taxonomy": "post_tag", "name": "jooq", "slug": "jooq", "term_id": 235, "parent": 0, "description": ""}
+{"object_id": 422, "taxonomy": "post_tag", "name": "junit", "slug": "junit", "term_id": 244, "parent": 0, "description": ""}
+{"object_id": 422, "taxonomy": "post_tag", "name": "testing", "slug": "testing", "term_id": 462, "parent": 0, "description": ""}
+{"object_id": 422, "taxonomy": "post_tag", "name": "testng", "slug": "testng", "term_id": 463, "parent": 0, "description": ""}
+{"object_id": 438, "taxonomy": "post_tag", "name": "apple", "slug": "apple", "term_id": 25, "parent": 0, "description": ""}
+{"object_id": 438, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 438, "taxonomy": "post_tag", "name": "features", "slug": "features", "term_id": 134, "parent": 0, "description": ""}
+{"object_id": 438, "taxonomy": "post_tag", "name": "idea", "slug": "idea", "term_id": 182, "parent": 0, "description": ""}
+{"object_id": 438, "taxonomy": "post_tag", "name": "ios", "slug": "ios", "term_id": 192, "parent": 0, "description": ""}
+{"object_id": 438, "taxonomy": "post_tag", "name": "javafx", "slug": "javafx", "term_id": 213, "parent": 0, "description": ""}
+{"object_id": 438, "taxonomy": "post_tag", "name": "jboss", "slug": "jboss", "term_id": 215, "parent": 0, "description": ""}
+{"object_id": 447, "taxonomy": "post_tag", "name": "documentation", "slug": "documentation", "term_id": 102, "parent": 0, "description": ""}
+{"object_id": 447, "taxonomy": "post_tag", "name": "junit", "slug": "junit", "term_id": 244, "parent": 0, "description": ""}
+{"object_id": 447, "taxonomy": "post_tag", "name": "lint", "slug": "lint", "term_id": 267, "parent": 0, "description": ""}
+{"object_id": 447, "taxonomy": "post_tag", "name": "mutation testing", "slug": "mutation-testing", "term_id": 311, "parent": 0, "description": ""}
+{"object_id": 447, "taxonomy": "post_tag", "name": "mutexes", "slug": "mutexes", "term_id": 313, "parent": 0, "description": ""}
+{"object_id": 447, "taxonomy": "category", "name": "news", "slug": "news", "term_id": 4, "parent": 0, "description": ""}
+{"object_id": 447, "taxonomy": "post_tag", "name": "synchronized", "slug": "synchronized", "term_id": 456, "parent": 0, "description": ""}
+{"object_id": 447, "taxonomy": "post_tag", "name": "testing", "slug": "testing", "term_id": 462, "parent": 0, "description": ""}
+{"object_id": 455, "taxonomy": "post_tag", "name": "filter", "slug": "filter", "term_id": 137, "parent": 0, "description": ""}
+{"object_id": 455, "taxonomy": "post_tag", "name": "hibernate", "slug": "hibernate", "term_id": 175, "parent": 0, "description": ""}
+{"object_id": 455, "taxonomy": "post_tag", "name": "imageio", "slug": "imageio", "term_id": 183, "parent": 0, "description": ""}
+{"object_id": 455, "taxonomy": "post_tag", "name": "java 9", "slug": "java-9", "term_id": 205, "parent": 0, "description": ""}
+{"object_id": 455, "taxonomy": "post_tag", "name": "jdbc", "slug": "jdbc", "term_id": 219, "parent": 0, "description": ""}
+{"object_id": 455, "taxonomy": "category", "name": "news", "slug": "news", "term_id": 4, "parent": 0, "description": ""}
+{"object_id": 455, "taxonomy": "post_tag", "name": "png", "slug": "png", "term_id": 354, "parent": 0, "description": ""}
+{"object_id": 455, "taxonomy": "post_tag", "name": "proxy", "slug": "proxy", "term_id": 388, "parent": 0, "description": ""}
+{"object_id": 467, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 467, "taxonomy": "post_tag", "name": "dzone", "slug": "dzone", "term_id": 106, "parent": 0, "description": ""}
+{"object_id": 467, "taxonomy": "post_tag", "name": "escape analysis", "slug": "escape-analysis", "term_id": 124, "parent": 0, "description": ""}
+{"object_id": 467, "taxonomy": "post_tag", "name": "glassfish", "slug": "glassfish", "term_id": 154, "parent": 0, "description": ""}
+{"object_id": 467, "taxonomy": "post_tag", "name": "java ee", "slug": "java-ee", "term_id": 206, "parent": 0, "description": ""}
+{"object_id": 467, "taxonomy": "post_tag", "name": "java ee 7", "slug": "java-ee-7", "term_id": 207, "parent": 0, "description": ""}
+{"object_id": 467, "taxonomy": "post_tag", "name": "jboss", "slug": "jboss", "term_id": 215, "parent": 0, "description": ""}
+{"object_id": 467, "taxonomy": "post_tag", "name": "payara", "slug": "payara", "term_id": 346, "parent": 0, "description": ""}
+{"object_id": 467, "taxonomy": "post_tag", "name": "tomcat", "slug": "tomcat", "term_id": 468, "parent": 0, "description": ""}
+{"object_id": 467, "taxonomy": "post_tag", "name": "wildfly", "slug": "wildfly", "term_id": 487, "parent": 0, "description": ""}
+{"object_id": 471, "taxonomy": "post_tag", "name": "devoxx", "slug": "devoxx", "term_id": 96, "parent": 0, "description": ""}
+{"object_id": 471, "taxonomy": "post_tag", "name": "devoxx4kids", "slug": "devoxx4kids", "term_id": 97, "parent": 0, "description": ""}
+{"object_id": 471, "taxonomy": "post_tag", "name": "jrebel", "slug": "jrebel", "term_id": 239, "parent": 0, "description": ""}
+{"object_id": 471, "taxonomy": "category", "name": "news", "slug": "news", "term_id": 4, "parent": 0, "description": ""}
+{"object_id": 471, "taxonomy": "post_tag", "name": "survey", "slug": "survey", "term_id": 452, "parent": 0, "description": ""}
+{"object_id": 471, "taxonomy": "post_tag", "name": "zeroturnaround", "slug": "zeroturnaround", "term_id": 494, "parent": 0, "description": ""}
+{"object_id": 475, "taxonomy": "post_tag", "name": "enum", "slug": "enum", "term_id": 119, "parent": 0, "description": ""}
+{"object_id": 475, "taxonomy": "post_tag", "name": "enumset", "slug": "enumset", "term_id": 121, "parent": 0, "description": ""}
+{"object_id": 475, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 475, "taxonomy": "post_tag", "name": "jmh", "slug": "jmh", "term_id": 229, "parent": 0, "description": ""}
+{"object_id": 475, "taxonomy": "post_tag", "name": "jvisualvm", "slug": "jvisualvm", "term_id": 246, "parent": 0, "description": ""}
+{"object_id": 484, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 484, "taxonomy": "post_tag", "name": "dzone", "slug": "dzone", "term_id": 106, "parent": 0, "description": ""}
+{"object_id": 484, "taxonomy": "post_tag", "name": "employment", "slug": "employment", "term_id": 116, "parent": 0, "description": ""}
+{"object_id": 484, "taxonomy": "post_tag", "name": "escape analysis", "slug": "escape-analysis", "term_id": 124, "parent": 0, "description": ""}
+{"object_id": 484, "taxonomy": "post_tag", "name": "exceptions", "slug": "exceptions", "term_id": 128, "parent": 0, "description": ""}
+{"object_id": 484, "taxonomy": "post_tag", "name": "idea", "slug": "idea", "term_id": 182, "parent": 0, "description": ""}
+{"object_id": 484, "taxonomy": "post_tag", "name": "microframework", "slug": "microframework", "term_id": 297, "parent": 0, "description": ""}
+{"object_id": 484, "taxonomy": "post_tag", "name": "openjdk", "slug": "openjdk", "term_id": 337, "parent": 0, "description": ""}
+{"object_id": 484, "taxonomy": "post_tag", "name": "osx", "slug": "osx", "term_id": 343, "parent": 0, "description": ""}
+{"object_id": 484, "taxonomy": "post_tag", "name": "pippo", "slug": "pippo", "term_id": 352, "parent": 0, "description": ""}
+{"object_id": 484, "taxonomy": "post_tag", "name": "recruiting", "slug": "recruiting", "term_id": 397, "parent": 0, "description": ""}
+{"object_id": 503, "taxonomy": "post_tag", "name": "akka", "slug": "akka", "term_id": 18, "parent": 0, "description": ""}
+{"object_id": 503, "taxonomy": "post_tag", "name": "c++", "slug": "c", "term_id": 50, "parent": 0, "description": ""}
+{"object_id": 503, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 503, "taxonomy": "post_tag", "name": "jna", "slug": "jna", "term_id": 231, "parent": 0, "description": ""}
+{"object_id": 503, "taxonomy": "post_tag", "name": "jni", "slug": "jni", "term_id": 233, "parent": 0, "description": ""}
+{"object_id": 503, "taxonomy": "post_tag", "name": "links", "slug": "links", "term_id": 266, "parent": 0, "description": ""}
+{"object_id": 503, "taxonomy": "post_tag", "name": "monads", "slug": "monads", "term_id": 303, "parent": 0, "description": ""}
+{"object_id": 503, "taxonomy": "post_tag", "name": "reactive", "slug": "reactive", "term_id": 395, "parent": 0, "description": ""}
+{"object_id": 503, "taxonomy": "post_tag", "name": "rxjava", "slug": "rxjava", "term_id": 416, "parent": 0, "description": ""}
+{"object_id": 503, "taxonomy": "post_tag", "name": "streams", "slug": "streams", "term_id": 448, "parent": 0, "description": ""}
+{"object_id": 503, "taxonomy": "post_tag", "name": "users", "slug": "users", "term_id": 476, "parent": 0, "description": ""}
+{"object_id": 513, "taxonomy": "post_tag", "name": "configuration", "slug": "configuration", "term_id": 78, "parent": 0, "description": ""}
+{"object_id": 513, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 513, "taxonomy": "post_tag", "name": "logback", "slug": "logback", "term_id": 271, "parent": 0, "description": ""}
+{"object_id": 513, "taxonomy": "post_tag", "name": "spring", "slug": "spring", "term_id": 439, "parent": 0, "description": ""}
+{"object_id": 532, "taxonomy": "post_tag", "name": "autoclosable", "slug": "autoclosable", "term_id": 34, "parent": 0, "description": ""}
+{"object_id": 532, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 532, "taxonomy": "post_tag", "name": "dependencies", "slug": "dependencies", "term_id": 92, "parent": 0, "description": ""}
+{"object_id": 532, "taxonomy": "post_tag", "name": "maven", "slug": "maven", "term_id": 286, "parent": 0, "description": ""}
+{"object_id": 532, "taxonomy": "post_tag", "name": "mute design", "slug": "mute-design", "term_id": 312, "parent": 0, "description": ""}
+{"object_id": 532, "taxonomy": "post_tag", "name": "patterns", "slug": "patterns", "term_id": 345, "parent": 0, "description": ""}
+{"object_id": 532, "taxonomy": "post_tag", "name": "refactor", "slug": "refactor", "term_id": 399, "parent": 0, "description": ""}
+{"object_id": 534, "taxonomy": "post_tag", "name": "c++", "slug": "c", "term_id": 50, "parent": 0, "description": ""}
+{"object_id": 534, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 534, "taxonomy": "post_tag", "name": "gradle", "slug": "gradle", "term_id": 158, "parent": 0, "description": ""}
+{"object_id": 534, "taxonomy": "post_tag", "name": "hashcodes", "slug": "hashcodes", "term_id": 173, "parent": 0, "description": ""}
+{"object_id": 534, "taxonomy": "post_tag", "name": "hashmap", "slug": "hashmap", "term_id": 174, "parent": 0, "description": ""}
+{"object_id": 534, "taxonomy": "post_tag", "name": "maven", "slug": "maven", "term_id": 286, "parent": 0, "description": ""}
+{"object_id": 534, "taxonomy": "post_tag", "name": "speed", "slug": "speed", "term_id": 438, "parent": 0, "description": ""}
+{"object_id": 534, "taxonomy": "post_tag", "name": "testing", "slug": "testing", "term_id": 462, "parent": 0, "description": ""}
+{"object_id": 543, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 543, "taxonomy": "post_tag", "name": "process", "slug": "process", "term_id": 380, "parent": 0, "description": ""}
+{"object_id": 543, "taxonomy": "post_tag", "name": "processbuilder", "slug": "processbuilder", "term_id": 381, "parent": 0, "description": ""}
+{"object_id": 543, "taxonomy": "post_tag", "name": "runtime", "slug": "runtime", "term_id": 414, "parent": 0, "description": ""}
+{"object_id": 543, "taxonomy": "post_tag", "name": "zt-exec", "slug": "zt-exec", "term_id": 497, "parent": 0, "description": ""}
+{"object_id": 576, "taxonomy": "post_tag", "name": "abstraction", "slug": "abstraction", "term_id": 12, "parent": 0, "description": ""}
+{"object_id": 576, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 576, "taxonomy": "post_tag", "name": "dzone", "slug": "dzone", "term_id": 106, "parent": 0, "description": ""}
+{"object_id": 576, "taxonomy": "post_tag", "name": "git", "slug": "git", "term_id": 152, "parent": 0, "description": ""}
+{"object_id": 576, "taxonomy": "post_tag", "name": "hamcrest", "slug": "hamcrest", "term_id": 169, "parent": 0, "description": ""}
+{"object_id": 576, "taxonomy": "post_tag", "name": "javascript", "slug": "javascript", "term_id": 214, "parent": 0, "description": ""}
+{"object_id": 576, "taxonomy": "post_tag", "name": "junit", "slug": "junit", "term_id": 244, "parent": 0, "description": ""}
+{"object_id": 576, "taxonomy": "post_tag", "name": "personality", "slug": "personality", "term_id": 350, "parent": 0, "description": ""}
+{"object_id": 576, "taxonomy": "post_tag", "name": "test", "slug": "test", "term_id": 461, "parent": 0, "description": ""}
+{"object_id": 586, "taxonomy": "post_tag", "name": "angularjs", "slug": "angularjs", "term_id": 21, "parent": 0, "description": ""}
+{"object_id": 586, "taxonomy": "post_tag", "name": "benchmark", "slug": "benchmark", "term_id": 42, "parent": 0, "description": ""}
+{"object_id": 586, "taxonomy": "post_tag", "name": "cdi", "slug": "cdi", "term_id": 58, "parent": 0, "description": ""}
+{"object_id": 586, "taxonomy": "post_tag", "name": "distributed programming", "slug": "distributed-programming", "term_id": 100, "parent": 0, "description": ""}
+{"object_id": 586, "taxonomy": "post_tag", "name": "docker", "slug": "docker", "term_id": 101, "parent": 0, "description": ""}
+{"object_id": 586, "taxonomy": "post_tag", "name": "map", "slug": "map", "term_id": 279, "parent": 0, "description": ""}
+{"object_id": 586, "taxonomy": "post_tag", "name": "markov chains", "slug": "markov-chains", "term_id": 283, "parent": 0, "description": ""}
+{"object_id": 586, "taxonomy": "category", "name": "news", "slug": "news", "term_id": 4, "parent": 0, "description": ""}
+{"object_id": 586, "taxonomy": "post_tag", "name": "pdf", "slug": "pdf", "term_id": 347, "parent": 0, "description": ""}
+{"object_id": 586, "taxonomy": "post_tag", "name": "semweb", "slug": "semweb", "term_id": 424, "parent": 0, "description": ""}
+{"object_id": 586, "taxonomy": "post_tag", "name": "web framework", "slug": "web-framework", "term_id": 484, "parent": 0, "description": ""}
+{"object_id": 596, "taxonomy": "post_tag", "name": "date parsing", "slug": "date-parsing", "term_id": 90, "parent": 0, "description": ""}
+{"object_id": 596, "taxonomy": "post_tag", "name": "exceptions", "slug": "exceptions", "term_id": 128, "parent": 0, "description": ""}
+{"object_id": 596, "taxonomy": "post_tag", "name": "executorservice", "slug": "executorservice", "term_id": 130, "parent": 0, "description": ""}
+{"object_id": 596, "taxonomy": "post_tag", "name": "interviews", "slug": "interviews", "term_id": 190, "parent": 0, "description": ""}
+{"object_id": 596, "taxonomy": "category", "name": "news", "slug": "news", "term_id": 4, "parent": 0, "description": ""}
+{"object_id": 596, "taxonomy": "post_tag", "name": "nlp", "slug": "nlp", "term_id": 324, "parent": 0, "description": ""}
+{"object_id": 596, "taxonomy": "post_tag", "name": "spring", "slug": "spring", "term_id": 439, "parent": 0, "description": ""}
+{"object_id": 598, "taxonomy": "post_tag", "name": "bom", "slug": "bom", "term_id": 46, "parent": 0, "description": ""}
+{"object_id": 598, "taxonomy": "post_tag", "name": "endianness", "slug": "endianness", "term_id": 118, "parent": 0, "description": ""}
+{"object_id": 598, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 598, "taxonomy": "post_tag", "name": "String BOM Unicode", "slug": "string-bom-unicode", "term_id": 450, "parent": 0, "description": ""}
+{"object_id": 598, "taxonomy": "post_tag", "name": "unicode", "slug": "unicode", "term_id": 474, "parent": 0, "description": ""}
+{"object_id": 611, "taxonomy": "post_tag", "name": "gradle", "slug": "gradle", "term_id": 158, "parent": 0, "description": ""}
+{"object_id": 611, "taxonomy": "post_tag", "name": "hibernate", "slug": "hibernate", "term_id": 175, "parent": 0, "description": ""}
+{"object_id": 611, "taxonomy": "post_tag", "name": "java", "slug": "java", "term_id": 199, "parent": 0, "description": ""}
+{"object_id": 611, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 611, "taxonomy": "post_tag", "name": "jdbi", "slug": "jdbi", "term_id": 220, "parent": 0, "description": ""}
+{"object_id": 611, "taxonomy": "post_tag", "name": "jdk", "slug": "jdk", "term_id": 221, "parent": 0, "description": ""}
+{"object_id": 611, "taxonomy": "post_tag", "name": "jooq", "slug": "jooq", "term_id": 235, "parent": 0, "description": ""}
+{"object_id": 611, "taxonomy": "post_tag", "name": "jpa", "slug": "jpa", "term_id": 236, "parent": 0, "description": ""}
+{"object_id": 611, "taxonomy": "post_tag", "name": "libraries", "slug": "libraries", "term_id": 260, "parent": 0, "description": ""}
+{"object_id": 611, "taxonomy": "post_tag", "name": "maven", "slug": "maven", "term_id": 286, "parent": 0, "description": ""}
+{"object_id": 611, "taxonomy": "post_tag", "name": "quickstart", "slug": "quickstart", "term_id": 392, "parent": 0, "description": ""}
+{"object_id": 628, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 628, "taxonomy": "post_tag", "name": "jvm", "slug": "jvm", "term_id": 247, "parent": 0, "description": ""}
+{"object_id": 628, "taxonomy": "post_tag", "name": "netbeans", "slug": "netbeans", "term_id": 317, "parent": 0, "description": ""}
+{"object_id": 628, "taxonomy": "post_tag", "name": "procyon", "slug": "procyon", "term_id": 383, "parent": 0, "description": ""}
+{"object_id": 628, "taxonomy": "post_tag", "name": "safepoints", "slug": "safepoints", "term_id": 417, "parent": 0, "description": ""}
+{"object_id": 635, "taxonomy": "post_tag", "name": "big data", "slug": "big-data", "term_id": 44, "parent": 0, "description": ""}
+{"object_id": 635, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 635, "taxonomy": "post_tag", "name": "eclipse", "slug": "eclipse", "term_id": 108, "parent": 0, "description": ""}
+{"object_id": 635, "taxonomy": "post_tag", "name": "grunt", "slug": "grunt", "term_id": 162, "parent": 0, "description": ""}
+{"object_id": 635, "taxonomy": "post_tag", "name": "gulp", "slug": "gulp", "term_id": 164, "parent": 0, "description": ""}
+{"object_id": 635, "taxonomy": "post_tag", "name": "hashcode", "slug": "hashcode", "term_id": 172, "parent": 0, "description": ""}
+{"object_id": 635, "taxonomy": "post_tag", "name": "mariadb", "slug": "mariadb", "term_id": 281, "parent": 0, "description": ""}
+{"object_id": 635, "taxonomy": "post_tag", "name": "mysql", "slug": "mysql", "term_id": 315, "parent": 0, "description": ""}
+{"object_id": 635, "taxonomy": "post_tag", "name": "nodejs", "slug": "nodejs", "term_id": 326, "parent": 0, "description": ""}
+{"object_id": 635, "taxonomy": "post_tag", "name": "npm", "slug": "npm", "term_id": 329, "parent": 0, "description": ""}
+{"object_id": 651, "taxonomy": "post_tag", "name": "autovalue", "slug": "autovalue", "term_id": 36, "parent": 0, "description": ""}
+{"object_id": 651, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 651, "taxonomy": "post_tag", "name": "git", "slug": "git", "term_id": 152, "parent": 0, "description": ""}
+{"object_id": 651, "taxonomy": "post_tag", "name": "lombok", "slug": "lombok", "term_id": 273, "parent": 0, "description": ""}
+{"object_id": 651, "taxonomy": "post_tag", "name": "optimization", "slug": "optimization", "term_id": 339, "parent": 0, "description": ""}
+{"object_id": 659, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 659, "taxonomy": "post_tag", "name": "classpath", "slug": "classpath", "term_id": 63, "parent": 0, "description": ""}
+{"object_id": 659, "taxonomy": "post_tag", "name": "data", "slug": "data", "term_id": 86, "parent": 0, "description": ""}
+{"object_id": 659, "taxonomy": "post_tag", "name": "fake", "slug": "fake", "term_id": 132, "parent": 0, "description": ""}
+{"object_id": 659, "taxonomy": "post_tag", "name": "finally", "slug": "finally", "term_id": 138, "parent": 0, "description": ""}
+{"object_id": 659, "taxonomy": "post_tag", "name": "jsimpledb", "slug": "jsimpledb", "term_id": 240, "parent": 0, "description": ""}
+{"object_id": 659, "taxonomy": "post_tag", "name": "persistence", "slug": "persistence", "term_id": 349, "parent": 0, "description": ""}
+{"object_id": 659, "taxonomy": "post_tag", "name": "scan", "slug": "scan", "term_id": 421, "parent": 0, "description": ""}
+{"object_id": 659, "taxonomy": "post_tag", "name": "specification", "slug": "specification", "term_id": 435, "parent": 0, "description": ""}
+{"object_id": 659, "taxonomy": "post_tag", "name": "try", "slug": "try", "term_id": 473, "parent": 0, "description": ""}
+{"object_id": 670, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 670, "taxonomy": "post_tag", "name": "data types", "slug": "data-types", "term_id": 88, "parent": 0, "description": ""}
+{"object_id": 670, "taxonomy": "post_tag", "name": "end of life", "slug": "end-of-life", "term_id": 117, "parent": 0, "description": ""}
+{"object_id": 670, "taxonomy": "post_tag", "name": "gradle", "slug": "gradle", "term_id": 158, "parent": 0, "description": ""}
+{"object_id": 670, "taxonomy": "post_tag", "name": "java 6", "slug": "java-6", "term_id": 203, "parent": 0, "description": ""}
+{"object_id": 670, "taxonomy": "post_tag", "name": "maven", "slug": "maven", "term_id": 286, "parent": 0, "description": ""}
+{"object_id": 670, "taxonomy": "post_tag", "name": "openjdk", "slug": "openjdk", "term_id": 337, "parent": 0, "description": ""}
+{"object_id": 670, "taxonomy": "post_tag", "name": "phone numbers", "slug": "phone-numbers", "term_id": 351, "parent": 0, "description": ""}
+{"object_id": 670, "taxonomy": "post_tag", "name": "windows", "slug": "windows", "term_id": 488, "parent": 0, "description": ""}
+{"object_id": 670, "taxonomy": "post_tag", "name": "xterm", "slug": "xterm", "term_id": 492, "parent": 0, "description": ""}
+{"object_id": 677, "taxonomy": "post_tag", "name": "books", "slug": "books", "term_id": 47, "parent": 0, "description": ""}
+{"object_id": 677, "taxonomy": "post_tag", "name": "dsl", "slug": "dsl", "term_id": 105, "parent": 0, "description": ""}
+{"object_id": 677, "taxonomy": "post_tag", "name": "jaas", "slug": "jaas", "term_id": 194, "parent": 0, "description": ""}
+{"object_id": 677, "taxonomy": "post_tag", "name": "javascript", "slug": "javascript", "term_id": 214, "parent": 0, "description": ""}
+{"object_id": 677, "taxonomy": "post_tag", "name": "maslow", "slug": "maslow", "term_id": 284, "parent": 0, "description": ""}
+{"object_id": 677, "taxonomy": "post_tag", "name": "meteor", "slug": "meteor", "term_id": 292, "parent": 0, "description": ""}
+{"object_id": 677, "taxonomy": "post_tag", "name": "nodejs", "slug": "nodejs", "term_id": 326, "parent": 0, "description": ""}
+{"object_id": 677, "taxonomy": "post_tag", "name": "scala. big data", "slug": "scala-big-data", "term_id": 420, "parent": 0, "description": ""}
+{"object_id": 677, "taxonomy": "post_tag", "name": "security", "slug": "security", "term_id": 423, "parent": 0, "description": ""}
+{"object_id": 677, "taxonomy": "post_tag", "name": "shiro", "slug": "shiro", "term_id": 429, "parent": 0, "description": ""}
+{"object_id": 677, "taxonomy": "post_tag", "name": "spring", "slug": "spring", "term_id": 439, "parent": 0, "description": ""}
+{"object_id": 677, "taxonomy": "post_tag", "name": "tdd", "slug": "tdd", "term_id": 459, "parent": 0, "description": ""}
+{"object_id": 677, "taxonomy": "category", "name": "Uncategorized", "slug": "uncategorized", "term_id": 1, "parent": 0, "description": ""}
+{"object_id": 686, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 686, "taxonomy": "post_tag", "name": "halstead", "slug": "halstead", "term_id": 167, "parent": 0, "description": ""}
+{"object_id": 686, "taxonomy": "post_tag", "name": "halsted", "slug": "halsted", "term_id": 168, "parent": 0, "description": ""}
+{"object_id": 686, "taxonomy": "post_tag", "name": "jep", "slug": "jep", "term_id": 224, "parent": 0, "description": ""}
+{"object_id": 686, "taxonomy": "post_tag", "name": "jhawk", "slug": "jhawk", "term_id": 226, "parent": 0, "description": ""}
+{"object_id": 686, "taxonomy": "post_tag", "name": "jit", "slug": "jit", "term_id": 228, "parent": 0, "description": ""}
+{"object_id": 686, "taxonomy": "post_tag", "name": "jvm", "slug": "jvm", "term_id": 247, "parent": 0, "description": ""}
+{"object_id": 686, "taxonomy": "post_tag", "name": "mutation testing", "slug": "mutation-testing", "term_id": 311, "parent": 0, "description": ""}
+{"object_id": 686, "taxonomy": "post_tag", "name": "testing", "slug": "testing", "term_id": 462, "parent": 0, "description": ""}
+{"object_id": 692, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 692, "taxonomy": "post_tag", "name": "ecosystem", "slug": "ecosystem", "term_id": 109, "parent": 0, "description": ""}
+{"object_id": 692, "taxonomy": "post_tag", "name": "externalizable", "slug": "externalizable", "term_id": 131, "parent": 0, "description": ""}
+{"object_id": 692, "taxonomy": "post_tag", "name": "javascript", "slug": "javascript", "term_id": 214, "parent": 0, "description": ""}
+{"object_id": 692, "taxonomy": "post_tag", "name": "jit", "slug": "jit", "term_id": 228, "parent": 0, "description": ""}
+{"object_id": 692, "taxonomy": "post_tag", "name": "serialization", "slug": "serialization", "term_id": 425, "parent": 0, "description": ""}
+{"object_id": 704, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 704, "taxonomy": "post_tag", "name": "collection", "slug": "collection", "term_id": 67, "parent": 0, "description": ""}
+{"object_id": 704, "taxonomy": "post_tag", "name": "gwt", "slug": "gwt", "term_id": 165, "parent": 0, "description": ""}
+{"object_id": 704, "taxonomy": "post_tag", "name": "iterator", "slug": "iterator", "term_id": 193, "parent": 0, "description": ""}
+{"object_id": 704, "taxonomy": "post_tag", "name": "method references", "slug": "method-references", "term_id": 294, "parent": 0, "description": ""}
+{"object_id": 704, "taxonomy": "post_tag", "name": "stream", "slug": "stream", "term_id": 446, "parent": 0, "description": ""}
+{"object_id": 714, "taxonomy": "post_tag", "name": "c++", "slug": "c", "term_id": 50, "parent": 0, "description": ""}
+{"object_id": 714, "taxonomy": "post_tag", "name": "c64", "slug": "c64", "term_id": 51, "parent": 0, "description": ""}
+{"object_id": 714, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 714, "taxonomy": "post_tag", "name": "commodore", "slug": "commodore", "term_id": 70, "parent": 0, "description": ""}
+{"object_id": 714, "taxonomy": "post_tag", "name": "docker", "slug": "docker", "term_id": 101, "parent": 0, "description": ""}
+{"object_id": 714, "taxonomy": "post_tag", "name": "eafp", "slug": "eafp", "term_id": 107, "parent": 0, "description": ""}
+{"object_id": 714, "taxonomy": "post_tag", "name": "findbugs", "slug": "findbugs", "term_id": 139, "parent": 0, "description": ""}
+{"object_id": 714, "taxonomy": "post_tag", "name": "getLocalHost", "slug": "getlocalhost", "term_id": 151, "parent": 0, "description": ""}
+{"object_id": 714, "taxonomy": "post_tag", "name": "lbyl", "slug": "lbyl", "term_id": 259, "parent": 0, "description": ""}
+{"object_id": 714, "taxonomy": "post_tag", "name": "lifestyle", "slug": "lifestyle", "term_id": 263, "parent": 0, "description": ""}
+{"object_id": 714, "taxonomy": "post_tag", "name": "macos", "slug": "macos", "term_id": 276, "parent": 0, "description": ""}
+{"object_id": 714, "taxonomy": "post_tag", "name": "network", "slug": "network", "term_id": 321, "parent": 0, "description": ""}
+{"object_id": 714, "taxonomy": "post_tag", "name": "python", "slug": "python", "term_id": 390, "parent": 0, "description": ""}
+{"object_id": 714, "taxonomy": "post_tag", "name": "sierra", "slug": "sierra", "term_id": 430, "parent": 0, "description": ""}
+{"object_id": 717, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 717, "taxonomy": "post_tag", "name": "clojure", "slug": "clojure", "term_id": 65, "parent": 0, "description": ""}
+{"object_id": 717, "taxonomy": "post_tag", "name": "java ee", "slug": "java-ee", "term_id": 206, "parent": 0, "description": ""}
+{"object_id": 717, "taxonomy": "post_tag", "name": "jooq", "slug": "jooq", "term_id": 235, "parent": 0, "description": ""}
+{"object_id": 717, "taxonomy": "post_tag", "name": "jvm", "slug": "jvm", "term_id": 247, "parent": 0, "description": ""}
+{"object_id": 717, "taxonomy": "post_tag", "name": "kumuluz", "slug": "kumuluz", "term_id": 253, "parent": 0, "description": ""}
+{"object_id": 717, "taxonomy": "post_tag", "name": "microservices", "slug": "microservices", "term_id": 298, "parent": 0, "description": ""}
+{"object_id": 717, "taxonomy": "post_tag", "name": "performance", "slug": "performance", "term_id": 348, "parent": 0, "description": ""}
+{"object_id": 717, "taxonomy": "post_tag", "name": "sbt", "slug": "sbt", "term_id": 418, "parent": 0, "description": ""}
+{"object_id": 717, "taxonomy": "post_tag", "name": "scala", "slug": "scala", "term_id": 419, "parent": 0, "description": ""}
+{"object_id": 717, "taxonomy": "post_tag", "name": "sql", "slug": "sql", "term_id": 441, "parent": 0, "description": ""}
+{"object_id": 727, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 727, "taxonomy": "post_tag", "name": "guava", "slug": "guava", "term_id": 163, "parent": 0, "description": ""}
+{"object_id": 727, "taxonomy": "post_tag", "name": "languages", "slug": "languages", "term_id": 256, "parent": 0, "description": ""}
+{"object_id": 727, "taxonomy": "post_tag", "name": "lwjgl", "slug": "lwjgl", "term_id": 274, "parent": 0, "description": ""}
+{"object_id": 727, "taxonomy": "post_tag", "name": "mongodb", "slug": "mongodb", "term_id": 305, "parent": 0, "description": ""}
+{"object_id": 727, "taxonomy": "post_tag", "name": "nosql", "slug": "nosql", "term_id": 328, "parent": 0, "description": ""}
+{"object_id": 727, "taxonomy": "post_tag", "name": "random", "slug": "random", "term_id": 394, "parent": 0, "description": ""}
+{"object_id": 727, "taxonomy": "post_tag", "name": "rng", "slug": "rng", "term_id": 411, "parent": 0, "description": ""}
+{"object_id": 727, "taxonomy": "post_tag", "name": "threadlocal", "slug": "threadlocal", "term_id": 464, "parent": 0, "description": ""}
+{"object_id": 727, "taxonomy": "post_tag", "name": "whiley", "slug": "whiley", "term_id": 486, "parent": 0, "description": ""}
+{"object_id": 739, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 739, "taxonomy": "post_tag", "name": "http", "slug": "http", "term_id": 179, "parent": 0, "description": ""}
+{"object_id": 739, "taxonomy": "post_tag", "name": "jadler", "slug": "jadler", "term_id": 196, "parent": 0, "description": ""}
+{"object_id": 739, "taxonomy": "post_tag", "name": "java ee", "slug": "java-ee", "term_id": 206, "parent": 0, "description": ""}
+{"object_id": 739, "taxonomy": "post_tag", "name": "jee", "slug": "jee", "term_id": 222, "parent": 0, "description": ""}
+{"object_id": 739, "taxonomy": "post_tag", "name": "jrebel", "slug": "jrebel", "term_id": 239, "parent": 0, "description": ""}
+{"object_id": 739, "taxonomy": "post_tag", "name": "jsoup", "slug": "jsoup", "term_id": 242, "parent": 0, "description": ""}
+{"object_id": 739, "taxonomy": "post_tag", "name": "microservices", "slug": "microservices", "term_id": 298, "parent": 0, "description": ""}
+{"object_id": 739, "taxonomy": "post_tag", "name": "mock", "slug": "mock", "term_id": 301, "parent": 0, "description": ""}
+{"object_id": 739, "taxonomy": "post_tag", "name": "nudge4j", "slug": "nudge4j", "term_id": 330, "parent": 0, "description": ""}
+{"object_id": 739, "taxonomy": "post_tag", "name": "spring", "slug": "spring", "term_id": 439, "parent": 0, "description": ""}
+{"object_id": 739, "taxonomy": "post_tag", "name": "trampoline", "slug": "trampoline", "term_id": 471, "parent": 0, "description": ""}
+{"object_id": 752, "taxonomy": "post_tag", "name": "azul", "slug": "azul", "term_id": 38, "parent": 0, "description": ""}
+{"object_id": 752, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 752, "taxonomy": "post_tag", "name": "checked exceptions", "slug": "checked-exceptions", "term_id": 60, "parent": 0, "description": ""}
+{"object_id": 752, "taxonomy": "post_tag", "name": "deprecation", "slug": "deprecation", "term_id": 93, "parent": 0, "description": ""}
+{"object_id": 752, "taxonomy": "post_tag", "name": "exception", "slug": "exception", "term_id": 127, "parent": 0, "description": ""}
+{"object_id": 752, "taxonomy": "post_tag", "name": "exceptions", "slug": "exceptions", "term_id": 128, "parent": 0, "description": ""}
+{"object_id": 752, "taxonomy": "post_tag", "name": "java 9", "slug": "java-9", "term_id": 205, "parent": 0, "description": ""}
+{"object_id": 752, "taxonomy": "post_tag", "name": "jdbc", "slug": "jdbc", "term_id": 219, "parent": 0, "description": ""}
+{"object_id": 752, "taxonomy": "post_tag", "name": "linux", "slug": "linux", "term_id": 268, "parent": 0, "description": ""}
+{"object_id": 752, "taxonomy": "post_tag", "name": "microsoft", "slug": "microsoft", "term_id": 299, "parent": 0, "description": ""}
+{"object_id": 752, "taxonomy": "post_tag", "name": "midori", "slug": "midori", "term_id": 300, "parent": 0, "description": ""}
+{"object_id": 752, "taxonomy": "post_tag", "name": "sql server", "slug": "sql-server", "term_id": 442, "parent": 0, "description": ""}
+{"object_id": 764, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 764, "taxonomy": "post_tag", "name": "ejb", "slug": "ejb", "term_id": 113, "parent": 0, "description": ""}
+{"object_id": 764, "taxonomy": "post_tag", "name": "freemarker", "slug": "freemarker", "term_id": 145, "parent": 0, "description": ""}
+{"object_id": 764, "taxonomy": "post_tag", "name": "handlebars", "slug": "handlebars", "term_id": 170, "parent": 0, "description": ""}
+{"object_id": 764, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 764, "taxonomy": "post_tag", "name": "java ee", "slug": "java-ee", "term_id": 206, "parent": 0, "description": ""}
+{"object_id": 764, "taxonomy": "post_tag", "name": "java ee 7", "slug": "java-ee-7", "term_id": 207, "parent": 0, "description": ""}
+{"object_id": 764, "taxonomy": "post_tag", "name": "jsp", "slug": "jsp", "term_id": 243, "parent": 0, "description": ""}
+{"object_id": 764, "taxonomy": "post_tag", "name": "servlet", "slug": "servlet", "term_id": 426, "parent": 0, "description": ""}
+{"object_id": 764, "taxonomy": "post_tag", "name": "servlets", "slug": "servlets", "term_id": 427, "parent": 0, "description": ""}
+{"object_id": 780, "taxonomy": "post_tag", "name": "ims", "slug": "ims", "term_id": 186, "parent": 0, "description": ""}
+{"object_id": 780, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 780, "taxonomy": "post_tag", "name": "logging", "slug": "logging", "term_id": 272, "parent": 0, "description": ""}
+{"object_id": 780, "taxonomy": "post_tag", "name": "mainframe", "slug": "mainframe", "term_id": 278, "parent": 0, "description": ""}
+{"object_id": 780, "taxonomy": "post_tag", "name": "rome", "slug": "rome", "term_id": 412, "parent": 0, "description": ""}
+{"object_id": 780, "taxonomy": "post_tag", "name": "rss", "slug": "rss", "term_id": 413, "parent": 0, "description": ""}
+{"object_id": 787, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 788, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 791, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 791, "taxonomy": "post_tag", "name": "copypasta", "slug": "copypasta", "term_id": 82, "parent": 0, "description": ""}
+{"object_id": 791, "taxonomy": "post_tag", "name": "javac", "slug": "javac", "term_id": 212, "parent": 0, "description": ""}
+{"object_id": 791, "taxonomy": "post_tag", "name": "kafka", "slug": "kafka", "term_id": 249, "parent": 0, "description": ""}
+{"object_id": 791, "taxonomy": "post_tag", "name": "monitor", "slug": "monitor", "term_id": 306, "parent": 0, "description": ""}
+{"object_id": 800, "taxonomy": "post_tag", "name": "actor", "slug": "actor", "term_id": 14, "parent": 0, "description": ""}
+{"object_id": 800, "taxonomy": "post_tag", "name": "actors", "slug": "actors", "term_id": 15, "parent": 0, "description": ""}
+{"object_id": 800, "taxonomy": "post_tag", "name": "asciidoc", "slug": "asciidoc", "term_id": 30, "parent": 0, "description": ""}
+{"object_id": 800, "taxonomy": "post_tag", "name": "asciidoctor", "slug": "asciidoctor", "term_id": 31, "parent": 0, "description": ""}
+{"object_id": 800, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 800, "taxonomy": "post_tag", "name": "dexy", "slug": "dexy", "term_id": 98, "parent": 0, "description": ""}
+{"object_id": 800, "taxonomy": "post_tag", "name": "documentation", "slug": "documentation", "term_id": 102, "parent": 0, "description": ""}
+{"object_id": 800, "taxonomy": "post_tag", "name": "imageio", "slug": "imageio", "term_id": 183, "parent": 0, "description": ""}
+{"object_id": 800, "taxonomy": "post_tag", "name": "java 9", "slug": "java-9", "term_id": 205, "parent": 0, "description": ""}
+{"object_id": 800, "taxonomy": "post_tag", "name": "java ee", "slug": "java-ee", "term_id": 206, "parent": 0, "description": ""}
+{"object_id": 800, "taxonomy": "post_tag", "name": "json", "slug": "json", "term_id": 241, "parent": 0, "description": ""}
+{"object_id": 800, "taxonomy": "post_tag", "name": "scala", "slug": "scala", "term_id": 419, "parent": 0, "description": ""}
+{"object_id": 813, "taxonomy": "post_tag", "name": "certificate", "slug": "certificate", "term_id": 59, "parent": 0, "description": ""}
+{"object_id": 813, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 813, "taxonomy": "post_tag", "name": "database", "slug": "database", "term_id": 89, "parent": 0, "description": ""}
+{"object_id": 813, "taxonomy": "post_tag", "name": "garbage collection", "slug": "garbage-collection", "term_id": 148, "parent": 0, "description": ""}
+{"object_id": 813, "taxonomy": "post_tag", "name": "gc", "slug": "gc", "term_id": 149, "parent": 0, "description": ""}
+{"object_id": 813, "taxonomy": "post_tag", "name": "git", "slug": "git", "term_id": 152, "parent": 0, "description": ""}
+{"object_id": 813, "taxonomy": "post_tag", "name": "graph database", "slug": "graph-database", "term_id": 160, "parent": 0, "description": ""}
+{"object_id": 813, "taxonomy": "post_tag", "name": "jep", "slug": "jep", "term_id": 224, "parent": 0, "description": ""}
+{"object_id": 813, "taxonomy": "post_tag", "name": "maven", "slug": "maven", "term_id": 286, "parent": 0, "description": ""}
+{"object_id": 813, "taxonomy": "post_tag", "name": "neo4j", "slug": "neo4j", "term_id": 316, "parent": 0, "description": ""}
+{"object_id": 813, "taxonomy": "post_tag", "name": "security", "slug": "security", "term_id": 423, "parent": 0, "description": ""}
+{"object_id": 813, "taxonomy": "post_tag", "name": "titan", "slug": "titan", "term_id": 467, "parent": 0, "description": ""}
+{"object_id": 820, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 820, "taxonomy": "post_tag", "name": "java 9", "slug": "java-9", "term_id": 205, "parent": 0, "description": ""}
+{"object_id": 820, "taxonomy": "post_tag", "name": "jigsaw", "slug": "jigsaw", "term_id": 227, "parent": 0, "description": ""}
+{"object_id": 820, "taxonomy": "post_tag", "name": "jmm", "slug": "jmm", "term_id": 230, "parent": 0, "description": ""}
+{"object_id": 820, "taxonomy": "post_tag", "name": "jpms", "slug": "jpms", "term_id": 237, "parent": 0, "description": ""}
+{"object_id": 820, "taxonomy": "post_tag", "name": "maven", "slug": "maven", "term_id": 286, "parent": 0, "description": ""}
+{"object_id": 820, "taxonomy": "post_tag", "name": "memory", "slug": "memory", "term_id": 288, "parent": 0, "description": ""}
+{"object_id": 820, "taxonomy": "post_tag", "name": "optional", "slug": "optional", "term_id": 340, "parent": 0, "description": ""}
+{"object_id": 820, "taxonomy": "post_tag", "name": "plumbr", "slug": "plumbr", "term_id": 353, "parent": 0, "description": ""}
+{"object_id": 822, "taxonomy": "post_tag", "name": "guava", "slug": "guava", "term_id": 163, "parent": 0, "description": ""}
+{"object_id": 822, "taxonomy": "post_tag", "name": "immutability", "slug": "immutability", "term_id": 184, "parent": 0, "description": ""}
+{"object_id": 822, "taxonomy": "post_tag", "name": "jackson", "slug": "jackson", "term_id": 195, "parent": 0, "description": ""}
+{"object_id": 822, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 822, "taxonomy": "post_tag", "name": "jcip", "slug": "jcip", "term_id": 216, "parent": 0, "description": ""}
+{"object_id": 822, "taxonomy": "post_tag", "name": "jmm", "slug": "jmm", "term_id": 230, "parent": 0, "description": ""}
+{"object_id": 822, "taxonomy": "post_tag", "name": "lombok", "slug": "lombok", "term_id": 273, "parent": 0, "description": ""}
+{"object_id": 833, "taxonomy": "post_tag", "name": "arraylist", "slug": "arraylist", "term_id": 27, "parent": 0, "description": ""}
+{"object_id": 833, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 833, "taxonomy": "post_tag", "name": "linkedlist", "slug": "linkedlist", "term_id": 265, "parent": 0, "description": ""}
+{"object_id": 833, "taxonomy": "post_tag", "name": "performance", "slug": "performance", "term_id": 348, "parent": 0, "description": ""}
+{"object_id": 843, "taxonomy": "post_tag", "name": "ai", "slug": "ai", "term_id": 17, "parent": 0, "description": ""}
+{"object_id": 843, "taxonomy": "post_tag", "name": "atlassian", "slug": "atlassian", "term_id": 33, "parent": 0, "description": ""}
+{"object_id": 843, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 843, "taxonomy": "post_tag", "name": "ci", "slug": "ci", "term_id": 62, "parent": 0, "description": ""}
+{"object_id": 843, "taxonomy": "post_tag", "name": "docker", "slug": "docker", "term_id": 101, "parent": 0, "description": ""}
+{"object_id": 843, "taxonomy": "post_tag", "name": "maven", "slug": "maven", "term_id": 286, "parent": 0, "description": ""}
+{"object_id": 843, "taxonomy": "post_tag", "name": "mental health", "slug": "mental-health", "term_id": 290, "parent": 0, "description": ""}
+{"object_id": 843, "taxonomy": "post_tag", "name": "mental illness", "slug": "mental-illness", "term_id": 291, "parent": 0, "description": ""}
+{"object_id": 843, "taxonomy": "post_tag", "name": "performance", "slug": "performance", "term_id": 348, "parent": 0, "description": ""}
+{"object_id": 843, "taxonomy": "post_tag", "name": "teamwork", "slug": "teamwork", "term_id": 460, "parent": 0, "description": ""}
+{"object_id": 850, "taxonomy": "post_tag", "name": "dropwizard", "slug": "dropwizard", "term_id": 103, "parent": 0, "description": ""}
+{"object_id": 850, "taxonomy": "post_tag", "name": "howto", "slug": "howto", "term_id": 178, "parent": 0, "description": ""}
+{"object_id": 850, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 850, "taxonomy": "post_tag", "name": "meter", "slug": "meter", "term_id": 293, "parent": 0, "description": ""}
+{"object_id": 850, "taxonomy": "post_tag", "name": "metrics", "slug": "metrics", "term_id": 296, "parent": 0, "description": ""}
+{"object_id": 857, "taxonomy": "category", "name": "Uncategorized", "slug": "uncategorized", "term_id": 1, "parent": 0, "description": ""}
+{"object_id": 866, "taxonomy": "post_tag", "name": "activemq", "slug": "activemq", "term_id": 13, "parent": 0, "description": ""}
+{"object_id": 866, "taxonomy": "post_tag", "name": "ai", "slug": "ai", "term_id": 17, "parent": 0, "description": ""}
+{"object_id": 866, "taxonomy": "post_tag", "name": "amqp", "slug": "amqp", "term_id": 19, "parent": 0, "description": ""}
+{"object_id": 866, "taxonomy": "post_tag", "name": "apis", "slug": "apis", "term_id": 23, "parent": 0, "description": ""}
+{"object_id": 866, "taxonomy": "post_tag", "name": "artificial intelligence", "slug": "artificial-intelligence", "term_id": 29, "parent": 0, "description": ""}
+{"object_id": 866, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 866, "taxonomy": "post_tag", "name": "discrete math", "slug": "discrete-math", "term_id": 99, "parent": 0, "description": ""}
+{"object_id": 866, "taxonomy": "post_tag", "name": "druid", "slug": "druid", "term_id": 104, "parent": 0, "description": ""}
+{"object_id": 866, "taxonomy": "post_tag", "name": "kafka", "slug": "kafka", "term_id": 249, "parent": 0, "description": ""}
+{"object_id": 866, "taxonomy": "post_tag", "name": "kotlin", "slug": "kotlin", "term_id": 252, "parent": 0, "description": ""}
+{"object_id": 866, "taxonomy": "post_tag", "name": "math", "slug": "math", "term_id": 285, "parent": 0, "description": ""}
+{"object_id": 866, "taxonomy": "post_tag", "name": "nosql", "slug": "nosql", "term_id": 328, "parent": 0, "description": ""}
+{"object_id": 866, "taxonomy": "post_tag", "name": "rabbitmq", "slug": "rabbitmq", "term_id": 393, "parent": 0, "description": ""}
+{"object_id": 866, "taxonomy": "post_tag", "name": "rest", "slug": "rest", "term_id": 405, "parent": 0, "description": ""}
+{"object_id": 875, "taxonomy": "post_tag", "name": "ai", "slug": "ai", "term_id": 17, "parent": 0, "description": ""}
+{"object_id": 875, "taxonomy": "post_tag", "name": "app store", "slug": "app-store", "term_id": 24, "parent": 0, "description": ""}
+{"object_id": 875, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 875, "taxonomy": "post_tag", "name": "fixtures", "slug": "fixtures", "term_id": 141, "parent": 0, "description": ""}
+{"object_id": 875, "taxonomy": "post_tag", "name": "genetic algorithm", "slug": "genetic-algorithm", "term_id": 150, "parent": 0, "description": ""}
+{"object_id": 875, "taxonomy": "post_tag", "name": "git", "slug": "git", "term_id": 152, "parent": 0, "description": ""}
+{"object_id": 875, "taxonomy": "post_tag", "name": "github", "slug": "github", "term_id": 153, "parent": 0, "description": ""}
+{"object_id": 875, "taxonomy": "post_tag", "name": "junit", "slug": "junit", "term_id": 244, "parent": 0, "description": ""}
+{"object_id": 875, "taxonomy": "post_tag", "name": "marketplace", "slug": "marketplace", "term_id": 282, "parent": 0, "description": ""}
+{"object_id": 875, "taxonomy": "post_tag", "name": "testng", "slug": "testng", "term_id": 463, "parent": 0, "description": ""}
+{"object_id": 878, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 878, "taxonomy": "post_tag", "name": "conference", "slug": "conference", "term_id": 77, "parent": 0, "description": ""}
+{"object_id": 878, "taxonomy": "post_tag", "name": "emacs", "slug": "emacs", "term_id": 115, "parent": 0, "description": ""}
+{"object_id": 878, "taxonomy": "post_tag", "name": "fonts", "slug": "fonts", "term_id": 143, "parent": 0, "description": ""}
+{"object_id": 878, "taxonomy": "post_tag", "name": "god object", "slug": "god-object", "term_id": 155, "parent": 0, "description": ""}
+{"object_id": 878, "taxonomy": "post_tag", "name": "jcp", "slug": "jcp", "term_id": 218, "parent": 0, "description": ""}
+{"object_id": 878, "taxonomy": "post_tag", "name": "jigsaw", "slug": "jigsaw", "term_id": 227, "parent": 0, "description": ""}
+{"object_id": 878, "taxonomy": "post_tag", "name": "law of demeter", "slug": "law-of-demeter", "term_id": 258, "parent": 0, "description": ""}
+{"object_id": 878, "taxonomy": "post_tag", "name": "object locator", "slug": "object-locator", "term_id": 332, "parent": 0, "description": ""}
+{"object_id": 878, "taxonomy": "post_tag", "name": "user experience", "slug": "user-experience", "term_id": 475, "parent": 0, "description": ""}
+{"object_id": 878, "taxonomy": "post_tag", "name": "ux", "slug": "ux", "term_id": 477, "parent": 0, "description": ""}
+{"object_id": 878, "taxonomy": "post_tag", "name": "vim", "slug": "vim", "term_id": 480, "parent": 0, "description": ""}
+{"object_id": 878, "taxonomy": "post_tag", "name": "vjug24", "slug": "vjug24", "term_id": 481, "parent": 0, "description": ""}
+{"object_id": 886, "taxonomy": "post_tag", "name": "cassandra", "slug": "cassandra", "term_id": 57, "parent": 0, "description": ""}
+{"object_id": 886, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 886, "taxonomy": "post_tag", "name": "dropwizard", "slug": "dropwizard", "term_id": 103, "parent": 0, "description": ""}
+{"object_id": 886, "taxonomy": "post_tag", "name": "jar", "slug": "jar", "term_id": 198, "parent": 0, "description": ""}
+{"object_id": 886, "taxonomy": "post_tag", "name": "jdbc", "slug": "jdbc", "term_id": 219, "parent": 0, "description": ""}
+{"object_id": 886, "taxonomy": "post_tag", "name": "mongodb", "slug": "mongodb", "term_id": 305, "parent": 0, "description": ""}
+{"object_id": 886, "taxonomy": "post_tag", "name": "readability", "slug": "readability", "term_id": 396, "parent": 0, "description": ""}
+{"object_id": 886, "taxonomy": "post_tag", "name": "snacktory", "slug": "snacktory", "term_id": 433, "parent": 0, "description": ""}
+{"object_id": 886, "taxonomy": "post_tag", "name": "spring boot", "slug": "spring-boot", "term_id": 440, "parent": 0, "description": ""}
+{"object_id": 886, "taxonomy": "post_tag", "name": "war", "slug": "war", "term_id": 483, "parent": 0, "description": ""}
+{"object_id": 888, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 888, "taxonomy": "post_tag", "name": "cli", "slug": "cli", "term_id": 64, "parent": 0, "description": ""}
+{"object_id": 888, "taxonomy": "post_tag", "name": "console", "slug": "console", "term_id": 79, "parent": 0, "description": ""}
+{"object_id": 888, "taxonomy": "post_tag", "name": "jcommander", "slug": "jcommander", "term_id": 217, "parent": 0, "description": ""}
+{"object_id": 888, "taxonomy": "post_tag", "name": "jdbc", "slug": "jdbc", "term_id": 219, "parent": 0, "description": ""}
+{"object_id": 888, "taxonomy": "post_tag", "name": "logging", "slug": "logging", "term_id": 272, "parent": 0, "description": ""}
+{"object_id": 894, "taxonomy": "post_tag", "name": "address", "slug": "address", "term_id": 16, "parent": 0, "description": ""}
+{"object_id": 894, "taxonomy": "post_tag", "name": "enumeration", "slug": "enumeration", "term_id": 120, "parent": 0, "description": ""}
+{"object_id": 894, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 894, "taxonomy": "post_tag", "name": "kotlin", "slug": "kotlin", "term_id": 252, "parent": 0, "description": ""}
+{"object_id": 894, "taxonomy": "post_tag", "name": "network", "slug": "network", "term_id": 321, "parent": 0, "description": ""}
+{"object_id": 894, "taxonomy": "post_tag", "name": "stream", "slug": "stream", "term_id": 446, "parent": 0, "description": ""}
+{"object_id": 903, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 903, "taxonomy": "post_tag", "name": "fat jar", "slug": "fat-jar", "term_id": 133, "parent": 0, "description": ""}
+{"object_id": 903, "taxonomy": "post_tag", "name": "gradle", "slug": "gradle", "term_id": 158, "parent": 0, "description": ""}
+{"object_id": 903, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 903, "taxonomy": "post_tag", "name": "maven", "slug": "maven", "term_id": 286, "parent": 0, "description": ""}
+{"object_id": 903, "taxonomy": "post_tag", "name": "shade", "slug": "shade", "term_id": 428, "parent": 0, "description": ""}
+{"object_id": 914, "taxonomy": "category", "name": "news", "slug": "news", "term_id": 4, "parent": 0, "description": ""}
+{"object_id": 914, "taxonomy": "category", "name": "podcast", "slug": "podcast", "term_id": 5, "parent": 0, "description": ""}
+{"object_id": 914, "taxonomy": "post_tag", "name": "podcast", "slug": "podcast", "term_id": 355, "parent": 0, "description": ""}
+{"object_id": 914, "taxonomy": "post_tag", "name": "podcast-1", "slug": "podcast-1", "term_id": 356, "parent": 0, "description": ""}
+{"object_id": 920, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 920, "taxonomy": "post_tag", "name": "derby", "slug": "derby", "term_id": 94, "parent": 0, "description": ""}
+{"object_id": 920, "taxonomy": "post_tag", "name": "eclipse", "slug": "eclipse", "term_id": 108, "parent": 0, "description": ""}
+{"object_id": 920, "taxonomy": "post_tag", "name": "ee4j", "slug": "ee4j", "term_id": 111, "parent": 0, "description": ""}
+{"object_id": 920, "taxonomy": "post_tag", "name": "h2", "slug": "h2", "term_id": 166, "parent": 0, "description": ""}
+{"object_id": 920, "taxonomy": "post_tag", "name": "idea", "slug": "idea", "term_id": 182, "parent": 0, "description": ""}
+{"object_id": 920, "taxonomy": "post_tag", "name": "java 9", "slug": "java-9", "term_id": 205, "parent": 0, "description": ""}
+{"object_id": 920, "taxonomy": "post_tag", "name": "java ee", "slug": "java-ee", "term_id": 206, "parent": 0, "description": ""}
+{"object_id": 920, "taxonomy": "post_tag", "name": "kotlin", "slug": "kotlin", "term_id": 252, "parent": 0, "description": ""}
+{"object_id": 920, "taxonomy": "post_tag", "name": "netbeans", "slug": "netbeans", "term_id": 317, "parent": 0, "description": ""}
+{"object_id": 920, "taxonomy": "post_tag", "name": "optional", "slug": "optional", "term_id": 340, "parent": 0, "description": ""}
+{"object_id": 920, "taxonomy": "category", "name": "podcast", "slug": "podcast", "term_id": 5, "parent": 0, "description": ""}
+{"object_id": 920, "taxonomy": "post_tag", "name": "podcast", "slug": "podcast", "term_id": 355, "parent": 0, "description": ""}
+{"object_id": 920, "taxonomy": "post_tag", "name": "podcast-2", "slug": "podcast-2", "term_id": 365, "parent": 0, "description": ""}
+{"object_id": 920, "taxonomy": "post_tag", "name": "postgres", "slug": "postgres", "term_id": 377, "parent": 0, "description": ""}
+{"object_id": 920, "taxonomy": "post_tag", "name": "postgresql", "slug": "postgresql", "term_id": 378, "parent": 0, "description": ""}
+{"object_id": 920, "taxonomy": "post_tag", "name": "spring", "slug": "spring", "term_id": 439, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "4gl", "slug": "4gl", "term_id": 8, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "5gl", "slug": "5gl", "term_id": 9, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "aws", "slug": "aws", "term_id": 37, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "curses", "slug": "curses", "term_id": 85, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "eclipse", "slug": "eclipse", "term_id": 108, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "electron", "slug": "electron", "term_id": 114, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "fn", "slug": "fn", "term_id": 142, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "javafx", "slug": "javafx", "term_id": 213, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "junit", "slug": "junit", "term_id": 244, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "lambda", "slug": "lambda", "term_id": 255, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "livetable", "slug": "livetable", "term_id": 269, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "nethack", "slug": "nethack", "term_id": 319, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "oracle", "slug": "oracle", "term_id": 341, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "category", "name": "podcast", "slug": "podcast", "term_id": 5, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "podcast", "slug": "podcast", "term_id": 355, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "podcast-3", "slug": "podcast-3", "term_id": 366, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "processing", "slug": "processing", "term_id": 382, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "reverse engineering", "slug": "reverse-engineering", "term_id": 409, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "testing", "slug": "testing", "term_id": 462, "parent": 0, "description": ""}
+{"object_id": 929, "taxonomy": "post_tag", "name": "zircon", "slug": "zircon", "term_id": 496, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "android", "slug": "android", "term_id": 20, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "baeldung", "slug": "baeldung", "term_id": 39, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "benchmarking", "slug": "benchmarking", "term_id": 43, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "buck", "slug": "buck", "term_id": 48, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "cache", "slug": "cache", "term_id": 52, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "caffeine", "slug": "caffeine", "term_id": 53, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "ehcache", "slug": "ehcache", "term_id": 112, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "excelsior", "slug": "excelsior", "term_id": 126, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "gradle", "slug": "gradle", "term_id": 158, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "guava", "slug": "guava", "term_id": 163, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "jet", "slug": "jet", "term_id": 225, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "jooq", "slug": "jooq", "term_id": 235, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "kotlin", "slug": "kotlin", "term_id": 252, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "maven", "slug": "maven", "term_id": 286, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "openjdk", "slug": "openjdk", "term_id": 337, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "category", "name": "podcast", "slug": "podcast", "term_id": 5, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "podcast", "slug": "podcast", "term_id": 355, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "podcast-4", "slug": "podcast-4", "term_id": 367, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "security", "slug": "security", "term_id": 423, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "windows", "slug": "windows", "term_id": 488, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "wpa2", "slug": "wpa2", "term_id": 489, "parent": 0, "description": ""}
+{"object_id": 939, "taxonomy": "post_tag", "name": "zulu", "slug": "zulu", "term_id": 498, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "ai", "slug": "ai", "term_id": 17, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "automata", "slug": "automata", "term_id": 35, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "docker", "slug": "docker", "term_id": 101, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "dropwizard", "slug": "dropwizard", "term_id": 103, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "eclipse", "slug": "eclipse", "term_id": 108, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "hibernate", "slug": "hibernate", "term_id": 175, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "idea", "slug": "idea", "term_id": 182, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "java 8", "slug": "java-8", "term_id": 204, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "java 9", "slug": "java-9", "term_id": 205, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "java ee", "slug": "java-ee", "term_id": 206, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "jdbc", "slug": "jdbc", "term_id": 219, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "jooq", "slug": "jooq", "term_id": 235, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "mybatis", "slug": "mybatis", "term_id": 314, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "nlp", "slug": "nlp", "term_id": 324, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "openliberty", "slug": "openliberty", "term_id": 338, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "category", "name": "podcast", "slug": "podcast", "term_id": 5, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "podcast", "slug": "podcast", "term_id": 355, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "podcast-5", "slug": "podcast-5", "term_id": 368, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "python", "slug": "python", "term_id": 390, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "spring boot", "slug": "spring-boot", "term_id": 440, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "stanford", "slug": "stanford", "term_id": 444, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "vert.x", "slug": "vert-x", "term_id": 479, "parent": 0, "description": ""}
+{"object_id": 946, "taxonomy": "post_tag", "name": "weka", "slug": "weka", "term_id": 485, "parent": 0, "description": ""}
+{"object_id": 957, "taxonomy": "post_tag", "name": "composition", "slug": "composition", "term_id": 72, "parent": 0, "description": ""}
+{"object_id": 957, "taxonomy": "post_tag", "name": "delegate", "slug": "delegate", "term_id": 91, "parent": 0, "description": ""}
+{"object_id": 957, "taxonomy": "post_tag", "name": "design", "slug": "design", "term_id": 95, "parent": 0, "description": ""}
+{"object_id": 957, "taxonomy": "post_tag", "name": "inheritance", "slug": "inheritance", "term_id": 189, "parent": 0, "description": ""}
+{"object_id": 957, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 957, "taxonomy": "post_tag", "name": "lombok", "slug": "lombok", "term_id": 273, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "ai", "slug": "ai", "term_id": 17, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "cassandra", "slug": "cassandra", "term_id": 57, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "collections", "slug": "collections", "term_id": 68, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "continuations", "slug": "continuations", "term_id": 80, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "fibers", "slug": "fibers", "term_id": 136, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "gradle", "slug": "gradle", "term_id": 158, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "infoq", "slug": "infoq", "term_id": 188, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "java 9", "slug": "java-9", "term_id": 205, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "junit", "slug": "junit", "term_id": 244, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "mongo", "slug": "mongo", "term_id": 304, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "mongodb", "slug": "mongodb", "term_id": 305, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "neo4j", "slug": "neo4j", "term_id": 316, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "nosql", "slug": "nosql", "term_id": 328, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "osgi", "slug": "osgi", "term_id": 342, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "category", "name": "podcast", "slug": "podcast", "term_id": 5, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "podcast", "slug": "podcast", "term_id": 355, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "podcast-6", "slug": "podcast-6", "term_id": 369, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "postgres", "slug": "postgres", "term_id": 377, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "postgresql", "slug": "postgresql", "term_id": 378, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "redis", "slug": "redis", "term_id": 398, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "rife", "slug": "rife", "term_id": 410, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "testng", "slug": "testng", "term_id": 463, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "wildfly", "slug": "wildfly", "term_id": 487, "parent": 0, "description": ""}
+{"object_id": 962, "taxonomy": "post_tag", "name": "zgc", "slug": "zgc", "term_id": 495, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "post_tag", "name": "ai", "slug": "ai", "term_id": 17, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "post_tag", "name": "chunking", "slug": "chunking", "term_id": 61, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "post_tag", "name": "cognition", "slug": "cognition", "term_id": 66, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "post_tag", "name": "cryptography", "slug": "cryptography", "term_id": 84, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "post_tag", "name": "http", "slug": "http", "term_id": 179, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "post_tag", "name": "http/2", "slug": "http2", "term_id": 180, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "post_tag", "name": "java 10", "slug": "java-10", "term_id": 200, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "post_tag", "name": "json", "slug": "json", "term_id": 241, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "post_tag", "name": "kafka", "slug": "kafka", "term_id": 249, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "post_tag", "name": "kotlin", "slug": "kotlin", "term_id": 252, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "post_tag", "name": "machine learning", "slug": "machine-learning", "term_id": 275, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "post_tag", "name": "osx", "slug": "osx", "term_id": 343, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "category", "name": "podcast", "slug": "podcast", "term_id": 5, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "post_tag", "name": "podcast", "slug": "podcast", "term_id": 355, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "post_tag", "name": "podcast-7", "slug": "podcast-7", "term_id": 370, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "post_tag", "name": "prod", "slug": "prod", "term_id": 384, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "post_tag", "name": "staging", "slug": "staging", "term_id": 443, "parent": 0, "description": ""}
+{"object_id": 968, "taxonomy": "post_tag", "name": "testing", "slug": "testing", "term_id": 462, "parent": 0, "description": ""}
+{"object_id": 979, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 984, "taxonomy": "post_tag", "name": "beginners", "slug": "beginners", "term_id": 40, "parent": 0, "description": ""}
+{"object_id": 984, "taxonomy": "post_tag", "name": "commandline", "slug": "commandline", "term_id": 69, "parent": 0, "description": ""}
+{"object_id": 984, "taxonomy": "post_tag", "name": "common mistakes", "slug": "common-mistakes", "term_id": 71, "parent": 0, "description": ""}
+{"object_id": 984, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 984, "taxonomy": "post_tag", "name": "scanner", "slug": "scanner", "term_id": 422, "parent": 0, "description": ""}
+{"object_id": 993, "taxonomy": "post_tag", "name": "async", "slug": "async", "term_id": 32, "parent": 0, "description": ""}
+{"object_id": 993, "taxonomy": "post_tag", "name": "callback", "slug": "callback", "term_id": 54, "parent": 0, "description": ""}
+{"object_id": 993, "taxonomy": "post_tag", "name": "callback hell", "slug": "callback-hell", "term_id": 55, "parent": 0, "description": ""}
+{"object_id": 993, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 993, "taxonomy": "post_tag", "name": "netty", "slug": "netty", "term_id": 320, "parent": 0, "description": ""}
+{"object_id": 993, "taxonomy": "post_tag", "name": "nio", "slug": "nio", "term_id": 323, "parent": 0, "description": ""}
+{"object_id": 993, "taxonomy": "post_tag", "name": "node", "slug": "node", "term_id": 325, "parent": 0, "description": ""}
+{"object_id": 993, "taxonomy": "post_tag", "name": "nonblocking", "slug": "nonblocking", "term_id": 327, "parent": 0, "description": ""}
+{"object_id": 993, "taxonomy": "post_tag", "name": "promise", "slug": "promise", "term_id": 386, "parent": 0, "description": ""}
+{"object_id": 993, "taxonomy": "post_tag", "name": "promise hell", "slug": "promise-hell", "term_id": 387, "parent": 0, "description": ""}
+{"object_id": 993, "taxonomy": "post_tag", "name": "python", "slug": "python", "term_id": 390, "parent": 0, "description": ""}
+{"object_id": 993, "taxonomy": "post_tag", "name": "xnio", "slug": "xnio", "term_id": 491, "parent": 0, "description": ""}
+{"object_id": 1004, "taxonomy": "post_tag", "name": "async", "slug": "async", "term_id": 32, "parent": 0, "description": ""}
+{"object_id": 1004, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 1004, "taxonomy": "post_tag", "name": "dzone", "slug": "dzone", "term_id": 106, "parent": 0, "description": ""}
+{"object_id": 1004, "taxonomy": "post_tag", "name": "excel", "slug": "excel", "term_id": 125, "parent": 0, "description": ""}
+{"object_id": 1004, "taxonomy": "post_tag", "name": "infoq", "slug": "infoq", "term_id": 188, "parent": 0, "description": ""}
+{"object_id": 1004, "taxonomy": "post_tag", "name": "monads", "slug": "monads", "term_id": 303, "parent": 0, "description": ""}
+{"object_id": 1004, "taxonomy": "post_tag", "name": "nio", "slug": "nio", "term_id": 323, "parent": 0, "description": ""}
+{"object_id": 1004, "taxonomy": "post_tag", "name": "nodejs", "slug": "nodejs", "term_id": 326, "parent": 0, "description": ""}
+{"object_id": 1004, "taxonomy": "category", "name": "podcast", "slug": "podcast", "term_id": 5, "parent": 0, "description": ""}
+{"object_id": 1004, "taxonomy": "post_tag", "name": "podcast", "slug": "podcast", "term_id": 355, "parent": 0, "description": ""}
+{"object_id": 1004, "taxonomy": "post_tag", "name": "podcast-8", "slug": "podcast-8", "term_id": 371, "parent": 0, "description": ""}
+{"object_id": 1004, "taxonomy": "post_tag", "name": "poi", "slug": "poi", "term_id": 373, "parent": 0, "description": ""}
+{"object_id": 1004, "taxonomy": "post_tag", "name": "postgres", "slug": "postgres", "term_id": 377, "parent": 0, "description": ""}
+{"object_id": 1004, "taxonomy": "post_tag", "name": "python", "slug": "python", "term_id": 390, "parent": 0, "description": ""}
+{"object_id": 1004, "taxonomy": "post_tag", "name": "valhalla", "slug": "valhalla", "term_id": 478, "parent": 0, "description": ""}
+{"object_id": 1012, "taxonomy": "post_tag", "name": "async", "slug": "async", "term_id": 32, "parent": 0, "description": ""}
+{"object_id": 1012, "taxonomy": "post_tag", "name": "dsl", "slug": "dsl", "term_id": 105, "parent": 0, "description": ""}
+{"object_id": 1012, "taxonomy": "post_tag", "name": "jvm", "slug": "jvm", "term_id": 247, "parent": 0, "description": ""}
+{"object_id": 1012, "taxonomy": "post_tag", "name": "kotlin", "slug": "kotlin", "term_id": 252, "parent": 0, "description": ""}
+{"object_id": 1012, "taxonomy": "post_tag", "name": "latency", "slug": "latency", "term_id": 257, "parent": 0, "description": ""}
+{"object_id": 1012, "taxonomy": "post_tag", "name": "memory", "slug": "memory", "term_id": 288, "parent": 0, "description": ""}
+{"object_id": 1012, "taxonomy": "post_tag", "name": "null", "slug": "null", "term_id": 331, "parent": 0, "description": ""}
+{"object_id": 1012, "taxonomy": "post_tag", "name": "oop", "slug": "oop", "term_id": 336, "parent": 0, "description": ""}
+{"object_id": 1012, "taxonomy": "post_tag", "name": "optional", "slug": "optional", "term_id": 340, "parent": 0, "description": ""}
+{"object_id": 1012, "taxonomy": "category", "name": "podcast", "slug": "podcast", "term_id": 5, "parent": 0, "description": ""}
+{"object_id": 1012, "taxonomy": "post_tag", "name": "podcast", "slug": "podcast", "term_id": 355, "parent": 0, "description": ""}
+{"object_id": 1012, "taxonomy": "post_tag", "name": "podcast-9", "slug": "podcast-9", "term_id": 372, "parent": 0, "description": ""}
+{"object_id": 1012, "taxonomy": "post_tag", "name": "profiler", "slug": "profiler", "term_id": 385, "parent": 0, "description": ""}
+{"object_id": 1012, "taxonomy": "post_tag", "name": "reactive", "slug": "reactive", "term_id": 395, "parent": 0, "description": ""}
+{"object_id": 1012, "taxonomy": "post_tag", "name": "rxjava", "slug": "rxjava", "term_id": 416, "parent": 0, "description": ""}
+{"object_id": 1027, "taxonomy": "category", "name": "podcast", "slug": "podcast", "term_id": 5, "parent": 0, "description": ""}
+{"object_id": 1027, "taxonomy": "post_tag", "name": "podcast", "slug": "podcast", "term_id": 355, "parent": 0, "description": ""}
+{"object_id": 1027, "taxonomy": "post_tag", "name": "podcast-10", "slug": "podcast-10", "term_id": 357, "parent": 0, "description": ""}
+{"object_id": 1031, "taxonomy": "post_tag", "name": "docker", "slug": "docker", "term_id": 101, "parent": 0, "description": ""}
+{"object_id": 1031, "taxonomy": "post_tag", "name": "hystrix", "slug": "hystrix", "term_id": 181, "parent": 0, "description": ""}
+{"object_id": 1031, "taxonomy": "post_tag", "name": "java 9", "slug": "java-9", "term_id": 205, "parent": 0, "description": ""}
+{"object_id": 1031, "taxonomy": "post_tag", "name": "jigsaw", "slug": "jigsaw", "term_id": 227, "parent": 0, "description": ""}
+{"object_id": 1031, "taxonomy": "post_tag", "name": "meltdown", "slug": "meltdown", "term_id": 287, "parent": 0, "description": ""}
+{"object_id": 1031, "taxonomy": "post_tag", "name": "netflix", "slug": "netflix", "term_id": 318, "parent": 0, "description": ""}
+{"object_id": 1031, "taxonomy": "category", "name": "podcast", "slug": "podcast", "term_id": 5, "parent": 0, "description": ""}
+{"object_id": 1031, "taxonomy": "post_tag", "name": "podcast", "slug": "podcast", "term_id": 355, "parent": 0, "description": ""}
+{"object_id": 1031, "taxonomy": "post_tag", "name": "podcast-11", "slug": "podcast-11", "term_id": 358, "parent": 0, "description": ""}
+{"object_id": 1031, "taxonomy": "post_tag", "name": "resilience4j", "slug": "resilience4j", "term_id": 402, "parent": 0, "description": ""}
+{"object_id": 1031, "taxonomy": "post_tag", "name": "spectre", "slug": "spectre", "term_id": 437, "parent": 0, "description": ""}
+{"object_id": 1040, "taxonomy": "post_tag", "name": "azul", "slug": "azul", "term_id": 38, "parent": 0, "description": ""}
+{"object_id": 1040, "taxonomy": "post_tag", "name": "hollow jars", "slug": "hollow-jars", "term_id": 176, "parent": 0, "description": ""}
+{"object_id": 1040, "taxonomy": "post_tag", "name": "jar", "slug": "jar", "term_id": 198, "parent": 0, "description": ""}
+{"object_id": 1040, "taxonomy": "post_tag", "name": "java 9", "slug": "java-9", "term_id": 205, "parent": 0, "description": ""}
+{"object_id": 1040, "taxonomy": "post_tag", "name": "openjdk", "slug": "openjdk", "term_id": 337, "parent": 0, "description": ""}
+{"object_id": 1040, "taxonomy": "post_tag", "name": "optional", "slug": "optional", "term_id": 340, "parent": 0, "description": ""}
+{"object_id": 1040, "taxonomy": "category", "name": "podcast", "slug": "podcast", "term_id": 5, "parent": 0, "description": ""}
+{"object_id": 1040, "taxonomy": "post_tag", "name": "podcast", "slug": "podcast", "term_id": 355, "parent": 0, "description": ""}
+{"object_id": 1040, "taxonomy": "post_tag", "name": "podcast-12", "slug": "podcast-12", "term_id": 359, "parent": 0, "description": ""}
+{"object_id": 1040, "taxonomy": "post_tag", "name": "scala", "slug": "scala", "term_id": 419, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "amqp", "slug": "amqp", "term_id": 19, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "coverage", "slug": "coverage", "term_id": 83, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "data structure", "slug": "data-structure", "term_id": 87, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "ee4j", "slug": "ee4j", "term_id": 111, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "gradle", "slug": "gradle", "term_id": 158, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "grizzly", "slug": "grizzly", "term_id": 161, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "hash", "slug": "hash", "term_id": 171, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "java 9", "slug": "java-9", "term_id": 205, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "jigsaw", "slug": "jigsaw", "term_id": 227, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "kafka", "slug": "kafka", "term_id": 249, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "kobalt", "slug": "kobalt", "term_id": 251, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "kotlin", "slug": "kotlin", "term_id": 252, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "linkedin", "slug": "linkedin", "term_id": 264, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "modules", "slug": "modules", "term_id": 302, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "multiline", "slug": "multiline", "term_id": 308, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "oracle", "slug": "oracle", "term_id": 341, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "password", "slug": "password", "term_id": 344, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "category", "name": "podcast", "slug": "podcast", "term_id": 5, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "podcast", "slug": "podcast", "term_id": 355, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "podcast-13", "slug": "podcast-13", "term_id": 360, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "rabbitmq", "slug": "rabbitmq", "term_id": 393, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "testing", "slug": "testing", "term_id": 462, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "testng", "slug": "testng", "term_id": 463, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "trie", "slug": "trie", "term_id": 472, "parent": 0, "description": ""}
+{"object_id": 1045, "taxonomy": "post_tag", "name": "vert.x", "slug": "vert-x", "term_id": 479, "parent": 0, "description": ""}
+{"object_id": 1055, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 1055, "taxonomy": "post_tag", "name": "password", "slug": "password", "term_id": 344, "parent": 0, "description": ""}
+{"object_id": 1055, "taxonomy": "category", "name": "security", "slug": "security", "term_id": 6, "parent": 0, "description": ""}
+{"object_id": 1055, "taxonomy": "post_tag", "name": "security", "slug": "security", "term_id": 423, "parent": 0, "description": ""}
+{"object_id": 1072, "taxonomy": "post_tag", "name": "fuzzer", "slug": "fuzzer", "term_id": 147, "parent": 0, "description": ""}
+{"object_id": 1072, "taxonomy": "post_tag", "name": "github", "slug": "github", "term_id": 153, "parent": 0, "description": ""}
+{"object_id": 1072, "taxonomy": "post_tag", "name": "java 10", "slug": "java-10", "term_id": 200, "parent": 0, "description": ""}
+{"object_id": 1072, "taxonomy": "post_tag", "name": "java 9", "slug": "java-9", "term_id": 205, "parent": 0, "description": ""}
+{"object_id": 1072, "taxonomy": "post_tag", "name": "kafka", "slug": "kafka", "term_id": 249, "parent": 0, "description": ""}
+{"object_id": 1072, "taxonomy": "post_tag", "name": "license", "slug": "license", "term_id": 262, "parent": 0, "description": ""}
+{"object_id": 1072, "taxonomy": "category", "name": "podcast", "slug": "podcast", "term_id": 5, "parent": 0, "description": ""}
+{"object_id": 1072, "taxonomy": "post_tag", "name": "podcast", "slug": "podcast", "term_id": 355, "parent": 0, "description": ""}
+{"object_id": 1072, "taxonomy": "post_tag", "name": "podcast-14", "slug": "podcast-14", "term_id": 361, "parent": 0, "description": ""}
+{"object_id": 1072, "taxonomy": "post_tag", "name": "pwhash", "slug": "pwhash", "term_id": 389, "parent": 0, "description": ""}
+{"object_id": 1072, "taxonomy": "post_tag", "name": "scala", "slug": "scala", "term_id": 419, "parent": 0, "description": ""}
+{"object_id": 1072, "taxonomy": "post_tag", "name": "security", "slug": "security", "term_id": 423, "parent": 0, "description": ""}
+{"object_id": 1072, "taxonomy": "post_tag", "name": "spark", "slug": "spark", "term_id": 434, "parent": 0, "description": ""}
+{"object_id": 1072, "taxonomy": "post_tag", "name": "testing", "slug": "testing", "term_id": 462, "parent": 0, "description": ""}
+{"object_id": 1093, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 1093, "taxonomy": "post_tag", "name": "kotlin", "slug": "kotlin", "term_id": 252, "parent": 0, "description": ""}
+{"object_id": 1093, "taxonomy": "post_tag", "name": "okhttp", "slug": "okhttp", "term_id": 334, "parent": 0, "description": ""}
+{"object_id": 1096, "taxonomy": "post_tag", "name": "concurrency", "slug": "concurrency", "term_id": 74, "parent": 0, "description": ""}
+{"object_id": 1096, "taxonomy": "post_tag", "name": "GPU", "slug": "gpu", "term_id": 156, "parent": 0, "description": ""}
+{"object_id": 1096, "taxonomy": "post_tag", "name": "graal", "slug": "graal", "term_id": 157, "parent": 0, "description": ""}
+{"object_id": 1096, "taxonomy": "post_tag", "name": "hibernate", "slug": "hibernate", "term_id": 175, "parent": 0, "description": ""}
+{"object_id": 1096, "taxonomy": "post_tag", "name": "hystrix", "slug": "hystrix", "term_id": 181, "parent": 0, "description": ""}
+{"object_id": 1096, "taxonomy": "post_tag", "name": "jvmti", "slug": "jvmti", "term_id": 248, "parent": 0, "description": ""}
+{"object_id": 1096, "taxonomy": "post_tag", "name": "okhttp", "slug": "okhttp", "term_id": 334, "parent": 0, "description": ""}
+{"object_id": 1096, "taxonomy": "category", "name": "podcast", "slug": "podcast", "term_id": 5, "parent": 0, "description": ""}
+{"object_id": 1096, "taxonomy": "post_tag", "name": "podcast", "slug": "podcast", "term_id": 355, "parent": 0, "description": ""}
+{"object_id": 1096, "taxonomy": "post_tag", "name": "podcast-15", "slug": "podcast-15", "term_id": 362, "parent": 0, "description": ""}
+{"object_id": 1096, "taxonomy": "post_tag", "name": "repl", "slug": "repl", "term_id": 401, "parent": 0, "description": ""}
+{"object_id": 1096, "taxonomy": "post_tag", "name": "resilience4j", "slug": "resilience4j", "term_id": 402, "parent": 0, "description": ""}
+{"object_id": 1096, "taxonomy": "post_tag", "name": "retry", "slug": "retry", "term_id": 407, "parent": 0, "description": ""}
+{"object_id": 1096, "taxonomy": "post_tag", "name": "retry4j", "slug": "retry4j", "term_id": 408, "parent": 0, "description": ""}
+{"object_id": 1096, "taxonomy": "post_tag", "name": "specifications", "slug": "specifications", "term_id": 436, "parent": 0, "description": ""}
+{"object_id": 1105, "taxonomy": "post_tag", "name": "310", "slug": "310", "term_id": 7, "parent": 0, "description": ""}
+{"object_id": 1105, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 1105, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 1105, "taxonomy": "post_tag", "name": "java.time", "slug": "java-time", "term_id": 209, "parent": 0, "description": ""}
+{"object_id": 1105, "taxonomy": "post_tag", "name": "joda-time", "slug": "joda-time", "term_id": 234, "parent": 0, "description": ""}
+{"object_id": 1105, "taxonomy": "post_tag", "name": "time", "slug": "time", "term_id": 466, "parent": 0, "description": ""}
+{"object_id": 1113, "taxonomy": "post_tag", "name": "concurrency", "slug": "concurrency", "term_id": 74, "parent": 0, "description": ""}
+{"object_id": 1113, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 1113, "taxonomy": "post_tag", "name": "memory model", "slug": "memory-model", "term_id": 289, "parent": 0, "description": ""}
+{"object_id": 1113, "taxonomy": "post_tag", "name": "threads", "slug": "threads", "term_id": 465, "parent": 0, "description": ""}
+{"object_id": 1132, "taxonomy": "post_tag", "name": "gradle", "slug": "gradle", "term_id": 158, "parent": 0, "description": ""}
+{"object_id": 1132, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 1132, "taxonomy": "post_tag", "name": "maven", "slug": "maven", "term_id": 286, "parent": 0, "description": ""}
+{"object_id": 1156, "taxonomy": "post_tag", "name": "docker", "slug": "docker", "term_id": 101, "parent": 0, "description": ""}
+{"object_id": 1156, "taxonomy": "post_tag", "name": "functional", "slug": "functional", "term_id": 146, "parent": 0, "description": ""}
+{"object_id": 1156, "taxonomy": "post_tag", "name": "jakarta ee", "slug": "jakarta-ee", "term_id": 197, "parent": 0, "description": ""}
+{"object_id": 1156, "taxonomy": "post_tag", "name": "java ee", "slug": "java-ee", "term_id": 206, "parent": 0, "description": ""}
+{"object_id": 1156, "taxonomy": "post_tag", "name": "json", "slug": "json", "term_id": 241, "parent": 0, "description": ""}
+{"object_id": 1156, "taxonomy": "post_tag", "name": "maven", "slug": "maven", "term_id": 286, "parent": 0, "description": ""}
+{"object_id": 1156, "taxonomy": "post_tag", "name": "netbeans", "slug": "netbeans", "term_id": 317, "parent": 0, "description": ""}
+{"object_id": 1156, "taxonomy": "post_tag", "name": "openjdk", "slug": "openjdk", "term_id": 337, "parent": 0, "description": ""}
+{"object_id": 1156, "taxonomy": "category", "name": "podcast", "slug": "podcast", "term_id": 5, "parent": 0, "description": ""}
+{"object_id": 1156, "taxonomy": "post_tag", "name": "podcast", "slug": "podcast", "term_id": 355, "parent": 0, "description": ""}
+{"object_id": 1156, "taxonomy": "post_tag", "name": "podcast-16", "slug": "podcast-16", "term_id": 363, "parent": 0, "description": ""}
+{"object_id": 1156, "taxonomy": "post_tag", "name": "toml", "slug": "toml", "term_id": 470, "parent": 0, "description": ""}
+{"object_id": 1156, "taxonomy": "post_tag", "name": "yaml", "slug": "yaml", "term_id": 493, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "post_tag", "name": "case", "slug": "case", "term_id": 56, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "post_tag", "name": "concurrenty", "slug": "concurrenty", "term_id": 76, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "post_tag", "name": "equals", "slug": "equals", "term_id": 122, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "post_tag", "name": "hibernate", "slug": "hibernate", "term_id": 175, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "post_tag", "name": "jakarta ee", "slug": "jakarta-ee", "term_id": 197, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "post_tag", "name": "java 12", "slug": "java-12", "term_id": 202, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "post_tag", "name": "java ee", "slug": "java-ee", "term_id": 206, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "post_tag", "name": "jep", "slug": "jep", "term_id": 224, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "post_tag", "name": "kotlin", "slug": "kotlin", "term_id": 252, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "post_tag", "name": "pdf", "slug": "pdf", "term_id": 347, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "category", "name": "podcast", "slug": "podcast", "term_id": 5, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "post_tag", "name": "podcast", "slug": "podcast", "term_id": 355, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "post_tag", "name": "podcast-17", "slug": "podcast-17", "term_id": 364, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "post_tag", "name": "spring", "slug": "spring", "term_id": 439, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "post_tag", "name": "spring boot", "slug": "spring-boot", "term_id": 440, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "post_tag", "name": "switch", "slug": "switch", "term_id": 454, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "post_tag", "name": "systemd", "slug": "systemd", "term_id": 458, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "post_tag", "name": "threads", "slug": "threads", "term_id": 465, "parent": 0, "description": ""}
+{"object_id": 1167, "taxonomy": "post_tag", "name": "tomee", "slug": "tomee", "term_id": 469, "parent": 0, "description": ""}
+{"object_id": 1174, "taxonomy": "post_tag", "name": "fedora", "slug": "fedora", "term_id": 135, "parent": 0, "description": ""}
+{"object_id": 1174, "taxonomy": "post_tag", "name": "java 11", "slug": "java-11", "term_id": 201, "parent": 0, "description": ""}
+{"object_id": 1174, "taxonomy": "category", "name": "news", "slug": "news", "term_id": 4, "parent": 0, "description": ""}
+{"object_id": 1174, "taxonomy": "post_tag", "name": "openjdk", "slug": "openjdk", "term_id": 337, "parent": 0, "description": ""}
+{"object_id": 1182, "taxonomy": "post_tag", "name": "jackson", "slug": "jackson", "term_id": 195, "parent": 0, "description": ""}
+{"object_id": 1182, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 1182, "taxonomy": "post_tag", "name": "json", "slug": "json", "term_id": 241, "parent": 0, "description": ""}
+{"object_id": 1182, "taxonomy": "category", "name": "security", "slug": "security", "term_id": 6, "parent": 0, "description": ""}
+{"object_id": 1182, "taxonomy": "post_tag", "name": "security", "slug": "security", "term_id": 423, "parent": 0, "description": ""}
+{"object_id": 1182, "taxonomy": "post_tag", "name": "serialization", "slug": "serialization", "term_id": 425, "parent": 0, "description": ""}
+{"object_id": 1182, "taxonomy": "post_tag", "name": "xml", "slug": "xml", "term_id": 490, "parent": 0, "description": ""}
+{"object_id": 1184, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 1186, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 1188, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 1190, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 1191, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 1194, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 1196, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 1198, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 1200, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 1204, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 1208, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 1210, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 1359, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 1361, "taxonomy": "nav_menu", "name": "Main", "slug": "main", "term_id": 499, "parent": 0, "description": ""}
+{"object_id": 1363, "taxonomy": "category", "name": "Uncategorized", "slug": "uncategorized", "term_id": 1, "parent": 0, "description": ""}
+{"object_id": 1369, "taxonomy": "category", "name": "Uncategorized", "slug": "uncategorized", "term_id": 1, "parent": 0, "description": ""}
+{"object_id": 1373, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 1377, "taxonomy": "category", "name": "Uncategorized", "slug": "uncategorized", "term_id": 1, "parent": 0, "description": ""}
+{"object_id": 1380, "taxonomy": "category", "name": "Uncategorized", "slug": "uncategorized", "term_id": 1, "parent": 0, "description": ""}
+{"object_id": 1384, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 1396, "taxonomy": "category", "name": "channel news", "slug": "channel-news", "term_id": 2, "parent": 0, "description": ""}
+{"object_id": 1396, "taxonomy": "post_tag", "name": "freenode", "slug": "freenode", "term_id": 501, "parent": 0, "description": ""}
+{"object_id": 1396, "taxonomy": "post_tag", "name": "libera", "slug": "libera", "term_id": 500, "parent": 0, "description": ""}
+{"object_id": 1396, "taxonomy": "post_tag", "name": "migration", "slug": "migration", "term_id": 502, "parent": 0, "description": ""}
+{"object_id": 1401, "taxonomy": "category", "name": "Uncategorized", "slug": "uncategorized", "term_id": 1, "parent": 0, "description": ""}
+{"object_id": 1408, "taxonomy": "category", "name": "Uncategorized", "slug": "uncategorized", "term_id": 1, "parent": 0, "description": ""}
+{"object_id": 1419, "taxonomy": "post_tag", "name": "collections", "slug": "collections", "term_id": 68, "parent": 0, "description": ""}
+{"object_id": 1419, "taxonomy": "post_tag", "name": "equals", "slug": "equals", "term_id": 122, "parent": 0, "description": ""}
+{"object_id": 1419, "taxonomy": "post_tag", "name": "java", "slug": "java", "term_id": 199, "parent": 0, "description": ""}
+{"object_id": 1419, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 1419, "taxonomy": "post_tag", "name": "reddit", "slug": "reddit", "term_id": 503, "parent": 0, "description": ""}
+{"object_id": 1421, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 1421, "taxonomy": "post_tag", "name": "locale", "slug": "locale", "term_id": 504, "parent": 0, "description": ""}
+{"object_id": 1425, "taxonomy": "post_tag", "name": "bash", "slug": "bash", "term_id": 506, "parent": 0, "description": ""}
+{"object_id": 1425, "taxonomy": "post_tag", "name": "gradle", "slug": "gradle", "term_id": 158, "parent": 0, "description": ""}
+{"object_id": 1425, "taxonomy": "category", "name": "java coding", "slug": "java-coding", "term_id": 3, "parent": 0, "description": ""}
+{"object_id": 1425, "taxonomy": "post_tag", "name": "maven", "slug": "maven", "term_id": 286, "parent": 0, "description": ""}
+{"object_id": 1425, "taxonomy": "category", "name": "news", "slug": "news", "term_id": 4, "parent": 0, "description": ""}
+{"object_id": 1425, "taxonomy": "post_tag", "name": "powershell", "slug": "powershell", "term_id": 507, "parent": 0, "description": ""}
+{"object_id": 1425, "taxonomy": "post_tag", "name": "tooling", "slug": "tooling", "term_id": 505, "parent": 0, "description": ""}
+{"object_id": 1425, "taxonomy": "post_tag", "name": "x11", "slug": "x11", "term_id": 508, "parent": 0, "description": ""}

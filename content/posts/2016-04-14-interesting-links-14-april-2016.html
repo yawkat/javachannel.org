@@ -1,0 +1,25 @@
+---
+title: "Interesting Links, 14 April 2016"
+date: "2016-04-14 08:34:25 -0400"
+author: "dreamreal"
+categories:
+  - "news"
+tags:
+  - "date-parsing"
+  - "exceptions"
+  - "executorservice"
+  - "interviews"
+  - "nlp"
+  - "spring"
+wp-id: 596
+wp-guid: "http://javachannel.org/?p=596"
+---
+
+<ul>
+<li><a href="http://natty.joestelmach.com/">Natty</a> is a natural language date parser written in Java. The idea is that you feed it corpora like <code>"1984/04/02"</code>, <code>"february twenty-eighth"</code>, or <code>"3 days from now"</code>, and get back a list of potential matching <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Date.html"><code>Date</code></a> objects. It is <em>not</em> designed to pull dates out of natural language – for that you’d want something like <a href="https://opennlp.apache.org/">OpenNLP</a> – but it might be able to help convert the natural language dates you get <em>from</em> OpenNLP into Java’s <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Date.html"><code>Date</code></a> representations.</li>
+<li><a href="https://github.com/SpigotMC/Scriptus">Scriptus</a> is a <a href="http://maven.apache.org/">Maven</a> plugin that writes the <a href="https://git-scm.com/">Git</a> version into build properties. It’s not entirely well-documented, but that’s what open source might be able to fix, right?</li>
+<li>In <a href="http://blogs.tedneward.com/post/when-interviews-fail/">When Interviews Fail</a>, Ted Neward deconstructs a <a href="http://dzone.com">DZone</a> article (“<a href="https://dzone.com/articles/can-you-call-non-static-method-from-a-static">Can You Call Non-Static Method From a Static?</a>“). It’s not difficult to imagine the activity – after all, this site does it to authors all the time! – but Ted’s especially good at it. In this case, he’s actually trying to dig at the purpose of an interview in the first place – and closes with “what do you really interview for?”, because if you’re interviewing for some grunt who can answer the corner cases, that’s… all you’re going to get.</li>
+<li>The <a href="https://blog.jooq.org">jOOQ blog</a> asks: “<a href="https://blog.jooq.org/2016/04/13/would-we-still-criticise-checked-exceptions-if-java-had-a-better-try-catch-syntax/">Would We Still Criticise Checked Exceptions, If Java had a Better try-catch Syntax?</a>” History says that yes, people would criticize Java for pretty much anything they can think of, and a few things they can’t. But in this case, it’s talking about potential syntax where the <code>try</code> is <em>optional</em>. It’s not present in a real compiler, and it does have some syntactic clarity to it – but in this author’s opinion, it’s actually hiding some pretty important information (namely, that you’re entering a <code>try/catch</code> block, which is pretty relevant information.)</li>
+<li>From <a href="http://dzone.com">DZone</a>: <a href="https://dzone.com/articles/properly-shutting-down-an-executorservice">Properly Shutting Down An ExecutorService</a> shows us a Spring bean to manage an <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html"><code>ExecutorService</code></a> shutdown. This, in itself, is a good thing. However, the <em>interesting</em> thing is that he wrote this because <a href="http://tomcat.apache.org/">Tomcat</a> was failing to kill the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html"><code>ExecutorService</code></a> itself – he’s basically illustrated why doing thread management in a web application is a bad idea. Let the container manage the threads, people. (This has always been in the specification – the apps are not supposed to start threads. Ever. Use message-driven beans, or timers, or a <a href="https://www.javacodegeeks.com/2014/07/java-ee-concurrency-api-tutorial.html">ManagedExecutorService</a>.)</li>
+</ul>
+<p>BTW, feel free to <a href="mailto:dreamreal@gmail.com">send me</a> Java-related (or somewhat Java-related!) links you think are worth retaining!</p>

@@ -1,0 +1,17 @@
+---
+title: "Link: The reason to use a buffered stream in Java"
+date: "2014-10-14 09:50:42 -0400"
+author: "dreamreal"
+categories:
+  - "java-coding"
+tags:
+  - "buffered-streams"
+  - "streams"
+  - "system-calls"
+wp-id: 216
+wp-guid: "http://javachannel.org/?p=216"
+---
+
+<p>The use of buffered streams in Java has come up a few times on ##java recently, so it might be worth reading something that one of the channel residents wrote up about the topic late last year: “<a href="http://orangepalantir.org/topicspace/show/83">The reason to use a buffered stream in Java</a>.”<br />
+Aside from being generally useful information, it actually has a test; the conclusion is that using a buffered stream is usually wise because it helps avoid system calls. The test shows this by spending four minutes <em>making</em> system calls, and only one and a half minutes in the actual program code.<br />
+Well done.</p>

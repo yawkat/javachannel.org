@@ -1,0 +1,64 @@
+---
+title: "JavaChannel’s Interesting Links podcast, episode 13"
+date: "2018-01-30 10:19:05 -0500"
+author: "dreamreal"
+categories:
+  - "podcast"
+tags:
+  - "amqp"
+  - "coverage"
+  - "data-structure"
+  - "ee4j"
+  - "gradle"
+  - "grizzly"
+  - "hash"
+  - "java-9"
+  - "jigsaw"
+  - "kafka"
+  - "kobalt"
+  - "kotlin"
+  - "linkedin"
+  - "modules"
+  - "multiline"
+  - "oracle"
+  - "password"
+  - "podcast"
+  - "podcast-13"
+  - "rabbitmq"
+  - "testing"
+  - "testng"
+  - "trie"
+  - "vert-x"
+enclosure: "/wp-content/uploads/2018/01/javachannel-13.mp3"
+enclosure-length: 53996724
+show-enclosure: true
+wp-id: 1045
+wp-guid: "https://javachannel.org/?p=1045"
+---
+
+<p>Welcome to the thirteenth ##java podcast. It’s Tuesday, January 30, 2018. Your hosts are Joseph Ottinger (dreamreal on IRC) and <a href="https://twitter.com/kinabalu">Andrew Lombardi</a> (kinabalu on IRC) from <a href="https://mysticcoders.com">Mystic Coders</a>. We have a guest this podcast: Cedric Beust, who’s always been very active in the Java ecosystem, being a factor in Android and author of TestNG as well as JCommander and other tools – and it’s fair to say that if you’ve used modern technology, Cedric’s actually had something to do with it. Really.<br />
+As always, this podcast is basically interesting content pulled from various sources, and funneled through the ##java IRC channel on freenode. You can find the show notes at the channel’s website, at javachannel.org; you can find all of the podcasts using the tag (or even “category”) “podcast”, and each podcast is tagged with its own identifier, too, so you can find this one by searching for the tag “podcast-13”.<br />
+A topic of discussion from ##java last week centers on code coverage: what numbers are “good”? What numbers can be expected? What’s a good metric to consider? Joseph likes (apparently) absurdly high numbers, like 90% or higher; Cedric recommends 50% code coverage as a good baseline; Andrew targets 70%. Expect a poll in the channel on this! It’s a really good discussion, but it’s not really going to be summarized here; listen to the podcast!</p>
+<ol>
+<li>
+<p><a href="https://github.com/eclipse-ee4j/grizzly">Grizzly</a> – an HTTP server library based on NIO – has been donated to EE4J. That’s not particularly interesting in and of itself, but there’s a question of whether all the projects being donated to EE4J imply an abandonment of Java EE as a container stack. It may not be; after all, EE4J is an umbrella just like Java EE itself is, so this may be very much what we should expect – which makes pointing it out as news rather odd. (The original item was from Reddit.)</p>
+</li>
+<li>
+<p>Pivotal gave us a really interesting article, called “<a href="https://content.pivotal.io/blog/understanding-when-to-use-rabbitmq-or-apache-kafka">Understanding When to use RabbitMQ or Apache Kafka</a>.” Kafka and RabbitMQ are both sort of message-oriented, but there’s a lot of confusion about when you’d use one against the other; this article discusses both RabbitMQ’s and Kafka’s strengths and weaknesses. It would have been nicer to talk about AMQP as opposed to RabbitMQ, but the article works nonetheless. Kafka is a high-performance message streaming library; it’s not transactional in the traditional sense; it’s incredibly fast. AMQP is slower (but still really fast, make no mistake) and provides traditional pub/sub and point to point messaging models. The main point of the article, though, is that if you need something other than a traditional model, Kafka is there… but it’s going to involve some effort.</p>
+</li>
+<li>
+<p><a href="https://docs.gradle.org/4.5/release-notes.html">Gradle 4.5 has been released</a>. It’s supposedly faster than it was, and has improvements for C/C++ programmers. It also has better documentation among other changes; Gradle’s good, and this release is important, but it’s not earth-shattering. This discussion veered off quickly and sharply to Cedric’s homegrown build tool, <a href="http://beust.com/kobalt/home/index.html">kobalt</a> – and mentioned Eclipse’ Aether library, since migrated to Apache under the <a href="https://maven.apache.org/resolver/">maven-resolver</a> project.</p>
+</li>
+<li>
+<p>More Java 9 shenanigans: Java EE modules – including CORBA, specifically – aren’t <a href="https://www.infoq.com/news/2016/06/corba-removed-java-9">part of the unnamed module in Java 9</a>. This comes to us courtesy of InfoQ, which pointed out CORBA specifically – CORBA being harder to reach isn’t really a big deal, I’d think, because nobody’s intentionally dealt with it who hasn’t absolutely had to. And it’s not really a Java EE module, really, so pointing out the removal along with Java EE is accurate but misleading. What does this mean? Well, if you’re using one of the nine modules removed, you’re likely to have to include flags at compilation and runtime to make these modules visible for your app. (See http://openjdk.java.net/jeps/320 for the actual Java Enhancement Proposal.)</p>
+</li>
+<li>
+<p>There’s a Java Enhancement Proposal for <a href="http://openjdk.java.net/jeps/8196004">multiline strings</a>. It’s in draft, but has Brian Goetz’ support; this is one of those features that Java doesn’t have that’s left people wondering why for a long time, I think – every other JVM language seems to include it. This doesn’t come up <em>very</em> often – if it was actually all that critical it would have been done a long time ago – but it’ll be nice to see it when (and if) it does make it into Java. It’s done with backticks; it does not use interpolation. Interesting, though.</p>
+</li>
+<li>
+<p>Baeldung has an article called “<a href="http://www.baeldung.com/trie-java">The Trie Data Structure in Java</a>,” which, well, presents a Trie. It’s a good article, and explains the data structure really well – but doesn’t explain why you’d use a Trie as opposed to some other similar data structures. Tries represent a tradeoff between data size and speed; Tries tend to be incredibly fast while being more memory-hungry than some of their counterparts. Incidentally: there’s a question of pronunciation! “Trie” is typically pronounced the same was as “tree” is – while Joe pronounces it like “try” and struggled mightily to concede to peer pressure and say “tree.” Naturally, he was inconsistent about it; early pronunciation was in fact like “try” but, as stated, convention says “tree.” And it <em>is</em> a tree structure…</p>
+</li>
+<li>
+<p>Simon Levermann, sonOfRa on the channel, published a reference to his new <a href="https://github.com/sonOfRa/pwhash">pwhash</a> project, a result of a series of discussions that seem to have gone on for a few weeks on the channel. It’s a password hashing library; it provides a unified interface to a set of hashing algorithms, like argon2 and bcrypt.</p>
+</li>
+</ol>

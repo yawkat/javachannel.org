@@ -1,0 +1,59 @@
+---
+title: "How to execute a group of tasks"
+date: "2014-09-08 08:08:19 -0400"
+author: "dreamreal"
+categories:
+  - "java-coding"
+tags:
+  - "executor"
+  - "java-8"
+  - "multithread"
+  - "stream"
+  - "synchronization"
+wp-id: 136
+wp-guid: "http://javachannel.org/?p=136"
+---
+
+<p>Someone on the channel today asked about how to run a series of tasks, with a terminal condition of sorts. Basically, they wanted to run a number of tasks, and know when they were done.<br />
+The question was originally built around having a <code>List</code> of results (<code>List&lt;integer&gt;</code>, maybe?), counting the number of results until the number of results matched the number of tasks.<br />
+The channel suggested using an <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html"><code>ExecutorService</code></a>, particularly the <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html#shutdown--"><code>shutdown()</code></a> and <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html#awaitTermination-long-java.util.concurrent.TimeUnit-"><code>awaitTermination()</code></a> methods, with another suggestion being <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html#invokeAll-java.util.Collection-"><code>invokeAll()</code></a> – which seemed particularly apt because the person asking didn’t want to have to build a new <code>ExecutorService</code> over and over again (which the <code>shutdown()</code> call would necessitate, although the cost of doing this shouldn’t be very high.)<br />
+Here’s an example with Java 8, of using the <code>invokeAll()</code> to execute a series of tasks; the task is made-up (it basically rolls three six-sided dice to determine a histogram of results, as a callback to <a href="http://en.wikipedia.org/wiki/Dungeons_%26_Dragons">Dungeons and Dragons</a>). It has one dependency, on Apache’s <a href="https://commons.apache.org/proper/commons-lang/">commons-lang3</a>.</p>
+<pre>package org.javachannel.examples.executors;
+import org.apache.commons.lang3.StringUtils;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.locks.LockSupport;
+import java.util.stream.IntStream;
+class Worker implements Callable<integer> {
+    int roll() {
+        LockSupport.parkNanos((long) (Math.random() * 10000000));
+        return (int) (Math.random() * 6) + 1;
+    }
+    @Override
+    public Integer call() throws Exception {
+        return roll() + roll() + roll();
+    }
+}
+public class Main {
+    public static void main(String[] args) throws InterruptedException {
+        List<worker> workerList = new ArrayList<>();
+        IntStream.range(0, 100000).forEach(i -> workerList.add(new Worker()));
+        ExecutorService service = Executors.newCachedThreadPool();
+        int[] count = new int[19];
+        service.invokeAll(workerList).stream().map(f -> {
+            try {
+                return f.get();
+            } catch (Throwable e) {
+                return 0;
+            }
+        }).forEach(m -> count[m]++);
+        IntStream.rangeClosed(3, 18).forEach(r -> {
+            System.out.printf("%02d %s%n", r, StringUtils.repeat("*", count[r]/100));
+        });
+    }
+}</worker></integer></pre>
+<p>This code creates a list of tasks, populates it, and then submits all of them in one call (<code>service.invokeAll(workerList)</code>), then uses the Stream API to populate the array of results. It looks a little more complicated than it should because of the lambda to pull the <code>int</code> out of the <code>Future&lt;/integer&gt;&lt;integer&gt;</code>, which is what return value for <code>call()</code> becomes when it’s submitted to the <code>Executor</code>.<br />
+It’s not a perfect example; surely others can come up with better examples. Feel free to submit them!</p>

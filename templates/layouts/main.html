@@ -1,0 +1,26 @@
+---
+theme-layout: main
+---
+
+{#head}
+{#if page.data.wp-id-redirects??}
+<script>
+  // Old WordPress links to /?p=<id> and /?page_id=<id>
+  (function () {
+    var m = /[?&](?:p|page_id)=(\d+)/.exec(location.search);
+    if (!m) return;
+    var ids = {};
+    {#for e in cdi:wp-ids.ids.fieldNames}ids["{=e}"] = "{=cdi:wp-ids.ids.getString(e)}";
+    {/for}
+    if (ids[m[1]]) location.replace(ids[m[1]]);
+  })();
+</script>
+{/if}
+{/head}
+
+{#insert /}
+
+{#footer}
+<p><a href="{=site.url.relative}">{=site.title}</a> &middot; {=site.description}</p>
+<p>Powered by <a href="https://iamroq.com" target="_blank">Roq</a></p>
+{/}

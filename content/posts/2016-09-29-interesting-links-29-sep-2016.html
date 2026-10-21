@@ -1,0 +1,48 @@
+---
+title: "Interesting Links – 29 Sep 2016"
+date: "2016-09-29 06:21:00 -0400"
+author: "dreamreal"
+categories:
+  - "channel-news"
+tags:
+  - "classpath"
+  - "data"
+  - "fake"
+  - "finally"
+  - "jsimpledb"
+  - "persistence"
+  - "scan"
+  - "specification"
+  - "try"
+wp-id: 659
+wp-guid: "http://javachannel.org/?p=659"
+---
+
+<ul>
+<li>The <a href="https://github.com/ronmamo/reflections">reflections</a> project scans your classpath, indexes the metadata, allows you to query it on runtime and may save and collect that information for many modules within your project.</li>
+<li>“<a href="http://www.pixelstech.net/article/1474892842-try-%7B-return-%7D-finally-%7B%7D">try { return } finally {}</a>” demonstrates what happens when a <code>finally</code> block modifies a reference that’s being returned in the <code>try</code> block. It’s rather interesting.</li>
+<li>Need to generate fake data? <a href="https://github.com/DiUS/java-faker">https://github.com/DiUS/java-faker</a> to the rescue. It’s a port of a popular Ruby GEM; this is not the only implementation, but it serves.</li>
+<li>User Anthaas offered this <a href="https://javabot.evanchooly.com/logs/%23%23java/2016-09-28#57ebce5c0a975a3175946f0c">gem</a>: “You’ll find most of the people who waste a large amount of time on something simple do so because they are fixated on fixing their solution, rather than finding a solution that works.”</li>
+<li>User liste pointed out <a href="https://github.com/archiecobbs/jsimpledb">JSimpleDB</a>, a project that says it is a “a better persistence layer for Java.” Basically, it provides a transactional access layer for various data stores (SQL databases, NoSQL data stores) as key/value stores, with quite a laundry list of features copied from the project home page:
+<ul>
+<li>Encoding/decoding of field values</li>
+<li>Enforcing referential integrity; forward/reverse delete cascades</li>
+<li>Field indexes (simple and composite)</li>
+<li>Query views</li>
+<li>Schema management</li>
+<li>Change notification</li>
+<li>Validation queues</li>
+<li>Command line interface</li>
+<li>Designed from the ground up to be Java-centric; 100% type-safe at all times.</li>
+<li>Works on top of any database that can function as a key/value store (SQL, NoSQL, etc.)</li>
+<li>Scales gracefully to large data sets; no “whole database” operation is ever required</li>
+<li>Configured entirely via Java annotations (only one is required)</li>
+<li>Queries are regular Java code – there is no “query language” needed</li>
+<li>Change notifications from arbitrarily distant objects</li>
+<li>Built-in support for rolling schema changes across multiple nodes with no downtime</li>
+<li>Supports simple and composite indexes, including on user-defined custom types</li>
+<li>Extensible command line interface (CLI) including Java 8 expression parser</li>
+<li>Built-in Java-aware graphical user interface (GUI) based on Vaadin</li>
+</ul>
+</li>
+</ul>

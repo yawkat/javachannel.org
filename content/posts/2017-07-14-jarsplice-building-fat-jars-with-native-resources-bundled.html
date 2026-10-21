@@ -1,0 +1,26 @@
+---
+title: "JarSplice: building fat jars with native resources bundled"
+date: "2017-07-14 10:02:12 -0400"
+author: "dreamreal"
+categories:
+  - "channel-news"
+  - "java-coding"
+tags:
+  - "fat-jar"
+  - "gradle"
+  - "maven"
+  - "shade"
+wp-id: 903
+wp-guid: "http://javachannel.org/?p=903"
+---
+
+<p><a href="http://ninjacave.com/jarsplice">JarSplice</a> is an application that builds a fat jar, with the main difference being that JarSplice will build invocation scripts and include <em>native resources</em>.<br />
+The main weaknesses of JarSplice seems to be its lack of build tool integration, its (apparently) unmaintained status, and its lack of source code availability (even though it’s described as being under the BSD license).<br />
+A “fat jar” (or a “shaded jar”) is a jar file that has been bundled with a project’s full set of required resources.<br />
+To explain, imagine that we have a Java project called “<code>foo</code>“, that depends on an external project, called “<code>bar</code>.”<br />
+For <code>foo</code> to run properly, then, our runtime classpath must contain <code>foo.jar:bar.jar</code> (in some order, although the order can be significant); both files must be present for the classloader to read in order for the project to run.<br />
+A “fat jar,” however, includes <em>all</em> of the resources from the classpath in a single jar. The build would extract every class from both <code>foo.jar</code> and <code>bar.jar</code> and built a <em>new</em> jar – named, for example, <code>foo-all.jar</code> – and therefore <em>only</em> this file would be required in order to run the project, since it has every resource that the prior classpath held.<br />
+However, this only works for <em>Java</em> resources; it doesn’t include native resources, like <a href="https://www.lwjgl.org/">LWJGL</a>‘s or <a href="https://www.sqlite.org/">SQLite</a>‘s binary components. If <code>foo</code> uses SQLite, then the computer that <code>foo</code> is running on has to have SQLite deployed as a system library in order for <code>foo</code> to run.<br />
+This is what JarSplice addresses; it <em>does</em> bundle SQLite or LWJGL resources into the fat jar.<br />
+Again, the main weakness of JarSplice is that it’s not integrated into a build tool, so invoking it is an external mechanism for deployment. Development seems to have stopped (the home page says the code is BSD-licensed but no reference to the code exists.) <a href="https://github.com/lquesada">Luis Quesada Torres</a> built a command-line tool, <a href="https://github.com/lquesada/JarSplicePlus">JarSplicePlus</a>; there are forks of <em>that</em> project that seem like there’s some promise for the future.<br />
+Feel free to participate and comment.</p>

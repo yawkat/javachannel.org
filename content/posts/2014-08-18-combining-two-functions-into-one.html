@@ -1,0 +1,49 @@
+---
+title: "Combining two functions into one"
+date: "2014-08-18 08:16:50 -0400"
+author: "egk9xj7yj"
+categories:
+  - "java-coding"
+tags:
+  - "java-stream-function"
+  - "java8"
+  - "streams"
+wp-id: 90
+wp-guid: "http://javachannel.org/?p=90"
+---
+
+<p>Every now and then, you may want to apply one function to only some of the elements in your stream.<br />
+This is not so much an example of manipulating streams but rather of combining two functions into one with a predicated dictating which function to apply. In concrete terms, we will create a stream of the integers in the range 0 through 10 (non-inclusive), multiply the even numbers by two and add one, then finally display the result.<br />
+The first function, or <code>IntUnaryOperator</code> – as it takes and returns one <code>int</code> – (slightly contrived use of <code>andThen</code> and <code>compose</code>) – looks like this:</p>
+<pre><code class="language-java">IntUnaryOperator f = IntUnaryOperator.identity()
+   .andThen(i -&gt; i + 1)
+   .compose(i -&gt; 2 * i);</code></pre>
+<p>The second function is just the identity:</p>
+<pre>IntUnaryOperator g = IntUnaryOperator.identity();</pre>
+<p>The predicate, or just a function taking an <code>int</code> and returning a <code>boolean</code>, was to do something for the even integers:</p>
+<pre><code class="language-java">IntPredicate p = (i -&gt; i % 2 == 0);</code></pre>
+<p>One way of combining the two functions is close to the lines of “if the value is <em>this</em>, do <em>that</em> to the value and return it, else do <em>something else</em> to the value and return it:”</p>
+<pre><code class="language-java">IntUnaryOperator m = (i -&gt; (p.test(i)
+   ? f.applyAsInt(i)
+   : g.applyAsInt(i)));</code></pre>
+<p>So now we can map the integers by</p>
+<pre><code class="language-java">IntStream.range(0, 10)
+   .map(m)
+   .forEach(System.out::println);</code></pre>
+<p>However, instead of creating a function taking and returning an integer we could create a function taking an integer and returning a function (which then take and return an integer):</p>
+<pre><code class="language-java">IntFunction&lt;IntUnaryOperator&gt; mm = (i -&gt; p.test(i) ? f : g);</code></pre>
+<p>This looks a bit nicer, but applying it to the stream gets messy:</p>
+<pre><code class="language-java">IntStream.range(0, 10)
+    .map(i -&gt; mm.apply(i).applyAsInt(i))
+    .forEach(System.out::println);</code></pre>
+<p>It might make be more sensible to just skip the intermediate step and write:</p>
+<pre><code class="language-java">IntStream.range(0, 10)
+    .map(i -&gt; (p.test(i) ? f : g)
+    .applyAsInt(i))
+ .forEach(System.out::println);</code></pre>
+<p>.. which is also a way to get around the problem of prepending or appending the functions <code>f</code> or <code>g</code>:</p>
+<pre><code class="language-java">IntStream.range(0, 10)
+    .map(i -&gt; (p.test(i) ? f : g.andThen(j -&gt; j + 100))
+       .applyAsInt(i))
+ .forEach(System.out::println);</code></pre>
+<p><a title="Let the reader beware">Caveat lector</a>: There are probably much cleaner and more sensible ways to do this. Feel free to suggest alternatives!</p>

@@ -1,0 +1,29 @@
+---
+title: "EJB Injection in JSP with Java EE 7"
+date: "2016-11-21 07:31:37 -0500"
+author: "dreamreal"
+categories:
+  - "channel-news"
+  - "java-coding"
+tags:
+  - "ejb"
+  - "freemarker"
+  - "handlebars"
+  - "java-ee"
+  - "java-ee-7"
+  - "jsp"
+  - "servlet"
+  - "servlets"
+wp-id: 764
+wp-guid: "http://javachannel.org/?p=764"
+---
+
+<p>User <code>suexec</code> asked ##java about accessing an EJB from a JSP template.<br />
+User <a href="http://enigmastation.com/"><code>dreamreal</code></a> (i.e., your author) put together a simple application (rather imaginatively called “<a href="https://github.com/jottinger/suexec-war"><code>suexec-war</code></a>” ) to explore the possibilities. The application was built from <a href="http://www.adam-bien.com/roller/abien/">Adam Bien</a>‘s <a href="http://www.adam-bien.com/roller/abien/entry/setting_up_java_ee_7">minimalistic Java EE 7 Maven archetype</a>, deployed into <a href="http://wildfly.org/">Wildfly</a> 10.0.<br />
+It turns out that to the best of my understanding, injection of an EJB into a JSP is simply unsupported. The JSP can use JNDI to acquire an EJB via JNDI (see <a href="https://github.com/jottinger/suexec-war/blob/master/src/main/webapp/test.jsp#L8-L11">source</a>) but the <a href="https://github.com/jottinger/suexec-war/blob/master/src/main/webapp/test.jsp#L7">CDI injection</a> never worked.<br />
+<a href="/wp-content/uploads/2016/11/suexec-jsp.png"><img class="alignnone wp-image-769 size-full" src="/wp-content/uploads/2016/11/suexec-jsp.png" width="668" height="280" /></a><br />
+Next, I wrote a simple servlet (called, of all things, <a href="https://github.com/jottinger/suexec-war/blob/master/src/main/java/com/autumncode/suexec/servlet/TestServlet.java"><code>TestServlet.java</code></a>). Here, the <a href="https://github.com/jottinger/suexec-war/blob/master/src/main/java/com/autumncode/suexec/servlet/TestServlet.java#L23-L24"><code>@EJB MyEJB ejb</code></a> worked like a charm.<br />
+<a href="/wp-content/uploads/2016/11/suexec-servlet.png"><img class="alignnone wp-image-769 size-full" src="/wp-content/uploads/2016/11/suexec-servlet.png" width="668" height="280" /></a><br />
+To render, I <a href="https://github.com/jottinger/suexec-war/blob/master/src/main/java/com/autumncode/suexec/servlet/TestServlet.java#L29-L36">used</a> the <a href="https://github.com/jknack/handlebars.java">Handlebars</a> template library just for kicks; <a href="http://freemarker.org/">Freemarker</a> (or even JSP itself) would have worked just as well, but I wanted to play with something different.<br />
+The process would have been the same no matter what templating library was chosen: you’d take the values you wanted to render and store them somewhere such that the rendering engine could access them. In my case, I could have built a composite object (or even asked Handlebars to call the <code>greet()</code> method itself, using the <code>ejb</code> value) but I was aiming for simplicity rather than optimal behavior, following whaley’s “Make it work, make it pretty, make it fast” principle (from “<a href="http://nathanmarz.com/blog/suffering-oriented-programming.html">Suffering-oriented programming</a>” )- this is rough code, meant to serve more as a smoke test than an actual example of a great application, so I left off at “make it work,” leaving even “make it pretty” to others.<br />
+Comments and improvements welcomed.</p>

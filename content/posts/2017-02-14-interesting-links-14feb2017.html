@@ -1,0 +1,45 @@
+---
+title: "Interesting Links – 14-Feb-2017"
+date: "2017-02-14 08:16:55 -0500"
+author: "dreamreal"
+categories:
+  - "channel-news"
+tags:
+  - "actor"
+  - "actors"
+  - "asciidoc"
+  - "asciidoctor"
+  - "dexy"
+  - "documentation"
+  - "imageio"
+  - "java-9"
+  - "java-ee"
+  - "json"
+  - "scala"
+wp-id: 800
+wp-guid: "http://javachannel.org/?p=800"
+---
+
+<ul>
+<li>From DZone: <a href="https://dzone.com/articles/distributed-systems-done-right-embracing-the-actor-model">Distributed Systems Done Right: Embracing the Actor Model</a> is a reference to a webinar (ugh, “webinar”) from <a href="https://www.lightbend.com/">Lightbend</a> on, well, the <a href="https://en.wikipedia.org/wiki/Actor_model">Actor Model</a>, a way of representing distributed services. Powerful model, even if you don’t use Actors as described.</li>
+<li><a href="https://github.com/haraldk/TwelveMonkeys">TwelveMonkeys</a> is a set of additional plug-ins and extensions for Java’s <a href="http://docs.oracle.com/javase/8/docs/api/javax/imageio/ImageIO.html">ImageIO</a>. It includes BMP, TIFF, JPEG, PNM, and a few others.</li>
+<li>From user u1dzer0: <a href="http://mrhaki.blogspot.com/2014/04/awesome-asciidoc-include-partial-parts.html">Awesome Asciidoctor: Include Partial Parts from Code Samples</a> describes how <a href="http://asciidoctor.org/">AsciiDoctor</a> can extract, well, partial code samples from a block of code. Given Java’s verbosity (not a bad thing, but a still thing that many people don’t like), having a way to ignore code can help focus on relevance. (Also see: <a href="http://www.dexy.it/">Dexy</a>.)</li>
+<li><a href="http://adambien.blog/roller/abien/entry/json_is_the_new_dto">JSON is the new Data Transfer Object</a> is a short reference to <a href="http://json.org">JSON</a> – Javascript Object Notation – in Java EE. JSON is becoming one of the more popular serialization formats (and I use “becoming” sarcastically – it’s very popular already). For better or for worse, it’s time. This isn’t a <em>long</em> article, nor is it very deep – but it touches on something that’s become more and more important over time.</li>
+<li><a href="https://medium.com/sitepoint/the-deadly-diamond-of-death-in-java-9s-module-system-3ccc6e3e61b1#.dkxsnw8xt">The Deadly Diamond Of Death In Java 9’s Module System</a> discusses a problem Java 9 has with <em>automatic modules</em>, when a dependency has two names but one resolution path. (Confused? Read the article – it describes it better than I do, but at much more length.)</li>
+</ul>
+<h1>An Aside About Scala</h1>
+<p>A mailing list that was pretty popular back in the day recently had some activity asking about Java 8. The discussion itself was a little bit interesting, including a reference here and there to other languages… like <a href="http://scala-lang.org/">Scala</a>. Kirk Pepperdine wrote <a href="https://groups.yahoo.com/neo/groups/straight_talking_java/conversations/messages/63086">a post</a> that absolutely riveted Your Humble Author, and may have actually convinced him to stop bothering with Scala except where absolutely necessary. I’d like to quote it here, since Yahoo!’s web page formats things poorly sometimes:</p>
+<blockquote><p>
+  I personally don’t feel that Scala offers any advantages over Java. If you take away the opinions on style, I’d argue that moving to Scala actually leaves you at a slight disadvantage. First, point, the JVM support for languages other than Java was quite poor until Nashorn. Nashorn was actually 2 separate projects. One to get JS running in the JVM and the second was to refactor the JVM to isolate the APIs needed to support alternate languages. Scala hasn’t been able to take advantage of those changes as of yet and I’m not sure they are interested in doing so. Next is tool support. The Java tooling chain is and remains quite broken in 8. I fear that this situation will get slightly better in 9 but then changes there will batter the tooling china quite badly. Unless the Scala people step up to the plate (and there is no evidence of them doing so to date), the dismal state of the tooling chain in Scala will continue to get worse. I currently see very little motivation for companies to invest in the work needed to improve the tooling in Scala. Though I see that this might change, every time I’ve previously thought it might get better, something in the market changes and Scala takes a hit and things don’t get better so my track record on predicting this is admittedly very poor. But then I’m predicting improvements in this area and they’ve simply not happened.<br />
+  What makes me more hopeful is that I know of a couple of very big projects running in stealth that are based on Scala. These projects are big enough that they’ve really been hurt by the weak tooling story in Scala and I imagine or can only hope that they will start to look at fixing the problems they are facing. Many of these problems are baked into the JVM so to fix them, we need to further fix the JVM’s support for alternate languages. The feeling I get coming from some JVM developers is that it’s the JVM that is past EOL. Maybe Graal will be the thing that replaced HotSpot… not sure… all I know is that the JVM is past due for a huge refactoring and simply don’t see anyone.. certainly not Oracle funding that effort.</p>
+<blockquote><p>
+    I’ve “played”with the new features and to be honest find the Scala implementations cleaner and easier to write and understand.
+  </p></blockquote>
+<p>  To say that Scala is less verbose than Java maybe true in the small but I’ve found it not to be so true in the large. Reachability in a language is very important and deserved or not, Scala as the reputation of not being so reachable and hence not so readable. IME, almost everyone one I know struggles with the readability of Scala even those that have been using it for quite some time. This is not to say that Scala code can’t be read, it’s simply that Scala code not naturally easily readable and hence people struggle with it.<br />
+  I think we had the same types of problems with Smalltalk. People resisted Smalltalk for some of the same reasons and in cases where C/C++ wasn’t so desirable we saw teams jumping to Java. In this era I think the current alternative to Java is Go. The buzz around Go is more marketing and hubris than reality but it has a buzz and level of activity that feels familiar to the buzz that we say with Java in it’s early days. Just like people kicked the tires and sniff around Smalltalk and then moved on, I get the same sense here with Scala.</p>
+<blockquote><p>
+    Java is starting to give under its own weight of patched-on features, IMHO.
+  </p></blockquote>
+<p>  On the contrary, I think that Brian has done a wonderful job integrating Streams and Lambda’s into Java. The only thing I can complain about that makes things a wee bit difficult is this aversion to mutable state. Fine if you don’t like mutable state but that streams make the mutable/immutable decision is an overreach on Brian’s part. It disallows a valid model that we need to work in. It’s different than how everything else works in the language.  Streams are inherently single threaded and thus concurrent modification of state is a concern that lies outside the internals of a Lambda expression. IOW, Java != Scala in that Scala had immutability baked into (just about) everything right from the beginning. Brian did consider these points when he designed Lambdas and he opted for his bias towards immutability.. so be it.. All I know if that Lambda’s <em>do</em> not feel like they are patched on to me. They feel like a natural part of the language… much better than the earlier proposals that were tabled. The work on ValueTypes and type inference is also focusing on making sure that the added features do not feel like bolted on bits and that they fit naturally into the current language. Brian’s idea was to create small changes in the language that have a huge impact on your code. While I don’t agree with all of his choices I do think he’s done a brilliant job.<br />
+  Regards, Kirk
+</p></blockquote>

@@ -1,0 +1,32 @@
+---
+title: "Caching All OkHttp Responses"
+date: "2018-02-09 07:48:43 -0500"
+author: "yawkat"
+categories:
+  - "java-coding"
+tags:
+  - "kotlin"
+  - "okhttp"
+wp-id: 1093
+wp-guid: "https://javachannel.org/?p=1093"
+---
+
+<p>When (integration) testing scrapers you need to strike a balance between “get as much input data as possible to cover parsing edge-cases” and “don’t DoS the backend, please”. Caching can help with that, and gives you a nice performance boost during testing on top.<br />
+The OkHttp http client library contains a cache built-in but by default it follows HTTP server caching headers. It also allows you to set a particular request to <em>always</em> use the cache, and error if the request isn’t present yet, but that is too harsh (we do want to fetch the first time after all). Turns out you can do both:</p>
+<pre>val cachedHttpClient = OkHttpClient.Builder()
+        .cache(Cache(File(".download-cache/okhttp"), 512 * 1024 * 1024))
+        .addInterceptor { chain -&gt;
+            chain.proceed(
+                    chain.request().newBuilder()
+                            .cacheControl(CacheControl.Builder()
+                                    .maxStale(Integer.MAX_VALUE, TimeUnit.SECONDS)
+                                    .build())
+                            .build()
+            )
+        }
+        .addNetworkInterceptor { chain -&gt;
+            log.info("Fetching {}", chain.request().toString())
+            chain.proceed(chain.request())
+        }
+        .build()!!</pre>
+<p>This is kotlin code, but you get the point.</p>

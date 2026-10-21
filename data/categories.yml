@@ -1,0 +1,12 @@
+channel-news:
+  name: "channel news"
+java-coding:
+  name: "java coding"
+news:
+  name: "news"
+podcast:
+  name: "podcast"
+security:
+  name: "security"
+uncategorized:
+  name: "Uncategorized"

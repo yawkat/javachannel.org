@@ -1,0 +1,83 @@
+---
+title: "LinkedList vs. ArrayList"
+date: "2017-04-25 09:38:22 -0400"
+author: "dreamreal"
+categories:
+  - "java-coding"
+tags:
+  - "arraylist"
+  - "linkedlist"
+  - "performance"
+wp-id: 833
+wp-guid: "http://javachannel.org/?p=833"
+---
+
+<p>Recently, <a href="http://www.thejavaprogrammer.com/">The Java Programmer</a> published “<a href="http://www.thejavaprogrammer.com/difference-between-arraylist-and-linkedlist/">Difference between ArrayList and LinkedList in Java</a>“, asserting different cases of when to prefer one <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html"><code>List</code></a> implementation over another. It’s a link full of conventional wisdom, and while it has some good information, it’s also wrong.<br />
+Here’s the channel’s <a href="https://javabot.evanchooly.com/factoids?name=linkedlist">factoid</a> on <a href="https://docs.oracle.com/javase/8/docs/api/java/util/LinkedList.html"><code>LinkedList</code></a>, as of 2017/Apr/25 (prior to it having been changed to point to the page you’re reading):</p>
+<blockquote><p>
+  LinkedList is almost always slower than ArrayList/ArrayDeque. It might be best to use ArrayList/ArrayDeque to start. But if you have an actual performance problem, you can compare the two for your specific case. Otherwise, just use ArrayDeque. (It too has O(1) performance for insert-at-beginning, and unlike LinkedList is actually fast).
+</p></blockquote>
+<h2>Implementation</h2>
+<p>The “Difference” page says that <a href="https://docs.oracle.com/javase/8/docs/api/java/util/LinkedList.html"><code>ArrayList</code></a> uses an internal array to represent stored objects, while a <code>LinkedList</code> uses a doubly-linked list internally. In this, it’s correct.</p>
+<h2>Searching</h2>
+<p>The next point of comparison is entitled “Searching.” Here’s what it says about <code>ArrayList</code>:</p>
+<blockquote><p>
+  An elements can be retrieved or accessed in O(1) time. ArrayList is faster because it uses array data structure and hence index based system is used to access elements.
+</p></blockquote>
+<p>And about <code>LinkedList</code>:</p>
+<blockquote><p>
+  An element can be accessed in O(N) time. LinkedList is slower because it uses doubly linked list and for accessing an element it iterates from start or end (whichever is closer).
+</p></blockquote>
+<p>First off, in the interest of honesty, the last bit of information – that it iterates from either forward or backward, depending on which is closer – was a surprise to me (although it’s perfectly logical.) It’s also <a href="http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/8u40-b25/java/util/LinkedList.java#LinkedList.node%28int%29">accurate</a>.<br />
+However, this isn’t <em>searching</em> – it’s element access. Access and searching are different things; it’s <code>get(42)</code> vs. <code>list.contains(matchingObject)</code>. This is important; <code>contains()</code> will have O(N) time for <em>either</em> <code>List</code> implementation, whereas <code>ArrayList</code> will have O(1) for <code>get()</code>, and <code>LinkedList</code> will have O(N) for <code>get()</code>.<br />
+The thing is: <code>LinkedList</code> is <em>not only</em> O(N) for <code>get()</code> but the nature of the internal implementation makes it slower than one might think, because of cache locality. In an <code>ArrayList</code>, the element references are stored sequentially in memory; a <code>LinkedList</code> potentially splatters the references all over the heap. (This is not entirely likely, but it’s possible.) Thus, a <code>LinkedList</code> not only has O(N) performance for indexed access (where the <code>ArrayList</code> has O(1)), but the O(N) is worse than one might expect.<br />
+For accessing elements, there’s no situation apart from accessing the first or last element where a <code>LinkedList</code> competes with an <code>ArrayList</code>‘s speed.</p>
+<blockquote><p>
+  Note that programming hates absolutes. It’s fully possible to create situations in which that last claim is not entirely true… but they’re rare and unlikely.
+</p></blockquote>
+<h2>Insertion</h2>
+<p>About <code>ArrayList</code>:</p>
+<blockquote><p>
+  Normally the insertion time is O(1). But in case array is full then array is resized by copying elements to new array, which makes insertion time O(N).
+</p></blockquote>
+<p>And about <code>LinkedList</code>:</p>
+<blockquote><p>
+  Insertion of an element in LinkedList is faster, it takes O(1) time.
+</p></blockquote>
+<p>Incomplete data is provided here. For one thing, the author conflates mutation with “insertion.” There are two different kinds of additive list mutations (where data is added to a <code>List</code>): insertion (meaning that elements are prepended to other elements) and addition (where an element “follows” the last element in the list prior to mutation.)<br />
+Where the elements go as part of the additive mutation is <em>really</em> important, and it’s also important to note that the claim of <code>LinkedList</code>‘s O(1) time is very much a <em>single</em> type of insertion.<br />
+For an <code>ArrayList</code>, a list append (i.e., calling <code>add()</code>, which adds the provided element at the end of the list) has O(N) performance, but <em>typically</em> has O(1) performance. The O(N) complexity is because the internal array size might be exceeded by the addition of the element, in which case a new internal array is allocated, and the array references are copied over to the new internal array, and <em>then</em> the new element is appended. Thus, in the worst case, it <em>is</em> O(N), but this is misleading because:</p>
+<ol>
+<li>It’s fairly rare (the list resizes with a formula of <code>currentSize*1.5</code> (the <a href="http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/8u40-b25/java/util/ArrayList.java#255">actual line</a> is <code>int newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1);</code>, if you’re interested.)</li>
+<li>Java’s blits are very, very, very fast; Java uses the blit mechanism constantly, and let’s be real, modern CPUs are really good at this anyway.</li>
+</ol>
+<p>So is it actually O(N), then? … given what conventional Big O notation means, yes, it is; it’s just that O(N) is a lot less expensive than one might think in this case. And typically, the <code>add()</code> will be O(1) in actuality.<br />
+But what about <code>LinkedList</code>?<br />
+Insertion at the beginning or the end of the list is, in fact, O(1). This is even the common case (<a href="http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/8u40-b25/java/util/LinkedList.java#337"><code>add(Object)</code></a> calls <code>linkLast(Object)</code> by default.) However, if positional notation is used <em>at all</em> (i.e., <code>add(int, Object)</code> you degrade to O(N), because the LinkedList has to find the position at which the new element has to be inserted – and finding that position is O(N).<br />
+So what’s the conclusion? <code>ArrayList</code> does in fact have O(N) performance for adds, but it’s close enough to O(1) in real world conditions that we can colloquially speak of it being likely as fast as <code>LinkedList</code>‘s similar case… and if we add any kind of positional insertion, <code>ArrayList</code>‘s degradation under the worst case is far better than <code>LinkedList</code>‘s degradation.<br />
+As usual, we can create situations under which this is not the case (for example, if we always insert <em>after</em> the first position in a <code>LinkedList</code>, which will “search” one element and only that element) but these are fairly rare.</p>
+<h2>Deletion</h2>
+<p>Let’s see about <code>ArrayList</code>:</p>
+<blockquote><p>
+  Deletion of an element is slower as all the elements have to be shifted to fill the space created by deleted element.
+</p></blockquote>
+<p>And <code>LinkedList</code>:</p>
+<blockquote><p>
+  Deletion of an element is faster in LinkedList because no elements shifting are required.
+</p></blockquote>
+<p>Well, um, no.<br />
+Here, the author is confusing <em>complexity</em> – big O notation – with <em>speed</em>, for <code>ArrayList</code>. (He or she is wrong about <code>LinkedList</code> in any event.)<br />
+For an <code>ArrayList</code>, deleting an element by index is indeed O(N) because the JVM does have to blit the elements after the removed element (it has to shift them all in the internal array.)<br />
+However, for a <code>LinkedList</code>, it also has to <em>find</em> the elements around the element to remove – and if you recall, accessing a specific element for a <code>LinkedList</code> is an O(N) complexity itself. Even though the <em>removal</em> is simple (it’s simply relinking the nodes before and after the removed element), actually <em>finding</em> those nodes is O(N), thus deletion is O(N) for LinkedList – and slower than <code>ArrayList</code>, to boot.</p>
+<h1>Memory and Initial Capacity</h1>
+<p>The author says that an <code>ArrayList</code> has a default internal capacity of 10. This is incorrect for Java 8. See <a href="http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/8u40-b25/java/util/ArrayList.java?av=f#164">this code</a>.<br />
+For the rest of it, the author is correct; a <code>LinkedList</code> is “empty” (there are no linked nodes internally); an <code>ArrayList</code> has <code>capacity</code> references in the internal list, while a <code>LinkedList</code> has a chain of objects, which will have higher memory consumption, but that’s not likely to matter unless your lists are <em>huge</em>.</p>
+<h1>The Comparison’s Conclusion</h1>
+<blockquote>
+<ul>
+<li>As search or get operation is faster in ArrayList so it is used in the scenario where more search or get operations are required.</li>
+<li>As insertion or deletion of an element is faster in LinkedList so it is used in the scenario where more insertion and deletion operations are required.</li>
+</ul>
+</blockquote>
+<p>The thing that the conclusion is missing is that “insertion and deletion” operations in <code>LinkedList</code> typically involve searches and gets – which are terrible for <code>LinkedList</code> – and therefore for even the operations that <code>LinkedList</code> is <em>potentially</em> better, <code>ArrayList</code> will typically perform better.<br />
+The factoid stands. If you need a <code>List</code>, use <code>ArrayList</code> first, then <code>ArrayDeque</code> if your access patterns demand… use <code>LinkedList</code> only after exhausting other possibilities.</p>

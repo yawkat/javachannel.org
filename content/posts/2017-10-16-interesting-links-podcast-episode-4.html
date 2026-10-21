@@ -1,0 +1,48 @@
+---
+title: "Interesting links podcast, episode 4"
+date: "2017-10-16 09:16:51 -0400"
+author: "dreamreal"
+categories:
+  - "channel-news"
+  - "podcast"
+tags:
+  - "android"
+  - "baeldung"
+  - "benchmarking"
+  - "buck"
+  - "cache"
+  - "caffeine"
+  - "ehcache"
+  - "excelsior"
+  - "gradle"
+  - "guava"
+  - "jet"
+  - "jooq"
+  - "kotlin"
+  - "maven"
+  - "openjdk"
+  - "podcast"
+  - "podcast-4"
+  - "security"
+  - "windows"
+  - "wpa2"
+  - "zulu"
+enclosure: "/wp-content/uploads/2017/10/javachannel-4.mp3"
+enclosure-length: 15398478
+show-enclosure: true
+wp-id: 939
+wp-guid: "http://javachannel.org/?p=939"
+---
+
+<p>Welcome to the fourth ##java podcast. I’m <a href="https://enigmastation.com">Joseph Ottinger</a>, <a href="mailto:dreamreal@gmail.com">dreamreal</a> on the IRC channel, and it’s Monday, 2017 October 16.<br />
+This podcast covers news and interesting things from the ##java IRC channel; if you see something interesting that’s related to Java, feel free to submit it to the channel bot, with <code>~submit</code> and a URL to the interesting thing, or you can also write an article for the channel blog as well; I’m pretty sure that if it’s interesting enough to write about and post on the channel blog, it’s interesting enough to include in the podcast.</p>
+<ol>
+<li>Worth noting, not because it’s Java-related but because we’re all on the same Internet: there’s a <a href="https://www.krackattacks.com/">security vulnerability with WPA2</a>, the wireless encryption used by, well, pretty much everyone. Check your routers for security patches; if they’re not available, they should be soon, and if they’re not available soon, consider getting a good router.</li>
+<li><a href="http://www.informit.com/store/effective-java-9780134685991">Effective Java</a> is one of the recommended books from the channel regulars; it covers a lot of things that affect efficiently written Java. However, Josh Bloch is working on an update for the third edition of <a href="http://www.informit.com/store/effective-java-9780134685991">Effective Java</a>. It’s available for pre-order. Highly recommended; Josh Bloch is one of the people who <em>really</em> knows Java, to the point where he says he can write code in Java such that he can influence how the JIT works, to make it more efficient than code mere mortals like you or I would write. So when he has a book on writing effective Java, it’s probably pretty authoritative.</li>
+<li>Facebook apparently uses their own build system, called “<a href="https://buckbuild.com/">Buck</a>.” It’s supposedly really fast; it apparently supports a <em>lot</em> of languages, which is a good thing; it does not, however, use the same build structure for source that <a href="https://maven.apache.org/">Maven</a> and <a href="https://gradle.org/">Gradle</a> use. That’s sort of okay; the Maven convention (which is what Gradle uses) is idiomatic in Java only because Maven itself became idiomatic, but it’s still something to consider if you’re moving to something different. My thought is that Buck might be cool but in a java-centric project, it’s probably not of sufficient interest to really move the needle. I looked; I considered; I moved on, seeing nothing really compelling in the description or tutorial that made me think “Wow!” like I did with, well, both Maven and Gradle, both of which I use regularly.</li>
+<li><a href="https://www.excelsiorjet.com">Excelsior JET</a> – who makes an ahead-of-time compiler for the JVM, so you can deploy your Java applications as native binaries – has an interesting post called “<a href="https://www.excelsiorjet.com/blog/support-stories/the-folder-of-god/">The Folder of God</a>.” No, it’s not a religious post, although religious fervor might be involved if you hate Windows enough. Basically, there’s a way to create a folder in Windows such that Java programs running from that folder will crash, every time. (I don’t know why you’d actually do that in practice.) It’s an actual Java bug, not an Excelsior bug – but Excelsior experiences the bug nonetheless. It’s apparently been addressed in the Java sources, but your JVM might not be updated with the fix. It’s fascinating reading, even if only to make you glad you’re not using Windows. </li>
+<li>A <a href="https://realm.io/realm-report/2017-q4/">report</a> by <a href="https://realm.io">realm.io</a> suggests that “Java (on Android) is dying. There aren’t simply more <a href="https://kotlinlang.org/">Kotlin</a> builders: they’re also switching their apps to Kotlin. In fact, 20% of apps built with Java before Google I/O are now being built in Kotlin. Kotlin may even change how Java is used on the server, too.” As a Kotlin user myself, I can say that the transition to Kotlin in dreamreal-land is progressing rather nicely… but what’s more relevant is that Kotlin on Android <em>is</em> increasing momentum, and that may very well drive server-side development as well, as there’s a strong tendency to be homogenous even if interoperability between languages like Kotlin and Java is quite strong. The channel recently had a discussion about Java’s checked exceptions, a feature Kotlin doesn’t share (because nobody really likes checked exceptions and the JVM itself doesn’t have them – they’re a <code>javac</code> thing, not a JVM thing); checked exceptions are actually a <em>good thing</em> in that they force you to think about your exception handling, but there’s no guarantee you’re going to actually handle your exceptions well, so they end up being an unnecessary burden in many peoples’ minds. Worth thinking about, in any event…</li>
+<li>Something that comes up fairly often in the channel is the use of the Oracle JDK vs. OpenJDK, and what the differences are between them. I always said it was in a set of closed-source libraries used in Oracle JDK, such that some features might be present in Oracle’s JVM that OpenJDK did not have. Well, while that was true at one point, it’s like all Internet knowledge: it erodes. The <a href="https://adoptopenjdk.net/">Adopt OpenJDK</a> project has a page on <a href="https://github.com/AdoptOpenJDK/openjdk-build/wiki/Differences-between-Adopt-OpenJDK-binaries-and-Oracle-JDK-Binaries">Differences between Adopt OpenJDK binaries and Oracle JDK Binaries</a> that actually walks through the differences, which is a really short list: font rasterizers, color management, and graphics renderers. That doesn’t compare the differences with other implementations of the JVM – <a href="https://www.azul.com/downloads/zulu/">Zulu</a> and whatnot – but what it does say is that OpenJDK and Oracle’s JDK are <em>really</em> closely aligned right now, just as designed.</li>
+<li>The <a href="https://blog.jooq.org/">Jooq blog</a> has an article called <a href="https://blog.jooq.org/2017/10/11/benchmarking-jdk-string-replace-vs-apache-commons-stringutils-replace/">Benchmarking JDK String.replace() vs Apache Commons StringUtils.replace()</a>. It walks through an optimization process and measures the effectiveness, offering a <em>ton</em> of apologies for what might appear to be premature optimization along the way; the upshot is that Java 9’s <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#replace-java.lang.CharSequence-java.lang.CharSequence-"><code>String.replace()</code></a> works better than it used to, which might affect which implementation to use. (It turns out that Java 9’s version is slower for matches in long strings but faster for matches in short strings, which – in practice – are <em>probably</em> more common.) They ended up staying with Apache’s implementation for now if only because most people are still on Java 8 and thus the performance improvements are worthwhile. It’s a fascinating read.</li>
+<li>Wrapping up, we have an article from <a href="http://www.baeldung.com/">Baeldung</a> called “<a href="http://www.baeldung.com/java-caching-caffeine">Introduction to Caffeine</a>“. <a href="https://github.com/ben-manes/caffeine">Caffeine</a> is a caching library; the article walks through its use, as one might expect. All that’s fine. What the article does <em>not</em> do, though, is differentiate <em>why</em> one might use Caffeine as opposed to one of the other caching libraries out there, like <a href="http://www.ehcache.org/">EHCache</a>, or <a href="https://github.com/google/guava">Guava</a> <a href="https://github.com/google/guava/wiki/CachesExplained">Cache</a> – which inspired Caffeine, actually. Channel inhabitant dudeji – which I don’t know how to pronounce – points out that Caffeine has time-to-live (as most of them do) but also automatic elimination based on unused keys; I can see some use in that, although I’d be concerned that the cache was deciding that a key was unused more aggressively than I’d have liked. I’m sure it’s tunable, though.</li>
+</ol>

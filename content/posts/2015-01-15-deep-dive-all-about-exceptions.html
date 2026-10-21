@@ -1,0 +1,195 @@
+---
+title: "Deep Dive: All about Exceptions"
+date: "2015-01-15 13:30:46 -0500"
+author: "rzwitserloot"
+categories:
+  - "java-coding"
+tags:
+  - "a2"
+  - "checked-exceptions"
+  - "exceptions"
+  - "rethrowing-exceptions"
+  - "runtime-exceptions"
+wp-id: 284
+wp-guid: "http://javachannel.org/?p=284"
+---
+
+<h2>Overview</h2>
+<p>Exceptions are a mechanism for java code to signal extraordinary conditions (such as virtual machine errors like running out of memory, code bugs such as passing a negative number to a method that doesn’t accept negative numbers, alternative ways a method can exit, such as an attempt to read from a network socket aborting because the other end severed the connection, and even intentional control flow such as aborting a thread ASAP). They are similar to <a href="http://en.wikipedia.org/wiki/Unix_signal">signals</a>, if you are familiar with that concept.</p>
+<h2>Basic mechanism</h2>
+<p>Exceptions can be thrown anywhere in Java code.<br />
+When an exception is thrown, the currently executing line of code is aborted, and the JVM checks if the currently executing line of code is inside of a <code>try</code> block that has an associated <code>catch</code> block that catches the exception (this is known as the <em>exception handler</em> block). If an associated exception handler block exists, execution continues in that block, and the act of throwing the exception is effectively equivalent to <em>break whatever loops you need to break and then go to the exception handler immediately</em>.<br />
+If there is no exception handler, the entire method is aborted immediately (the method exits immediately), and the exception ‘bubbles up’ to the next method in the call stack (the method that called the method that just aborted). The process then repeats: Either the caller of the method that threw the exception has an exception handler for it, in which case execution continues there, or it does not, and this method, too, is aborted and now the method that called the method that called the method that threw the exception gets its chance.<br />
+This process continues all the way up to the JVM if no code on the call stack has an appropriate exception handler. At the top level, the thread itself will stop execution and echo the exception class name, associated message, stack trace, etc to <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/System.html#err"><code>System.err</code></a>.</p>
+<h2>Throwing exceptions</h2>
+<p>To throw an exception, you use the throw statement, like so:</p>
+<pre><code>throw new IllegalArgumentException("foo should be positive");
+</code></pre>
+<p>When throwing an exception, you should usually add a convenient message explaining the situation in plain English, without ending the sentence in a full stop. You don’t <em>have</em> to create a new instance of an exception, but 99+% of the time you throw an exception, you create a new one like in the example. The aim of throwing an exception is usually to abort this method and signal to the caller that the method has finished executing with an unexpected result. In this sense, <code>throw</code> is a lot like <code>return</code>.</p>
+<h2>Catching exceptions</h2>
+<p>To catch an exception, you use the try/catch block, like so:</p>
+<pre><code>try {
+    someMethodThatMightThrowAnException();
+} catch (IllegalArgumentException e) {
+    // handle the issue here.
+}
+</code></pre>
+<p>You can add multiple catch blocks to a single <code>try</code>, each catching a different exception type. If an exception does occur in the body of the try block, the first exception handler whose catch line lists an exception type that matches the thrown exception ‘wins’ and code will resume execution there.<br />
+If you’re using Java 1.7 or newer (as you should be), you can also list multiple exception types for a single catch block. For example:</p>
+<pre><code>try {
+    someMethodThatMightThrowAnException();
+} catch (IllegalArgumentException | NullPointerException e) {
+    // handle either of those exceptions here.
+} catch (IOException e) {
+    // And handle I/O issues here.
+}
+</code></pre>
+<h2>The exception type hierarchy</h2>
+<p>All things that you can throw or catch must either be the type <code>java.lang.Throwable</code> or a subtype of it. There are 4 major types you should be aware of:</p>
+<h3><code>java.lang.Error</code></h3>
+<p>A subclass of Throwable, <code>Error</code> is used to communicate serious, generally unrecoverable problems with the hardware or JVM itself: the system is out of memory, the jar file containing your classes is corrupt, or you’ve got a method that endlessly calls itself, and the stack has overflowed.<br />
+You should generally never throw any <code>Error</code>s yourself, with the possible exception of <code>InternalError</code> which you can throw if a JVM guarantee fails to hold (for example, the JVM specification guarantees that <code>UTF-8</code> is an available character encoding. If it isn’t, you can throw <code>InternalError</code>).<br />
+You should subclass <code>Error</code> and throw it if an invariant is broken that can only be explained by a corrupt installation or failing hardware, such as when you read a data file via <a href="/posts/how-to-access-static-resources/">.getResourceAsStream</a> that’s packed along with your code, and it’s not there. That’s as catastrophic as a missing class file, which are also handled with errors.<br />
+Error, and all subclasses of Error, are so-called ‘unchecked exceptions’ (see below). You rarely catch them.<br />
+Note that some errors may not have reliable stack traces, and some (most notable <code>OutOfMemoryError</code>) may indicate the JVM has become unstable.<br />
+<strong>The usual strategy to handle an Error is to just let the JVM crash. Most <code>Error</code>s thrown in java applications result in the application crashing entirely, and this is intentional, because the problem cannot be solved.</strong></p>
+<h3><code>java.lang.Exception</code></h3>
+<p>The only other subclass of Throwable in the <code>java.*</code> namespace, this one indicates a more or less ‘expectable’ problem. Anything from unexpected user input to failing network connections to invalid SQL statements – they are generally handled by throwing some subclass of <code>j.l.Exception</code>. You should never throw <code>Exception</code> itself (always a more suitable subclass, and if no such suitable subclass exists, make your own), and, like <code>j.l.Error</code>, don’t catch it unless you are some sort of app server and you’re the final line of defense against a failing servlet, applet, event handler, etc.</p>
+<blockquote><p>Editor’s Note: This is a Java-centric concept; other JVM-based languages like Scala are far less restrictive in how exceptions are handled. Which approach is better for you depends very much on what you’re comfortable with. Using Java’s more restrictive approach is hardly ever a bad thing, but some other languages’ communities look down on it.</p></blockquote>
+<h3><code>java.lang.RuntimeException</code></h3>
+<p>This is a subclass of <code>java.lang.Exception</code> and covers a mix of code bugs and unexpected and generally unfixable problems.<br />
+Examples (all mentioned exceptions in this list are subclasses of <code>RuntimeException</code>):</p>
+<ul>
+<li>Whenever you write <code>x.foo</code> in java, and <code>x</code> is <code>null</code>, the line throws a <code>NullPointerException</code>.</li>
+<li>Many methods will throw <code>IllegalArgumentException</code> if you for example pass a negative number to a method that expected only positive numbers.</li>
+<li>If you try to refer to an array element that is outside of the bounds of that array, an <code>ArrayIndexOutOfBoundsException</code> is thrown. For example: <code>int[] x = new int[10]; print(x[11]);</code></li>
+</ul>
+<p>Like <code>Error</code>, RuntimeException and all subclasses of it are so-called ‘unchecked’.<br />
+<strong>The usual strategy to handle RuntimeExceptions depends on the exception; for exceptions that signify that you programmed a bug, the appropriate resolution is to just crash the application; the stack trace serves as debugging tool. There are also many runtime exceptions that occurr because of invalid user input (the user entered a word where they were supposed to enter a number) or some other problems for which you can write a resolution; you should catch those.</strong></p>
+<h3><code>java.lang.Throwable</code></h3>
+<p>This gets us back to <code>Throwable</code> itself. You can subclass it, but you should only do that when you use exception as control flow, which is not something you should think about until you have outgrown the need for articles such as these. Until you know a lot better, don’t ever subclass <code>Throwable</code> itself.</p>
+<blockquote><p>Editor’s note, because it bears repeating: You can subclass <code>Throwable</code>, but you should only do that when you use exception as control flow, which is not something you should think about until you have outgrown the need for articles such as these. Until you know a lot better, don’t ever subclass <code>Throwable</code> itself.</p></blockquote>
+<h2>Checked vs. Unchecked</h2>
+<p>As the previous paragraph explained, <code>java.lang.Error</code> and <code>java.lang.RuntimeException</code>, and all subclasses of those two, are known as the ‘unchecked exceptions’. The rest are checked. Those 2 classes are special and listed by name in the <a href="http://docs.oracle.com/javase/specs/jls/se8/html/index.html">Java language specification</a>. You can’t make more unchecked exceptions without subclassing <code>Error</code>, <code>RuntimeException</code>, or some other class that is itself a subclass of one of these two.<br />
+Checked exceptions MUST be handled in one of two ways:</p>
+<ul>
+<li>You wrap the code that is declared to possibly throw one in a try/catch block which catches the checked exception in question, <em>-OR-</em></li>
+<li>The method with the code that is declared to possibly throw one, has a ‘throws’ clause that explicitly declares that it throws this exception.</li>
+</ul>
+<p>In other words, if you’d like to write <code>throw new IOException("Network connection lost")</code>, then your method signature has to look like: <code>public void myMethod() throws IOException</code>. (<code>IOException</code> is a checked exception). Now code that calls <code>myMethod</code> inherits the requirements to handle it somehow: Either wrap the call to <code>myMethod()</code> in a try/catch block, or also put <code>throws IOException</code> in the method declaration line.<br />
+For unchecked exceptions, you have no such requirements. As such, you can throw them without adding that exception to the <code>throws</code> clause. In other words, all methods in all of Java, whether they are specified to do so or not, implicitly act like they have <code>throws Error, RuntimeException</code> tacked onto them. You can add <code>throws NullPointerException</code> to your method declaration if you like; this is meaningless (as <code>NullPointerException</code> is a subtype of <code>RuntimeException</code> and thus unchecked) but some programmers do this as a way to document their code.</p>
+<h2>Features of Throwable</h2>
+<h3>Stack traces</h3>
+<p>Whenever any throwable object is created (with <code>new</code>, such as <code>new FileNotFoundException()</code>), the call stack (the chain of method invocations) is stored in the object you just made. A call stack looks something like this:</p>
+<pre><code>java.lang.FileNotFoundException: /foo/bar/baz (No such file or directory)
+    at java.io.FileInputStream.open(Native Method)
+    at java.io.FileInputStream.&lt;init&gt;(FileInputStream.java:138)
+    at java.io.FileInputStream.&lt;/init&gt;&lt;init&gt;(FileInputStream.java:93)
+    at Example.main(Example:8)
+</code></pre>
+<p>The actual exception was thrown (with a <code>throw</code> statement) inside the top listed method. That method was invoked by the constructor of <code>FileInputStream</code>, on line 138, that constructor was invoked by another <code>FileInputStream</code> constructor, and that constructor was invoked by our example code.<br />
+You can programatically browse the call stack using the <code>.getStackTrace()</code> method of Throwable. Default handlers of execution frameworks will print them to logs or the screen so you can review the problem.<br />
+<em>ADVANCED TOPIC</em>: If you wish to ‘save’ a stack trace (for example, because in a different thread at a later time, a problem will surface that was initially caused by the current invocation, but we don’t know yet if that will happen, so we wish to save the stack trace for now and possibly refer to it much later if failure does eventually happen), just create a new exception without actually throwing it (yet).</p>
+<h3>Cause</h3>
+<p>Often the right approach to handling an exception is to restate the problem in your own exception type, and with a more appropriate message. It helps to staple the original cause to this brand new exception. This is called the ’cause’ and can be attached via the <code>initCause()</code> method. Also, most exception types have a constructor that takes the cause if you have one. The cause will be logged/printed along with the new exception.<br />
+<strong>Make sure you add the appropriate cause if there is one; it really helps debug issues and figure out what went wrong.</strong></p>
+<h2>Which exception should I throw?</h2>
+<p>Before we start, be aware that Java has been around for a long time and believes strongly in not changing already released code. As such, you can find many examples of methods throwing the ‘wrong’ kind of exception in <code>java.*</code> and popular libraries. That’s not ‘proof’ that their style is accepted convention or a good idea.</p>
+<ul>
+<li>A method must list each checked exception that it might possibly throw, and calling code must then handle it somehow (either with a <code>try/catch</code> block, or by adding a <code>throws</code> clause to the method, passing on the burden of handling the issue to all callers of this method). This is very annoying if the method is ever invoked such that the checked exception couldn’t possibly occur (in the sense of: Having to write code that is literally pointless, therefore impossible to test, and aggravating the author of the code calling yours). <strong>Therefore, for all problems that can only occur for invalid input or due to conditions entirely under control of the caller, ALWAYS use unchecked exceptions, that is: subtypes of RuntimeException.</strong></li>
+<li>
+<p>The type of the exception is the most important tool that you can give to callers of your code to handle the issue. Therefore, the more likely it is that you expect callers of your method to try/catch your exception, the more important it is to throw an appropriate type. Often, this means you should make your own type. Don’t shy away from this; making your own type (writing <code>public class MyOwnException extends Exception {...</code> in <code>MyOwnException.java</code>) is usually a good idea. <strong>When in doubt, make your own exceptions.</strong></p>
+</li>
+<li>
+<p>When different issues can come up but they are related in some way, especially if you expect that a caller might just want to handle all these issues in the exact same manner, you should build an exception hierarchy: One overarching type, with various subtypes of that type for more details. For example, <code>java.io.FileNotFoundException</code> is a subtype of <code>java.io.IOException</code>, which is a subtype of <code>java.lang.Exception</code>. If you call any method that may fail due to a file not existing, then <code>FileNotFoundException</code> may occur. You can catch this condition with <code>catch (FileNotFoundException e) {...}</code>, but if you don’t write such a catch block but you do catch all I/O problems with <code>catch (IOException e) {...}</code>, then all file not found problems will also be handled by this more general catch block. This is good API design: You give your caller the flexibility to handle issues as specifically, or as generally, as is appropriate for them. <strong>Make hierarchies of exception types if that is applicable.</strong></p>
+</li>
+<li>
+<p>The more likely a problem signaled via an exception can be handled in some appropriate way (other than ‘just crash the application or abort the web request’), the more you should lean towards a checked exception. The more likely a problem cannot be feasibly handled other than by aborting the entire operation, the more you should lean towards an unchecked exception. After all, a checked exception enforces the caller to deal with it, which is just pointless boilerplate if it is highly unlikely that the programmer that calls your method can do anything useful if the problem does occur.</p>
+</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li>To signal that the caller provided invalid input arguments, use <code>RuntimeException</code> subtypes. A few common ones already exist:
+<ul>
+<li><code>NullPointerException</code> is appropriate if an argument is <code>null</code> and that is not valid input. The message of the exception should be the name of the argument: <code>if (foo == null) throw new NullPointerException("foo");</code></li>
+<li><code>IndexOutOfBoundsException</code> is appropriate when an index is passed that is out of the valid range.</li>
+<li><code>IllegalStateException</code> is appropriate if the object is in a state such that this method call isn’t valid at all. For example, a List class has been ‘locked’ and later a caller attempts to add another object to it.</li>
+<li><code>UnsupportedOperationException</code> is appropriate if the object is in a state such that the call isn’t valid, and the object has always been, and will always be, in this state. For example, the <code>add</code> method of a list that is designed to be immutable (all objects that are in it are added during its construction and the list will never change) should throw <code>UnsupportedOperationException</code>.</li>
+<li>Various other types exist, but if you can’t find anything more appropriate, there’s always <code>IllegalArgumentException</code>. Because these are almost always bugs, you don’t need to make a specific subtype (under the rule: “the less likely it is that callers intend to catch it, the less need there is to make a subclass for it”).</li>
+</ul>
+</li>
+<li>To signal I/O errors, be it because of disk failure, network connection failure, or something more exotic, like failure to communicate with a device plugged into a serial port, throw <code>java.io.IOException</code>. You rarely throw it yourself though; you use APIs that talk to networks (such as <code>HttpServletResponse</code>, or <code>Socket</code>) and the API will throw the <code>IOException</code> for you.</li>
+</ul>
+<p>A few examples where common libraries actually got it wrong:</p>
+<ul>
+<li><code>NumberFormatException</code> is thrown by <code>Integer.parseInt()</code>, <code>Long.parseLong()</code>, etcetera; these methods parse text input for a number and return it. The exception is thrown if the text passed to the method is not, in fact, a number. This error is both to be expected (users can make mistakes; if talking to another software product, it might be buggy or on some different version), and often handleable, and yet <code>NumberFormatException</code> is a runtime exception. I/O issues are in fact somewhat less recoverable and somewhat less expectable, and yet those are checked exceptions, which is inconsistent.</li>
+</ul>
+<li>
+<p>Various methods in the JDK take a string that represents the character encoding. For example, when turning an array of bytes into a string, you should pass in the name of the text encoding that it used. Certain encoding types such as <code>UTF-8</code> are guaranteed by the Java virtual machine specification to always be available. Still, this code: <code>new String(someByteArray, "UTF-8")</code> is specced to throw <code>UnsupportedEncodingException</code>, which is a checked exception. That exception couldn’t possibly occur unless your JVM is corrupt (at which point you have far bigger problems). Fortunately this has been ‘solved’ in later versions by way of a method specifically designed for calling with known-valid charset names (<code>new String(someByteArray, StandardCharsets.UTF_8)</code>).</p>
+</li>
+<h3>@SneakyThrows</h3>
+<p><a href="http://projectlombok.org/">Project Lombok</a> is a compiler plugin that adds the ability to ‘ignore’ the rule that you must either try/catch, or declare that you ‘throws’ a checked exception, by annotating your method with <code>@SneakyThrows(IOException.class)</code> for example. This is particularly useful for working around unwieldy APIs, such as the <code>UnsupportedEncodingException</code> example listed above.</p>
+<blockquote><p>Editor’s note: I heartily endorse the use of Lombok, whose author contributed this article. I rarely work on any Java projects without it now.</p></blockquote>
+<h2>The ‘default’ exception handler</h2>
+<p>Some IDEs and many examples use the following default implementation for an exception handler:</p>
+<pre><code>try {
+    // Code that throws some exception
+} catch (IOException e) {
+    e.printStackTrace();
+}
+</code></pre>
+<p>This is a <strong>really bad</strong> default! You miss the message and the type of exception, and, more importantly, the code will just continue running immediately following the catch block. Most likely another exception will occur soon (given that clearly something is wrong, and in addition a bunch of your code, namely everything in the try block from the place where the exception occurred and onwards) also did not run. If that exception is handled similarly, yet another exception will occur soon. You’ll be faced with a cavalcade of stack traces, most of which are complete red herrings. Your app is also now completely broken, as code continues to execute even though your method has failed and its state is most likely no longer valid.<br />
+<strong>Don’t do this!</strong><br />
+The single best default exception handler looks like this:</p>
+<pre><code>try {
+    // Code that throws some exception
+} catch (IOException e) {
+    throw new RuntimeException("XXTODO: Uncaught", e);
+}
+</code></pre>
+<p>The exception text makes no bones about it: You’ve intentionally decided not to worry about this exception right now. Your method will also abort instead of continuing to run in an invalid state, and you can throw <code>RuntimeException</code> without having to add a <code>throws</code> clause.</p>
+<h2>How to make your own</h2>
+<p>If no exception exists that exactly describes the issue you are attempting to signal to your method’s callers, or it is unchecked when you want it to be checked or vice versa, you have to make your own. Fortunately, it is very easy to do this. For example, to make a new unchecked exception, you would write:</p>
+<pre><code>public class MyException extends RuntimeException {
+    public MyException(String msg) {
+        super(msg);
+    }
+    public MyException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
+}
+</code></pre>
+<p>Use a more descriptive name than <code>MyException</code>, of course. You can extend any existing class. If there’s no existing class that seems to make sense, extend <code>Error</code>, <code>Exception</code>, or <code>RuntimeException</code> depending on what kind of exception you want to create.</p>
+<h2>The finally construct</h2>
+<p>Sometimes you want code to execute to close resources or bring your object back to a valid state, and you want this code to run even if the main body of your method exits via an exception. The <code>finally</code> construct can help here. It’s part of the <code>try</code> syntax, and looks like:</p>
+<pre><code>try {
+    // code that might throw an exception
+} catch (NumberFormatException e) {
+    // Runs if NumberFormatException occurs in body.
+} finally {
+    // Runs always
+}
+</code></pre>
+<p>In the above example, the code in the <code>finally</code> block is always executed. If the main body (or the catch handler) uses the <code>return</code> statement, your finally code runs right before your method returns. If the try block just gets to the end naturally without an exception occurring, execution jumps to the finally block. If a <code>NumberFormatException</code> occurs, execution jumps to your <code>NumberFormatException</code> catch handler, and after that handler has completed (or if that handler itself throws an exception), your finally block is executed. If some other exception occurs in the try body, then code execution first jumps to your finally block, and once that finishes, the exception is actually ‘thrown’ (execution jumps to the caller and the exception is raised there).<br />
+If your <code>finally</code> block also explicitly exits the method (either via a <code>return</code> statement, or a <code>throw</code> statement), it overrides the explicit method exit that caused your finally block to run. Because that gets very confusing, you should not use <code>return</code> or <code>throw</code> in a <code>finally</code> block.<br />
+A <code>try</code> block needs to have either a <code>catch</code> block or a <code>finally</code> block, or it wouldn’t do anything. However, you don’t need both; just <code>try {} finally {}</code> is valid, for example.<br />
+<strong>NB</strong>: If a method never exits, for example because it loops endlessly or it has deadlocked, then the finally block would never execute. Also, if the JVM is shut down, either normally (with <code>System.exit(0)</code> for example), or forcibly (killed by the OS, or someone trips over a power cable), your finally blocks don’t run either.</p>
+<h2>Automatic Resource Management (‘ARM’)</h2>
+<p>Closing resources is a common pattern: Many classes, such as for example <code>java.io.FileInputStream</code>, are specified to <em>require</em> the caller of the constructor to eventually call <code>close()</code> on the stream. Failure to do so means the VM will leak resources, and, eventually, it can’t open any more files and the only solution is to restart the VM. Just calling <code>close()</code> when you are done is not sufficient because exceptions exist: You need to use a <code>finally</code> block. Because this is such a common pattern, there’s an easier way to do it, which is legal Java starting with Java v1.7:</p>
+<pre><code>try (FileInputStream in = new FileInputStream(path)) {
+    // code goes here; it can access 'in'
+}
+</code></pre>
+<p>In the above snippet, no matter how execution exits the try block (via <code>return</code> statement, by running to the end of it, or via an exception), the resource will be closed.<br />
+Another option is to use project lombok:</p>
+<pre><code>@lombok.Cleanup FileInputStream in = new FileInputStream(path);
+// code goes here
+</code></pre>
+<p>Here, ‘in’ will be closed when it goes out of scope, for example at the end of the method, no matter how it exits. Lombok’s cleanup works from java v1.6 and up. For more information, see the <a href="http://projectlombok.org/features/Cleanup.html">lombok feature page on @Cleanup</a>.</p>
+<h2>How ‘checkedness’ is javac only.</h2>
+<p>The concept of checked exceptions are twofold:</p>
+<ul>
+<li>You cannot catch a checked exception unless at least one thing in the associated try block is declared to throw that exception.</li>
+<li>If any line is declared to throw a checked exception, then this line must exist either inside of a try block with an associated catch handler for this checked exception, or, the method it is in must have declared this checked exception in its <code>throws</code> line.</li>
+</ul>
+<p>However, these 2 rules are applied only by the Java compiler (<code>javac</code>). The actual JVM treats all exceptions as unchecked; bytecode that throws a checked exception without declaring it does so / catching it, will run just fine, and, at the bytecode level, you can have a catch handler for a checked exception that can’t actually occur and the JVM will run it. This is why other languages that also compile to class files but which don’t have checked exceptions can work at all, and it’s also what makes lombok’s <code>@SneakyThrows</code> tick.</p>

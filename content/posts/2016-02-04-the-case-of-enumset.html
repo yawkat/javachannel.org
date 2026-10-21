@@ -1,0 +1,78 @@
+---
+title: "The case of EnumSet"
+date: "2016-02-04 09:38:53 -0500"
+author: "ernimril"
+categories:
+  - "java-coding"
+tags:
+  - "enum"
+  - "enumset"
+  - "jmh"
+  - "jvisualvm"
+wp-id: 475
+wp-guid: "http://javachannel.org/?p=475"
+---
+
+<p>A few days ago <a href="irc://freenode.org/##java">##java</a> happened to discuss sets and bit patterns and things like that, I happened to mention <code>EnumSet</code> and that I find it useful. The rest of the gang wanted to know how it actually measures up, so this is a short evaluation of how <a href="https://docs.oracle.com/javase/8/docs/api/java/util/EnumSet.html"><code>EnumSet</code></a> stacks up for some operations. We are going to look at a few different things.</p>
+<h2>EnumSet classes</h2>
+<p>There are two different versions of <code>EnumSet</code>:<br />
+* <a href="http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/8-b132/java/util/RegularEnumSet.java?av=f"><code>RegularEnumSet</code></a> when the enum has less than 64 values<br />
+* <a href="http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/8-b132/java/util/JumboEnumSet.java?av=f"><code>JumboEnumSet</code></a> used when the enum has more than 64 values<br />
+Looking at the code, it is easy to see that <code>RegularEnumSet</code> stores the bit pattern in one long and that <code>JumboEnumSet</code> uses a <code>long[]</code>. This of course means that <code>JumboEnumSet</code>s are quite a lot more expensive, both in memory usage and cpu usage (at least one extra level of memory access).</p>
+<h2>Memory usage</h2>
+<p>I created a <a href="/wp-content/uploads/2016/02/enumproject.zip">little program</a> to just hold one million <code>Set</code>s with a few values in each of them.</p>
+<blockquote><p>
+  Note: the <a href="/wp-content/uploads/2016/02/enumproject.zip">enumproject.zip</a> was built by your editor, not your author – any problems with it are the fault of dreamreal and not ernimril. Note that the project is mostly for source reference and not actually <em>running</em> the benchmark.
+</p></blockquote>
+<pre><code>    List&lt;Set&lt;Token&gt;&gt; tokens = new ArrayList&lt;&gt; ();
+    for (int i = 0; i &lt; 1_000_000; i++) {
+        Set&lt;Token&gt; s = new HashSet&lt;&gt; ();
+        s.add (Token.LF);
+        s.add (Token.CR);
+        s.add (Token.CRLF);
+        tokens.add (s);
+    }
+</code></pre>
+<p>Heap memory usage for this program was about 250 MB according to <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/jvisualvm.html">JVisualVM</a>.<br />
+Changing the <code>new HashSet&lt;&gt; ();</code> into <code>EnumSet.noneOf (Token.class);</code> we instead get 70 MB of heap memory usage.<br />
+Using the <code>SmallEnum</code> instead causes the <code>HashSet</code> to still use about 250MB, but drops the <code>EnumSet</code> usage down to <strong>39</strong> MB. I find it quite nice to save that much memory.</p>
+<h2>CPU performance</h2>
+<p>I constructed two simple tests, shown below, that calls a few methods on a <code>Set</code> that is either <code>EnumSet</code> or <code>HashSet</code>, depending on run. The enums have a few <code>Set</code>s that contain different allocations of the enum and the <code>isX</code>-methods only do <code>return xSet.contains(this);</code></p>
+<pre><code>    @Benchmark
+    public void testRegular() throws InterruptedException {
+        SmallEnum s = SmallEnum.A;
+        boolean isA = s.isA ();
+        boolean isB = s.isB ();
+        boolean isC = s.isC ();
+        boolean res = isA | isB | isC;
+    }
+    @Benchmark
+    public void testJumbo() throws InterruptedException {
+        Token t = Token.WHITESPACE;
+        boolean isWhitespace = t.isWhitespace ();
+        boolean isIdentifier = t.isIdentifier ();
+        boolean isKeyword = t.isKeyword ();
+        boolean isLiteral = t.isLiteral ();
+        boolean isSeparator = t.isSeparator ();
+        boolean isOperator = t.isOperator ();
+        boolean isBitOrShiftOperator = t.isBitOrShiftOperator ();
+        boolean res =
+            isWhitespace | isIdentifier | isKeyword | isLiteral |
+            isSeparator | isOperator | isBitOrShiftOperator;
+    }
+</code></pre>
+<p>I did the benchmarking using <a href="http://openjdk.java.net/projects/code-tools/jmh/">jmh</a> in order to find out how fast this is.</p>
+<h3>Using HashSet:</h3>
+<pre><code>Benchmark                      Mode  Cnt          Score         Error  Units
+EnumSetBenchmark.testJumbo    thrpt   20   46787074.985 ± 2373288.078  ops/s
+EnumSetBenchmark.testRegular  thrpt   20  124474882.016 ± 2165015.166  ops/s
+</code></pre>
+<h3>Using EnumSet:</h3>
+<pre><code>Benchmark                      Mode  Cnt          Score        Error  Units
+EnumSetBenchmark.testJumbo    thrpt   20  112456096.790 ± 320582.588  ops/s
+EnumSetBenchmark.testRegular  thrpt   20  563668720.636 ± 594323.541  ops/s
+</code></pre>
+<p>This is of course quite a silly test and one can argue that it does not do very much useful, but it still gives us quite a good indication that performance gains are there. Using EnumSet is 2.4 times faster for jumbo enums, but 4.5 times faster for small (regular) enums for this kind of operation.<br />
+I do not claim that your usage will notice the same speedup, but it might be worth checking out.</p>
+<h2>Final thoughts</h2>
+<p>Does it really matter if you use <code>EnumSet</code> or <code>Set</code>? In most cases: no, the enum will only be one field and not part of memory usage or cpu consumption, but depending on your use case it can be a nice memory saver while also being faster. I recommend that you use it.</p>

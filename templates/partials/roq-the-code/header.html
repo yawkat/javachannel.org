@@ -1,0 +1,42 @@
+{! Like the theme's header, plus the tagline and the old site's "Channel Rules" / "Channel Data" submenus !}
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-branding">
+      <a href="{=site.url.relative}" class="header-logo">{=site.title}</a>
+      <p class="header-tagline">{=site.description}</p>
+    </div>
+
+    <button id="mobile-menu-button" class="nav-item" aria-label="Menu">
+      <span class="icon icon-menu"></span>
+    </button>
+
+    {#fragment id=menu}
+    {@java.lang.String device = 'desktop'}
+    <div class="{=device == 'desktop' ? 'desktop-nav' : 'mobile-nav hidden'}">
+      <nav>
+        {#for item in cdi:menu.items}
+        {#if item.children??}
+        <div class="nav-submenu">
+          <span class="nav-item nav-submenu-title" tabindex="0">{=item.title}</span>
+          <div class="nav-submenu-items">
+            {#for child in item.children}
+            <a href="{=site.url(child.path)}">{=child.title}</a>
+            {/for}
+          </div>
+        </div>
+        {#else}
+        <a href="{=site.url(item.path)}" class="nav-item">{=item.title}</a>
+        {/if}
+        {/for}
+      </nav>
+      <span class="nav-separator"></span>
+      <button class="nav-item theme-toggle" aria-label="Toggle theme">
+        <span class="hidden toggle-light icon icon-sun"></span>
+        <span class="hidden toggle-dark icon icon-moon"></span>
+        {#if device == 'mobile'}<span class="theme-text">LIGHT MODE</span>{/if}
+      </button>
+    </div>
+    {/fragment}
+  </div>
+  {#include $menu device='mobile'/}
+</header>

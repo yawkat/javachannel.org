@@ -1,0 +1,46 @@
+---
+title: "JavaChannel’s Interesting Links podcast, episode 14"
+date: "2018-02-07 17:12:22 -0500"
+author: "dreamreal"
+categories:
+  - "podcast"
+tags:
+  - "fuzzer"
+  - "github"
+  - "java-10"
+  - "java-9"
+  - "kafka"
+  - "license"
+  - "podcast"
+  - "podcast-14"
+  - "pwhash"
+  - "scala"
+  - "security"
+  - "spark"
+  - "testing"
+enclosure: "/wp-content/uploads/2018/02/javachannel-14.mp3"
+enclosure-length: 49238694
+show-enclosure: true
+wp-id: 1072
+wp-guid: "https://javachannel.org/?p=1072"
+---
+
+<p>Welcome to the fourteenth ##java podcast. Your hosts, as usual, are Joseph Ottinger, dreamreal on the IRC channel, and <a href="https://twitter.com/kinabalu">Andrew Lombardi</a> from <a href="https://mysticcoders.com">Mystic Coders</a> (kinabalu on the channel), and it’s Wednesday, February 7, 2018.<br />
+As always, this podcast is basically interesting content pulled from various sources, and funneled through the ##java IRC channel on freenode. You can find the show notes at the channel’s website, at javachannel.org; you can find all of the podcasts using the tag (or even “category”) “podcast”, and each podcast is tagged with its own identifier, too, so you can find this one by searching for the tag “podcast-14”.</p>
+<ol>
+<li>
+<p><a href="https://github.com/cretz/javan-warty-pig">javan-warty-pig</a> is a fuzzer for Java. Basically, a fuzzer generates lots of potential inputs for a test; for example, if you were going to write a test to parse a number, well, you’d generate inputs like empty text, or “this is a test” or various numbers, and you’d expect that your tests would validate errors or demonstrate compliance to number conversion (this is a way of saying “it would parse the numbers.”) A Fuzzer generates this sort of thing largely randomly, and is a good way of really stressing the inputs for the methods; the fuzzer has no regard for boundary conditions, so it’s usually a good way of making sure you’ve covered cases. The question, therefore, becomes: would you use a fuzzer, or HAVE you used a fuzzer? Do you even see the applicability of such a tool? There’s no doubt that it <em>can</em> be useful, but potential doesn’t mean that the potential will be leveraged.</p>
+</li>
+<li>
+<p>Simon Levermann, mentioned last week for having released <code>pwhash</code>, wrote up <a href="/posts/modular-password-hashing-with-pwhash/">an article for the channel blog</a> detailing its use and reason for existing. Thank you, Simon!</p>
+</li>
+<li>
+<p><a href="https://dzone.com/articles/advantages-of-scala">Scala is in a complex fight to overthrow Java</a>, from DZone. Is the author willing to share the drugs they’re on? Scala’s been getting a ton of public notice lately – it’s like the Scala advocates finally figured out that everything Scala brought to the table, Kotlin does better, and with far less toxicity. If kotlin wanted to take aim at Scala, there’d be no contest – Kotlin would win immediately, unless “used in Spark and Kafka” were among the criteria for deciding a winner. It’s a fair criterion, though, honestly; Spark and Kafka are in fairly wide deployment. But Scala is incidental for them, and chances are that their developers would really rather have used something a lot more kind to them, like Kotlin, rather than Scala.</p>
+</li>
+<li>
+<p>More of the joys of having a super-rapid release cycle in Java: according to <a href="http://mail.openjdk.java.net/pipermail/jdk-updates-dev/2018-January/000028.html">a post on the openjdk mailing list</a>, bugs marked as critical are basically being ignored because the java 9 project is being shuttered. It’s apparently on to Java 10. This is going to take some getting used to. It’s good to have the new features, I guess, after wondering for years if Java would get things like lambdas, multiline strings, and so forth, but the rapid abandonment of releases before we even have a chance to see widespread adoption of the runtimes is… strange.</p>
+</li>
+<li>
+<p>James Ward posted <a href="https://engineering.salesforce.com/open-sourcing-get-you-a-license-7b74e26f846e">Open Sourcing “Get You a License”</a>, about a tool that allows you to pull up licenses for an entire github organization – and issue pull requests that <em>automatically add a license</em> for the various projects that need one. Brilliant idea. Laziness is the brother of invention, that’s what Uncle Grandpa always said.</p>
+</li>
+</ol>

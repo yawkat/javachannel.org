@@ -1,0 +1,37 @@
+---
+title: "Interesting Links, 9 Feb 2016"
+date: "2016-02-09 07:50:57 -0500"
+author: "dreamreal"
+categories:
+  - "channel-news"
+tags:
+  - "dzone"
+  - "employment"
+  - "escape-analysis"
+  - "exceptions"
+  - "idea"
+  - "microframework"
+  - "openjdk"
+  - "osx"
+  - "pippo"
+  - "recruiting"
+wp-id: 484
+wp-guid: "http://javachannel.org/?p=484"
+---
+
+<ul>
+<li>From <a href="https://parkscomputing.com/">Parks Computing</a>, a short word of advice in “<a href="http://www.parkscomputing.com/2016/02/on-recruiting/">On Recruiting</a>” for the movers and shakers (and those who <em>want to be</em> movers and shakers): “The quality of your company’s software will never exceed the quality of your company’s software developers.”</li>
+<li><a href="https://dzone.com">DZone</a> is back with a few interesting posts: “<a href="https://dzone.com/articles/openjdk-is-now-the-time">OpenJDK – Is Now the Time?</a>” starts by wondering is OpenJDK is reaching critical mass to the point where it should be considered instead of the standard Oracle JDK. It’s an odd post.
+<ul>
+<li>It points out that if Google had used OpenJDK instead of Oracle’s libraries, the lawsuit might not have happened (Editor’s note: it might have!). This is a good point.</li>
+<li>It says that the deployment options might open up, with standard package management instead of a custom update process specific to Java. This is also a good point.</li>
+<li>It points out that OpenJDK’s performance and scalability is the same as the Oracle JDK. This is… not a good point. The codebases are the same (they’re routinely synchronized: code in one will be in the other eventually.) Oracle’s JDK is effectively OpenJDK with some closed-source libraries, so Oracle’s JVM can write JPEGs natively (and some other features like that.)</li>
+<li>It also points out community improvements to OpenJDK – “As open source developer’s continue to provide insight into the source code, it is likely that OpenJDK could begin to outperform the version released by Oracle.” Um… since the codebases are the same, that’s not likely to happen much at all.</li>
+</ul>
+</li>
+<li>From ##java, cheeser had a beautiful expression of reference equivalence. Someone was asking about how two references (<code>A</code> and <code>B</code>) <a href="https://javabot.evanchooly.com/logs/%23%23java/today#56b5eaaf0a975a254a196d36">pointing to the same object</a> work – cheeser <a href="https://javabot.evanchooly.com/logs/%23%23java/today#56b5eb230a975a254a196d43">said</a>, “<code>If B is your *name*, A would be a nickname. Both of them mean you so anything said to either name or nickname both go to you.</code>“</li>
+<li>“<a href="http://depressiverobot.com/2016/02/05/intellij-path.html">Fix PATH environment variable for IntelliJ IDEA on Mac OS X</a>” describes a way for OSX users to provide the OS’s PATH to the popular IDE. It turns out that programs installed via <a href="http://brew.sh/"><code>brew</code></a> aren’t necessarily available to <a href="https://www.jetbrains.com/idea/">IDEA</a> unless you start IDEA from the shell – which few do. It’s easy to fix; this post shows you how. </li>
+<li><em>Another</em> from DZone – they’re on fire! – <a href="http://minborgsjavapot.blogspot.com/">Per-Åke Minborg</a> posted “<a href="https://dzone.com/articles/overview-of-javas-escape-analysis">Overview of Java’s Escape Analysis</a>“, which discusses what escape analysis is (it’s a way of determining the visibility of an object) and what it means for performance. (If an object isn’t used outside of a method or a block, it can  be allocated on the stack rather than on the JVM heap – and as fast as the heap can be in Java, the stack is much faster.)</li>
+<li><a href="http://www.pippo.ro/">Pippo</a> is a new, very small microframework based on services. The example looks … easy enough; take a look, see what you think.</li>
+<li>Yet one more from DZone: <a href="https://dzone.com/articles/how-to-properly-use-exceptions-in-java">Exceptions in Java: You’re (Probably) Doing It Wrong</a> advocates the use of <code>RuntimeException</code> to get rid of those pesky <code>throws</code> clauses and forced <code>try</code>/<code>catch</code> blocks in your Java code. It’s an argument Spring advocates, and checked exceptions aren’t part of languages like Scala… but I personally find the over-reliance on unchecked exceptions to be terrible. The core argument against check exceptions from the article: “The old argument is that (the use of checked exceptions) “forces” developers to handle exceptions properly. Anyone on a real code base knows that this does not happen, and Exceptions are routinely ignored, or printed out and then ignored. This isn’t some sign of a terrible developer; it is such a common occurrence that it is a sign that checked Exceptions are broken.” Except no, it’s such a common occurrence that it’s a sign that developers are terrible. This article was so terrible that I’ll probably write up a better response as soon as I get some time.</li>
+</ul>

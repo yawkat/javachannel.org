@@ -1,0 +1,119 @@
+---
+title: "How (not) to extend standard collection classes"
+date: "2017-10-24 12:12:44 -0400"
+author: "yawkat"
+categories:
+  - "java-coding"
+tags:
+  - "composition"
+  - "delegate"
+  - "design"
+  - "inheritance"
+  - "lombok"
+wp-id: 957
+wp-guid: "http://javachannel.org/?p=957"
+---
+
+<p>Today in ##java, someone had a problem: They wanted a bounded-size <code>PriorityQueue</code>. One solution offered was extending the <code>PriorityQueue</code> class to add this behavior<sup><a href="#1">1</a></sup>.<br />
+This article will talk about why that is <em>not</em> a good solution.<br />
+Here is an example implementation of this approach:</p>
+<pre><code>public class BoundedPriorityQueue&lt;E&gt; extends PriorityQueue&lt;E&gt; {
+    private final int bound;
+    public BoundedPriorityQueue(Comparator&lt;? super E&gt; comparator, int bound) {
+        super(comparator);
+        this.bound = bound;
+    }
+    @Override
+    public boolean add(E e) {
+        if (size() &gt;= bound) { return false; }
+        return super.add(e);
+    }
+}
+</code></pre>
+<p>Now… This looks somewhat correct, if you don’t pay attention. But it isn’t! The important thing missed here is that the <code>Queue.offer(E)</code> method is not overridden, and gives the user a way to put this queue into an invalid state (too many items).<br />
+In this particular case this is not a huge issue. There are only two methods, <code>offer</code> and <code>add</code>, that increase the size of a <code>PriorityQueue</code>, and <code>add</code> happens to delegate to <code>offer</code>. The important thing to get out of this example is that this bug can happen in the first place, and that the compiler – or runtime – won’t warn you about it.</p>
+<h2><a id="user-content-extending-arraylist" class="anchor" href="#extending-arraylist"></a>Extending ArrayList</h2>
+<p>Let’s get to a more problematic example. We want to have a List that can only be added to, but never removed from.</p>
+<pre><code>public class AddOnlyArrayList&lt;E&gt; extends ArrayList&lt;E&gt; {
+    @Override public E remove(int index) { throw new UnsupportedOperationException(); }
+    @Override public boolean remove(Object o) { throw new UnsupportedOperationException(); }
+    @Override public boolean removeAll(Collection&lt;?&gt; c) { throw new UnsupportedOperationException(); }
+    @Override public void clear() { throw new UnsupportedOperationException(); }
+    @Override public Iterator&lt;E&gt; iterator() { return Iterators.unmodifiableIterator(super.iterator()); }
+    @Override public List&lt;E&gt; subList(int fromIndex, int toIndex) { return ...; }
+    @Override public ListIterator&lt;E&gt; listIterator() { return ...; }
+    @Override public ListIterator&lt;E&gt; listIterator(int index) { return ...; }
+}
+</code></pre>
+<p>Hey, this is good, right? All remove methods and clear accounted for, iterators and subList also implemented, should be fine! Well, that’d be right. In Java 7.<br />
+With Java 8, <code>Collection.removeIf(Predicate&lt;E&gt;)</code> was added. This is a default method on <code>Collection</code> that normally only delegates to <code>iterator</code>, but <code>ArrayList</code> has its own, optimized version of it.<br />
+Suddenly, just with a JDK update, our class breaks and we may not even notice it. The issue is pretty subtle – it may never appear, and when it does happen, the only way we’ll notice is that our “AddOnly”ArrayList suddenly is shrinking because someone elsewhere decided to use that fancy new <code>removeIf</code> method.<br />
+The core problem with both these examples is that <em>extension is fragile</em>. A class has to be designed with extension in mind if it’s supposed to be extensible this way. While most standard library classes aren’t final, many of them are not intended to be extended, or only offer hooks for some specific forms of extension.</p>
+<h2><a id="user-content-how-to-do-it-properly" class="anchor" href="#how-to-do-it-properly"></a>How to do it properly</h2>
+<p>You hear this repeated often, but many do not really seem to understand why: <strong>Prefer composition over inheritance</strong>. Here’s our <code>AddOnlyArrayList</code> with composition:</p>
+<pre><code>public class AddOnlyArrayList&lt;E&gt; extends AbstractList&lt;E&gt; {
+    private final List&lt;E&gt; elements = new ArrayList&lt;&gt;();
+    @Override public E get(int index) { return elements.get(index); }
+    @Override public int size() { return elements.size(); }
+    @Override public E set(int index, E element) { return elements.set(index, element); }
+    @Override public void add(int index, E element) { elements.add(index, element); }
+}
+</code></pre>
+<p><code>remove</code> is unsupported by this class, but importantly, <em>this can never change</em>. The <code>elements</code> list we’re delegating to is fully encapsulated, and we control all access to it. There’s no way for a future change in <code>List</code>, <code>AbstractList</code> or even <code>ArrayList</code> itself to allow removal of elements. This approach is a lot less <em>fragile</em> than extending <code>ArrayList</code> itself.<br />
+Here’s our implementation of <code>BoundedPriorityQueue</code> following the same principle:</p>
+<pre><code>public class BoundedPriorityQueue&lt;E&gt; extends AbstractQueue&lt;E&gt; {
+    private final Queue&lt;E&gt; elements;
+    private final int bound;
+    public BoundedPriorityQueue(Comparator&lt;? super E&gt; comparator, int bound) {
+        this.elements = new PriorityQueue&lt;&gt;(comparator);
+        this.bound = bound;
+    }
+    @Override public Iterator&lt;E&gt; iterator() { return elements.iterator(); }
+    @Override public int size() { return elements.size(); }
+    @Override public E poll() { return elements.poll(); }
+    @Override public E peek() { return elements.peek(); }
+    @Override
+    public boolean offer(E e) {
+        if (elements.size() &gt; bound) return false;
+        return elements.offer(e);
+    }
+}
+</code></pre>
+<h2><a id="user-content-disadvantages" class="anchor" href="#disadvantages"></a>Disadvantages</h2>
+<p>Of course, delegation has its disadvantages.</p>
+<h3><a id="user-content-memory-overhead" class="anchor" href="#memory-overhead"></a>Memory overhead</h3>
+<p>There’s an additional object for the wrapper. This isn’t really a problem in practice, though.</p>
+<h3><a id="user-content-performance" class="anchor" href="#performance"></a>Performance</h3>
+<p>You can’t take advantage of all optimizations a class may introduce in the future. <code>ArrayList.removeIf</code> is a great example again – the delegating class will only delegate a subset of methods, falling back to the potentially unoptimial behavior of <code>AbstractList</code> for others. But importantly, while this may be slower, it’s always <em>correct</em> – if it becomes a problem, just delegate that method as well. At least it won’t suddenly lead to broken behavior.</p>
+<h3><a id="user-content-missing-optional-methods" class="anchor" href="#missing-optional-methods"></a>Missing Optional Methods</h3>
+<p>It’s possible to miss certain optional methods when delegating. In the standard <code>AbstractList</code> example, it’s very easy to forget to delegate the <code>set(int, E)</code> method since it isn’t used very often.<br />
+However, this is usually fail-fast – it’ll throw an Exception and you’ll notice it – and much preferrable to the unexpected and subtle results wrong extension may produce.</p>
+<h3><a id="user-content-additional-code" class="anchor" href="#additional-code"></a>Additional Code</h3>
+<p>Especially with large interfaces and interfaces where you don’t have a handy stub class like <code>AbstractList</code> available, there can be quite a lot of methods to delegate. This is probably the biggest problem with delegation and a good reason to keep interfaces small.</p>
+<h4><a id="user-content-tooling" class="anchor" href="#tooling"></a>Tooling</h4>
+<p>Your IDE can assist you with generating delegation methods.<br />
+If you are a fan of <a href="https://projectlombok.org/">lombok</a>, it offers an experimental <code>@Delegate</code> annotation. But beware: Using this annotation with only <code>excludes</code> defined can lead to the very same issue! Take the example from the lombok website:</p>
+<pre><code>class ExcludesDelegateExample {
+  long counter = 0L;
+  private interface Add {
+    boolean add(String x);
+    boolean addAll(Collection&lt;? extends String&gt; x);
+  }
+  @Delegate(excludes=Add.class)
+  private final Collection&lt;String&gt; collection = new ArrayList&lt;String&gt;();
+  public boolean add(String item) {
+    counter++;
+    return collection.add(item);
+  }
+  public boolean addAll(Collection&lt;? extends String&gt; col) {
+    counter += col.size();
+    return collection.addAll(col);
+  }
+}
+</code></pre>
+<p>Here we are missing proper handling for the <code>listIterator.add</code> and corresponding <code>subList</code> methods – we can enter invalid states and can have subtle bugs. Be very careful when using this annotation!</p>
+<h2><a id="user-content-conclusion" class="anchor" href="#conclusion"></a>Conclusion</h2>
+<p>Don’t extend classes that weren’t meant to be extended. A class not being <code>final</code> does not give us a free pass – non-<code>final</code> is the default in java, and many programmers do not design their classes with extension in mind (and that’s fine).<br />
+Before extending a class with actual logic in it, think about alternatives. Can you use delegation instead? With collections and their convenient <code>Abstract*</code> stub implementations it’s easy, but with small interfaces you may not even need that.</p>
+<hr />
+<aside><a name="1"></a>Editor’s Note, put here because the editor didn’t want to interrupt the flow of the article: <code>dreamreal</code> – the editor of this site – was the one suggesting inheritance, on the assumption that the class had a very limited use case. That’s not much of a defense, but it’s what defense there is, and this serves as a good rule of thumb: always do it right, always question.</aside>

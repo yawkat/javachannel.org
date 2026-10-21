@@ -1,0 +1,60 @@
+---
+title: "Non-Blocking vs. blocking I/O: Go with blocking."
+date: "2017-12-20 08:52:14 -0500"
+author: "rzwitserloot"
+categories:
+  - "java-coding"
+tags:
+  - "async"
+  - "callback"
+  - "callback-hell"
+  - "netty"
+  - "nio"
+  - "node"
+  - "nonblocking"
+  - "promise"
+  - "promise-hell"
+  - "python"
+  - "xnio"
+wp-id: 993
+wp-guid: "http://javachannel.org/?p=993"
+---
+
+<p>You might have heard or read a various things on the Internet extolling the virtues of writing your applications to be ‘non blocking’. Java offers various libraries that help with this endeavour; <a href="http://undertow.io/">Undertow</a> is a java web server that lets you write your servlet handlers non-blocking, for example. <a href="https://github.com/xnio/xnio">XNIO</a> is a more general I/O library that lets you write non-blocking code in simpler fashion.<br />
+If you take nothing else away from this article, at the very least use one of those libraries to do your non-blocking work.<br />
+But the real point is: don’t write non-blocking code.<br />
+That’s right: Don’t write non-blocking code. It’s not worth it. You’re using Java, it ships with a garbage collector. Going non-blocking is like manually cleaning up your garbage: in theory it’s faster, in practice it’s more annoying, more error prone, and performance-wise usually either irrelevant or actually slower.<br />
+Said differently: Programming for non-blocking is a lot harder than you think it is, and the performance benefits are far less than you think they are.</p>
+<h2>What does ‘non-blocking’ mean?</h2>
+<p>Let’s say you wish to read from a file, so you create a <a href="https://javabot.evanchooly.com/javadoc/JDK/1.8/index.html?java/io/FileInputStream.html"><code>FileInputStream</code></a> and proceed to call the <a href="https://javabot.evanchooly.com/javadoc/JDK/1.8/java/io/FileInputStream.html#read--"><code>read()</code></a> method on it. What happens now? Well, the CPU needs to send a signal that travels to various associated chips on the motherboard, to eventually end up at the disk controller, which will then query some cells in the solid state array and returns this to you. Heaven forbid if you still have a spinning disk, in which case we might have to wait for something as archaic as a <em>motor</em> to spin some metal around and a pick-up-needle like thing to swing in there to read some bits! Even with very fast hardware this process takes ages, at least, as far as the CPU is concerned.</p>
+<blockquote><p>From Your Editor: Want to know more about how your computer actually works and why? A good book to read is Charles Petzold’s <a href="https://smile.amazon.com/Code-Language-Computer-Developer-Practices-ebook/dp/B00JDMPOK2/ref=sr_1_1?ie=UTF8&amp;qid=1513777058&amp;sr=8-1&amp;keywords=code+charles+petzold">Code</a>.</p></blockquote>
+<p>So what happens? Well, the CPU will just… wait. In parlance, the thread executing the <code>read()</code> call ‘blocks’, that is, it’ll stop executing while the disk system fetches the requested bytes, and the CPU is going to go do some other stuff (perhaps fill the audio buffer with the next bit of the music you’re playing in the background, do some compilation, et cetera), and if there’s nothing else to do, it’ll idle for a bit and save power.<br />
+Once the disk system has fetched the bytes and returned them to the CPU, the CPU will pick back up where it left off and your <code>read()</code> call returns.<br />
+That’s how ‘blocking’ works. Blocking is relevant for lots of things, but it’s almost always going to come up when talking to other systems: Networks, Disks, a database, et cetera: Input/Output, or I/O.<br />
+There’s another way to do it, though: ‘non-blocking’ code. (Yes, the quotes are intentional.) In non-blocking, things work a little differently. Instead of the thread freezing when there is no data yet, a non-blocking <code>read()</code> returns the bytes that are available, and execution continues. If you didn’t get it all, well, call it some more, or later. In practice, there are 2 separate strategies to make this work correctly:</p>
+<ol>
+<li>The functional/closures/lambda way: You ask for some data, <em>and</em> you provide some code that is to be executed once the data is fetched, and you leave the job of gathering this data (waiting for the disk, for example), and calling this code, to whatever framework you’re using, and it might use non-blocking I/O under the hood.</li>
+<li>
+<p>The multiplexing way: You are a thing that responds to many requests (imagine a web server, designed to handle thousands of simultaneously incoming requests), and if there isn’t yet enough data to respond to some incoming request, you simply… go work on some other request. You round-robin your way through all the requests, handling whatever data there is.</p>
+</li>
+</ol>
+<h2>It’s not as fast as you think it’ll be</h2>
+<p>Generally, ‘non blocking is faster!’ is a usually incorrect oversimplification that is based on the idea that switching threads is very slow. Let’s compare a webserver handling 100 simultaneous requests written with blocking I/O in mind, versus a webserver that is written non-blocking style. The blocking one obviously needs 100 threads to execute simultaneously; most of them will be asleep, waiting for data to either arrive or be sent out to the clients they are handling.<br />
+The blocking webserver will be switching active threads <em>a lot</em>. Contrast this to the non-blocking webserver: It might well run on only a single core: The one thread this webserver has will sleep as long as all 100 connections are waiting for I/O, and if even a single one has something to do, the thread awakes, does whatever job is needed for all connections that have data available, and only goes back to sleep when all 100 connections are awaiting I/O.</p>
+<blockquote><p>From Your Editor: The nonblocking approach just described is what Python and Node use nearly exclusively, by the way.</p></blockquote>
+<p>Thus, the theory goes: Switching threads is slow, especially compared to.. simply.. not doing that.<br />
+But this is an oversimplified state of affairs: In actual practice, modern kernels are really good at taking care of the bookkeeping that threads require. You can create many thousands of threads in Java and it’ll be fine. Furthermore, your one non-blocking thread model is also switching contexts: Every time it jumps to handling another connection, it needs to look at a completely different chunk of memory. This will usually invalidate the caches on your CPU and loading a new page into cache takes on the order of magnitude of 600 or so CPU operations. The CPU just sits there doing nothing while a new page is loaded into cache. This cost is similar to (and takes a similar duration as) thread switches. You gained nothing.<br />
+For more on why you’re not going to see a meaningful performance boost (in fact, why you’ll probably get less performance), check out Paul Thyma’s Presentation “<a href="http://paultyma.blogspot.com/2008/03/writing-java-multithreaded-servers.html">Thousands of Threads and Blocking I/O: The Old Way to Write Java Servers Is New Again (and Way Better)</a>“. Thyma is the operator of mailinator.com; he knows a thing or two about handling a lot of simultaneous traffic.</p>
+<h2>It’s really, really complicated</h2>
+<p>The problem with non-blocking is two-fold: First of all, modern CPUs definitely have more than one core, so a web server that has a single thread handling all connections in a non-blocking fashion is actually <em>much</em> slower: All cores but one are idling. You can easily solve this problem by having as many ‘handler threads’ all doing non-blocking operations, as you have cores. But this does mean you get none of the benefits of having a single thread. That is, you do not get to ignore synchronization issues unless you’re willing to pay a huge performance fine (bugs that occur because of the order in which threads execute, so called ‘race conditions’ – these bugs are notoriously hard to find and test for).<br />
+Secondly: The point of non-blocking is that you <em>do not block</em>: Whenever you are executing in a non-blocking context it is a bug to call any method or do anything that DOES block. You can NOT talk to a database in a non-blocking handler, because that will, or might, block. You can’t ping a server. Something as simple and innocuous as writing a log might block. The problem is, if you do something that does block, you won’t notice until much later when your server seems to fall over even at a fairly light load. You won’t get a log message or an exception if you mess up and block in a non-blocking context. Your server just stops being able to handle more than a handful of requests (equal to the # of cores you have) in a timely fashion for a while. Whoops! Your big server designed to handle millions of users can’t handle more than 8 people connecting at once because it’s waiting for a log line to be flushed to disk!</p>
+<blockquote><p>From Your Editor: Of course, you could write all of those operations in a nonblocking fashion as well, which is what Python and Node.JS have to do – and there’s a good reason why such things lead to a condition known as “callback hell.” It can be done, obviously; they do it. It’s also incredibly ugly and error-prone; it’s a good example of the “cure” being worse than the “disease.”</p></blockquote>
+<p>This really is a big problem: As a rule, most Java libraries simply do not mention whether or not they block – you can’t rely on documentation and you can’t rely on exceptions either.<br />
+Trying to program in this ‘you cannot block!’ world is incredibly complicated.<br />
+For a deeper dive into the nuttiness of that programming model, read “<a href="http://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/">What color is your function?</a>” by Bob Nystrom, a language designer on the Dart team.</p>
+<h2>Soo.. completely useless, huh? Why does it exist, then?</h2>
+<p>Well, non-blocking probably exists because, like the idea of the <a href="https://en.wikipedia.org/wiki/Tongue_map">tongue map</a>, it’s just a very widespread myth that non-blocking automatically means it’s all going to run significantly faster.<br />
+It’s not completely useless, though. The biggest benefit to writing your code non-blocking style, is that you gain full control of buffer sizes. Normally, in the blocking I/O model, most of the state of handling your I/O is stuck in the stack someplace: If you ask an inputstream to read a JSON block, for example, and only half of the data is readily available, half of that data is processed by your thread into the data structures you’re reading that JSON into, and then the thread freezes. That data is now stuck in bits of heap memory, and the rest is in this thread’s stack memory. Contrast to a non-blocking model where you’ll have made a <a href="https://javabot.evanchooly.com/javadoc/JDK/1.8/index.html?java/nio/ByteBuffer.html"><code>ByteBuffer</code></a> explicitly and most of the data is in there.<br />
+CPU stack, <code>ByteBuffer</code>: Potato, potato: It’s all RAM. The difference is: stacks are at least 1MB, and the same size for each and every thread in the VM. <code>ByteBuffer</code>s are fully under your control. You can make them smaller than 1MB, you can dynamically update the size, and you can have different buffer sizes for different connections, for example.<br />
+Non-blocking code tends to have a smaller memory footprint because of this, if the coder’s aware and takes advantage of the possibility, and that’s the one saving grace it does offer.<br />
+It is up to you to figure out if that benefit is worth the hardship and performance hit of going with the non-blocking model. Generally, RAM is very cheap. I’d wager my bets on the blocking model. After all, we don’t write all our software in hand tuned machine code either!</p>

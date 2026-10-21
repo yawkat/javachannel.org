@@ -1,0 +1,32 @@
+---
+title: "The JavaChannel Podcast, vol 16"
+date: "2018-08-16 10:00:05 -0400"
+author: "dreamreal"
+categories:
+  - "podcast"
+tags:
+  - "docker"
+  - "functional"
+  - "jakarta-ee"
+  - "java-ee"
+  - "json"
+  - "maven"
+  - "netbeans"
+  - "openjdk"
+  - "podcast"
+  - "podcast-16"
+  - "toml"
+  - "yaml"
+enclosure: "/wp-content/uploads/2018/08/javachannel-16.mp3"
+enclosure-length: 45906050
+show-enclosure: true
+wp-id: 1156
+wp-guid: "https://javachannel.org/?p=1156"
+---
+
+<p>It’s only been six months, so it’s finally time for a new podcast. This one doesn’t even pretend to go over the mountains of killer content from ##java since the last podcast – it focuses on some of the more recent links, and that’s <em>it</em>. Well, apart from talking about the Java ecosystem a bit, especially in contrast with Python, an upstart language that’s making a lot of headway lately thanks to a giant upsurge in data science applications.</p>
+<p>(A bit of irony: the very first paragraph in the podcast says it’s only been “four months” when it’s actually been six. Yikes.)</p>
+<p>But there <em>are</em> some interesting links, and here are the ones the podcast focused on!</p>
+<ul><li>The Apache Maven compiler plugin has been <a href="https://blog.soebes.de/blog/2018/07/30/apache-maven-compiler-plugin-version-3-dot-8-0-released/">updated to 3.8.0</a>, includes module-info support; default Java version is now 1.6, only two versions out of date</li><li><a href="https://netbeans.apache.org/download/nb90/nb90.html">NetBeans 9.0 has been released</a>, and both Netbeans users rejoiced. You go, you two!<br /></li><li><a href="https://github.com/GoogleContainerTools/jib">https://github.com/GoogleContainerTools/jib</a> is a gradle/maven plugin that builds a docker container easily. May not work well with <a href="https://aboullaite.me/docker-distroless-image/">https://aboullaite.me/docker-distroless-image/</a> but there’s more than one way to skin a firetruck.</li><li>String literals are <a href="http://mail.openjdk.java.net/pipermail/amber-dev/2018-July/003254.html">targeted for JDK 12</a> as the first preview language feature.</li><li> <a href="https://github.com/angelozerr/jdt-codemining/blob/master/README.md">JDT-Codemining</a> is an eclipse plugin that decorates various nodes in your java code with live-updating useful info. Examples: * Did this @Test pass in last test run? * What are the param names for this method call? And an IDEA plugin that pulls completions from a public repository: <a href="https://www.codota.com/">Codota</a>.<br /></li><li>“<a href="https://arp242.net/weblog/yaml_probably_not_so_great_after_all.html">YAML: Probably not so great after all</a>” is not a great article, but it points out that YAML might contain insecure data (like commands to run that aren’t wise) but does have a good point that the YAML spec is enormous for such a simple-looking document format. An alternative lately seems to be TOML, though: <a href="https://github.com/toml-lang/toml">https://github.com/toml-lang/toml</a> and a Java library for TOML (with no recommendation) is: <a href="https://github.com/mwanji/toml4j">https://github.com/mwanji/toml4j</a></li><li><a href="https://github.com/schibsted/jslt">https://github.com/schibsted/jslt</a> provides XSLT-type transformations for JSON.</li><li><a href="https://blogs.oracle.com/java-platform-group/a-quick-summary-on-the-new-java-se-subscription">https://blogs.oracle.com/java-platform-group/a-quick-summary-on-the-new-java-se-subscription</a> – an important rollup from Oracle on the nature of new Java releases. Chances are Oracle’ll be fine, what with corporations handing them money for the Oracle JVM and support… but everyone else should go ahead and use OpenJDK.</li><li><a href="https://itnext.io/pros-and-cons-of-functional-programming-32cdf527e1c2">https://itnext.io/pros-and-cons-of-functional-programming-32cdf527e1c2</a> is a decent rollup of functional programming. The best summary I’ve seen for it is still a book, though: <a href="https://www.amazon.com/Functional-Programming-Scala-Paul-Chiusano/dp/1617290653/ref=sr_1_1?s=digital-text&amp;ie=UTF8&amp;qid=1534427190&amp;sr=8-1&amp;keywords=functional+programming+scala">Functional Programming in Scala</a>. The <em>book</em> is good. Scala is not. 😀</li><li><a href="https://jaxenter.com/understanding-jakarta-series-tijms-147953.html">https://jaxenter.com/understanding-jakarta-series-tijms-147953.html</a> brings up the idea that Jakarta EE (the new name for Java EE) might be more useful as a collection of specifications than as a deployment environment. The age of the containers might have passed, killed off by the new and ascendant microcontainers.</li><li><a href="/java-books/">https://javachannel.org/java-books/</a> – the channel website finally has a list of recommended Java books! If you think this list needs to be amended, feel free to send in your suggestions.</li><li>Quick hit from ##java: files to commit in the source repository? the entire project folder, ignoring .classpath, .project, .settings/, *.iml, *.ipr, .idea/, and *~.</li></ul>
+<p>This was written with the new editor plugin for WordPress, called “Gutenberg.” It’s a lot like Medium.com’s editor. It’s effective for writing… unless you have any actual features you want in the text.</p>
+<p></p>

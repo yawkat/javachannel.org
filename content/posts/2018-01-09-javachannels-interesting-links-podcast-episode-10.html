@@ -1,0 +1,45 @@
+---
+title: "Javachannel’s Interesting Links podcast, episode 10"
+date: "2018-01-09 09:04:10 -0500"
+author: "dreamreal"
+categories:
+  - "podcast"
+tags:
+  - "podcast"
+  - "podcast-10"
+enclosure: "/wp-content/uploads/2018/01/javachannel-10.mp3"
+enclosure-length: 39467898
+show-enclosure: true
+wp-id: 1027
+wp-guid: "https://javachannel.org/?p=1027"
+---
+
+<p>Welcome to the tenth ##java podcast. If we were Neanderthals, our lives would be half over by now. As usual, I think, I’m Joseph Ottinger, dreamreal on the IRC channel, and it’s Tuesday, 2018 January 9. <a href="https://twitter.com/kinabalu">Andrew Lombardi</a>, kinabalu on IRC from <a href="https://mysticcoders.com">Mystic Coders</a> is with me again.<br />
+As always, this podcast is basically interesting content pulled from various sources, and funneled through the ##java IRC channel on freenode. You can find the show notes at the channel’s website, at javachannel.org; you can find all of the podcasts using the tag (or even “category”) “podcast”, and each podcast is tagged with its own identifier, too, so you can find this one by searching for the tag “podcast-10”. The podcast can also be found on iTunes and I’m trying to figure out if it’d be worth it to put it on Youtube, too – sorry, folks, no video from me. I can’t afford the cameras; every time they take a picture of me, they shatter.<br />
+You can submit to the podcast, too, by using the channel bot; <code>~submit</code>, followed by an interesting url, along with maybe a comment that shows us what you think is interesting about the url. Yes, you have to have a url; this is not <em>necessarily</em> entirely sourced material, but we definitely prefer sourced material over random thoughts.</p>
+<ol>
+<li>
+<p>TechTarget finally gets into the podcast, with <a href="http://searchcloudapplications.techtarget.com/opinion/Four-ways-the-container-ecosystem-will-evolve-in-2018">Four ways the container ecosystem will evolve in 2018</a>. Kubernetes gets the nod of approval, and… imagine containers being used in IoT. I’m not quite sure how the latter point will work. Is docker communicating with an embedded device, or are they talking about embedded devices RUNNING docker? If so, that’d be challenging. After all, Java’s not been all that successful on constrained devices either, and it has a constrained <em>version</em>. (The other two ways are: increased WIndows adoption in containers, and LinuxKit – derived from the Windows thing.)</p>
+</li>
+<li>
+<p><a href="https://meltdownattack.com/">Meltdown and Spectre</a> – scary words indeed, and deservedly so. Our benefactors at Intel, whose sponsorship we’d accept mostly because we’re cheap and will take money from ANYONE, have blessed us with horrible security in virtually every chip manufactured in the last decade or so. Meltdown allows a program to access the memory of other programs and the host OS; Spectre <em>also</em> breaks isolation between programs. Fixing this requires replacing your physical CPU or patching your OS; the patches have performance implications. If you’re not patched, start looking for patches today. The JVM is not a good vector for <em>delivering</em> either of these flaws, although yawkat’s been playing around with trying it out; this is not the same as the JVM protecting you from <em>other programs</em> exploiting these flaws. Again, thanks, Intel.</p>
+</li>
+<li>
+<p>Riccardo Cardin wrote up “<a href="https://dzone.com/articles/single-responsibility-principle-done-right">Single-Responsibility Principle Done Right</a> on DZone. He’s addressing one of the SOLID principles from Robert Martin, the “Single Responsibility” principle, which states: “A class should have only one reason to change.” Mr. Cardin understandably says that that’s a qualitative assertion and not a quantitative assertion – and he suggests adding cohesion to the definition, so that “only one reason” means that it has a single purpose – be it serving as a rectangle, or interacting with a database, or what-have-you. That’s still qualitative, really, but it’s a good baseline – a data access object should ONLY interact with a database, not perform calculations on the individual objects (although I guess you could bend the definitions to make THAT work, too, in the case of reporting.)</p>
+</li>
+<li>
+<p>Lorenzo Sciandra wrote up “<a href="https://medium.com/@Kelset/i-thought-i-understood-open-source-i-was-wrong-cf54999c097b">I thought I understood Open Source – I was wrong</a>,” a well-written post about the open source mindset. He says that he used to see open source as a customer getting a freebie: the maintainers have a product that they give freely to the world. But that’s wrong: open source is all about participation. As soon as you <em>use</em> an open source product, you yourself are an actual owner, even if you’re passive about it; it’s yours, not theirs, and you have a right (and to a degree a responsibility) to participate and contribute to that product. It’s yours. You bit it, you bought it… which means if you find a problem, it’s your responsibility to report and address it.</p>
+</li>
+<li>
+<p>DZone offered us “<a href="https://dzone.com/articles/a-log-message-is-executable-code-and-comment">A Log Message is Executable Code and Comment</a>”. Basically, the author – Dustin Marx – suggests that using a logger for comments actually is a lot more useful than simple code comments; code comments are easy to ignore (even if your IDE highlights them, you get used to seeing the green or blue marker and just skip over them). But a logger event – especially if the log levels are high enough to not hide, like error or severe levels – isn’t something you can ignore. The danger here, of course, is that your comments can actually affect your runtime; interpolation takes time, so you may end up having guards around your <em>comments</em>, a concept I’m struggling with. But it’s a neat idea – if the logger uses a lambda instead of an interpolated value (the lambda can do the interpolation, after all) the logger can do its own guarding and the performance impact MIGHT be minimal.</p>
+</li>
+<li>
+<p>Up next: <a href="https://javers.org/blog/2017/12/javers-vs-envers-comparision.html">JaVers compared to Envers</a>. This is a comparison between JaVers and Envers. Both are auditing tools for databases, but they have very different mindsets; Envers stores in an “audit” table that shows the history of the data with an additional version number, while JaVers stores a JSON representation of the object. The article’s pretty well-done – and uses Groovy to show functionality. Who knew – people use Groovy for something outside of Gradle? Crazy. Given that the article was written by the author of JaVers, I can’t say it was completely unbiased. It looks like a decent write-up of both tools, and seems like a fairly useful tool if you it’s a requirement for you. Have you needed to use any data auditing tools like this before?</p>
+</li>
+<li>
+<p><a href="https://github.com/creactiviti/jiccup">Jiccup</a> is a library inspired by Clojure’s “hiccup” – oddly reminiscent of <a href="http://jakarta.apache.org/ecs/">ECS</a>. It reminds one more of the Jade templating engine over in NodeJS land. You don’t see this thing done much outside of JavaScript libraries (well, except for hiccup, maybe?), so it’s good to see it but it’s really weak compared to what they’ve done with something like Jade. I’m looking forward to seeing if this gets more interest, as it looks like a fairly young project. (ECS is a dead project from Jakarta; each HTML element was represented as an object type, so you’d have an HTML object to which you’d add a <code>head</code> object and a <code>body</code> object, and your <code>body</code> would have a list of <code>paragraph</code> objects… so you’re just building an object model of an HTML page. It was slaughtered, and badly and quickly, by templating.)</p>
+</li>
+<li>
+<p>“<a href="https://dzone.com/articles/switch-expressions-coming-to-java">Switch Expressions coming to Java?</a>” mentions a Java enhancement to make <code>switch</code> an expression instead of a statement. I’m all for this, but why limit it to <code>switch</code>? Why not <code>try</code> or <code>if</code>? This is one of those features that made me love Scala – before I realized what a puddle of hacks Scala was in the real world – and makes me enjoy Kotlin today. It’d be interesting to see how this works out – there are semantics that need defining, especially in light of backward compatibility – but I love this idea.</p>
+</li>
+</ol>

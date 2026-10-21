@@ -1,0 +1,61 @@
+---
+title: "Jackson-databind and Default Typing Vulnerabilities"
+date: "2018-10-16 16:40:52 -0400"
+author: "yawkat"
+categories:
+  - "java-coding"
+  - "security"
+tags:
+  - "jackson"
+  - "json"
+  - "security"
+  - "serialization"
+  - "xml"
+wp-id: 1182
+wp-guid: "https://javachannel.org/?p=1182"
+---
+
+<p>Today, GitHub sent out security notices to owners of projects using old jackson-databind versions (older than 2.8.11.1 and 2.9.5). These notices pertain to <a href="https://github.com/FasterXML/jackson-databind/issues/1599">this issue</a>. I have talked about its relevance before on IRC, but since it is getting more attention now, I will describe it here again.</p>
+<h2>The Problem</h2>
+<p>The “bug” comes from using the so-called <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.9/com/fasterxml/jackson/databind/ObjectMapper.html#enableDefaultTyping()">default typing</a>. This feature allows a user to deserialize subclasses (or even Object) without specifying the full possible type hierarchy. Consider this model:</p>
+<pre>interface I {
+}
+@Data
+class A implements I {
+    private int i;
+}
+@Data
+class B implements I {
+    private boolean b;
+}</pre>
+<p>Now, if we wish to serialize the interface I, you usually need to specify some sort of <em>type info</em>. This is typically done through an annotation on the interface:</p>
+<pre>@JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
+@JsonSubTypes(&#123;@JsonSubTypes.Type(value = A.class, name = "A"), @JsonSubTypes.Type(value = B.class, name = "B")})
+interface I {
+}</pre>
+<p>If we now serialize an object of type I, we get a result like this:</p>
+<pre>new ObjectMapper().writerFor(I.class).writeValueAsString(new A())
+{"@type":"A","i":0}</pre>
+<p>Deserializing this JSON works as expected.</p>
+<h2>Default typing</h2>
+<p>This annotation-based registration is fine for small use cases, but can get cumbersome if the types are in different modules, or there are just a lot of them, or it would be bad style to reference them from the parent class. Normal Java serialization does not have this problem (it just carries the actual dynamic class name with it), so this could be a barrier for adoption of Jackson for previous Java serialization users.</p>
+<blockquote><p>
+  The problem here is that we <em>want</em> people to migrate from Java serialization. There are lots of reasons, most of them compelling.
+</p></blockquote>
+<p>Enter <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.9/com/fasterxml/jackson/databind/ObjectMapper.html#enableDefaultTyping()">default typing</a>. With default typing, we don’t need the type info annotations at all:</p>
+<pre>new ObjectMapper().enableDefaultTyping().writerFor(I.class).writeValueAsString(new A())
+["net.hawo.tv.tvui17.A",{"i":0}]</pre>
+<p>(Ignore the fact that this is now suddenly an array – this is one of the ways jackson may include type info)<br />
+The idea is simple: Include the full class name in the json, and you can simply get the proper class at runtime! Sounds good, right?</p>
+<h2>The Vulnerability</h2>
+<p>Well, turns out this is not that good of an idea. Java serialization does a very similar thing (though it still requires the named class to be serializable, which jackson doesn’t) and this has lead to what feels like a third of all serious security vulnerabilities in Java applications, ever. The problem lies with the fact that Java classpaths are often <em>massive</em>, and allowing <em>any</em> class on that classpath to be deserialized at will can be disastrous since it exposes a huge attack surface. If you can get <em>any</em> class on the classpath to execute code when deserialized with jackson, you have successfully achieved remote code execution.<br />
+This is exactly what happened with Jackson. Some classes that were common on user classpaths could be deserialized to execute arbitrary code. <a href="https://github.com/FasterXML/jackson-databind/commit/60d459cedcf079c6106ae7da2ac562bc32dcabe1#diff-98084d808198119d550a9211e128a16fR53">The fix</a> for this issue is basically a blacklist of a few of these classes that could be exploited. Blacklists are not a solution, though, and since this first list, the list has been amended <a href="https://github.com/FasterXML/jackson-databind/commits/66475749c6ec576453bdba519d5f94224ef1a474/src/main/java/com/fasterxml/jackson/databind/jsontype/impl/SubTypeValidator.java">several times</a>. The maintainers are playing whack-a-mole here, and in my opinion it is a waste of everyone’s time to be adding all exploitable classes to this list.</p>
+<h2>The Solution</h2>
+<p>Our experience with this same issue in the Java serialization world tells us not to deserialize untrusted data. Luckily, Jackson is much more secure than Java serialization – if you don’t use default typing. The only acceptable solution to this issue in the long run is: <strong>do not use default typing to deserialize untrusted data.</strong> Default typing is rarely necessary or even a good idea.<br />
+Unfortunately, online resources saying this are sparse. Default typing is an “easy” solution, and many people simply do not have the security awareness to see the issue with it – they will stumble over stackoverflow answers such as <a href="https://stackoverflow.com/questions/17694042/jackson-default-typing-for-object-containing-a-field-of-mapstring-object">this one</a> and simply enable default typing to easily serialize Object fields. The documentation of Jackson also doesn’t highlight this as much as it should.<br />
+Two alternatives to default typing exist in Jackson:</p>
+<ul>
+<li>Normal, annotation-based typing as shown above. This allows you either to use the full name as with default typing, or even specify your own name for greater compatibility (you can later change the class name without affecting the serialized representation). This is the “standard” solution, and the appropriate one for most use cases.</li>
+<li>Should you not know the possible subtypes of a class you wish to deserialize in advance, you can use the rich <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.9/com/fasterxml/jackson/databind/ObjectMapper.html#registerSubtypes(java.lang.Class...)">registerSubtypes</a> API to dynamically add the types you desire. These types could be detected through an existing module system you are already using, or using something like <a href="https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html">SPI</a>.</li>
+</ul>
+<p>All in all, I am a bit dissatisfied with the attention this issue has gotten. The issue is a security vulnerability <em>by design</em>, and anyone using default typing should have been aware of it. Luckily, default typing is not on by default. I do not have statistics but I would be surprised if many people used it or knew of its existence in the first place, and so I find the attention GitHub has given this a bit over the top – the biggest thing these notifications will spread is uncertainty about Jackson, so this article was an attempt at clearing up what it’s actually all about.</p>

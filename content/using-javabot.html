@@ -1,0 +1,92 @@
+---
+title: "Using Javabot"
+layout: "page"
+link: "/using-javabot/"
+wp-id: 60
+---
+
+<h1>How do I use the javabot?</h1>
+<ul>
+<li>Ask it how in a private message: <code>/msg javabot help</code></li>
+<li>This is a quick primer, and is not meant to be a complete tutorial. You should observe how the channel regulars use javabot, and learn from that.</li>
+<li>All commands are assumed to be executed from the channel. If done in private message, the tilde is unnecessary and invalid.</li>
+<li>If your NickServ account is new, javabot may refuse to interact with you; ask someone who’s been around to show you what you need. Your NickServ account needs to have been registered for at least fourteen days (in javabot’s default configuration).</li>
+</ul>
+<h1>Where can I find javabot’s web interface?</h1>
+<ul>
+<li><a href="https://javabot.evanchooly.com/factoids">Factoids</a></li>
+<li><a href="https://javabot.evanchooly.com/karma">Karma Rankings</a></li>
+<li><a href="https://javabot.evanchooly.com/changes">ChangeLog</a></li>
+<li><a href="https://javabot.evanchooly.com/logs/%23%23java/today">Channel Log</a></li>
+</ul>
+<h1>What is karma?</h1>
+<p>Karma is a rough measure of your peers’ respect toward you in matters related to the ##java channel. It’s common for residents to assign you karma points for:</p>
+<ul>
+<li>helping with a tough problem without spoonfeeding</li>
+<li>saying something funny</li>
+<li>providing a service to the ##java community</li>
+<li>otherwise being someone that others respect, like, etc. in ##java</li>
+</ul>
+<h2>How do I increment or decrement somebody’s karma?</h2>
+<ul>
+<li>To increment somebody’s karma, enter <code>~nick++</code></li>
+<li>To decrement somebody’s karma to do <code>~nick--</code><br />
+Note: Incrementing your own karma will cause you to <em>lose</em> one karma point. This is not a bug, so don’t bother reporting it. It is intended to discourage karma whoring. Karma whoring is defined as trying to increment your own karma to make you look like you have more respect than you actually do.</li>
+<li>One thing of interest is that you cannot modify karma in a private message to javabot.</li>
+</ul>
+<p>If you still try to whore your own karma by, well, working around the bot, the human ops will know and respond – often by decrementing your karma by quite a bit. It’s just an informal gauge; it’s not worth your trouble.</p>
+<h2>Why does ~pastebin output a different pastebin sometimes?</h2>
+<p><code>~literal pastebin</code> outputs the following: <code>&lt;reply&gt;(http://papernapkin.org/pastebin|http://eugeneciurana.com/pastebin|http://rifers.org/paste|http://pastebin.stonekeep.com)</code>, which is how javabot chooses one entry from a set of possible answers.</p>
+<h2>How do I add factoids?</h2>
+<p>A couple things to note:</p>
+<ul>
+<li>Please only add factoids that are useful.</li>
+<li>Think twice before adding a factoid or saying something that is rude, offensive, or just generally useless. Be considerate of others, especially the ops.</li>
+<li>To add a factoid the syntax is: <code>~foo is whatever</code>, this would would make <code>~foo</code> output <code>foo is whatever</code>. Replace <code>foo</code> with the name of the factoid you want to add.</li>
+</ul>
+<p>Now, there are special tags that can be used:</p>
+<ul>
+<li><code>&lt;reply&gt;</code> makes the factoid trigger a reply from javabot, the reply is whatever is after the <code>&lt;reply&gt;</code> tag.</li>
+<li><code>&lt;action&gt;</code> makes the bot issue an IRC action.</li>
+</ul>
+<p>The syntax is: <code>~foo is &lt;reply&gt;bar</code> and <code>~foo is &lt;action&t;jumps up and down</code>, replace foo with the name of the factoid you’d like to add.<br />
+DO NOT put a space between the text and <code>&lt;reply&gt;</code> and <code>&lt;action&gt;</code>. The syntax is exactly as it is given.<br />
+If you would like the factoid to take an argument, an example is <code>~greet $1 is &lt;reply&gt;Hello $1.</code>; you’d trigger that factoid by typing <code>~greet argument</code>, where <code>argument</code> is the argument you need passed to the bot. That will output <code>Hello argument</code>.<br />
+You can also use <code>$^</code>, which camel-cases the input (removing all spaces). For example: <code>~foo $^ is &lt;reply&gt;$^</code>. The reply will be the input passed to <code>~foo</code>, camel-cased with all spaces removed. So, for example:<br />
+<code>~foo This is a test</code> will output: <code>ThisIsATest</code><br />
+Lastly, the $+ token will URL encode the input so it can cleanly be passed as a <code>GET</code> parameter to a url such as google, etc. Usage is similar to the <code>$^</code> and <code>$1</code> tokens. For more information see the javadoc for <a href="http://docs.oracle.com/javase/8/docs/api/java/net/URLEncoder.html#encode(java.lang.String)">URLEncoder.encode(String)</a>.<br />
+As an Example:<br />
+<code>~foo $+ is &lt;reply&gt;http://www.google.com/search?q=$+</code><br />
+One other token may be of interest to you: the <code>$who</code> token. That is the person who retrieved the factoid, or the person whom the ~tell was directed towards.</p>
+<h2>How do I redirect a factoid to an existing one?</h2>
+<p>To do that you use the <code>&lt;see&gt;</code> tag. Please keep in mind that you SHOULD NOT put a space between <code>&lt;see&gt;</code> and the factoid you are redirecting to.<br />
+Example: <code>foo is &lt;see&gt;bar</code></p>
+<h2>How do I get information about who added a factoid?</h2>
+<p>Do <code>~info rbi</code> replacing “rbi” with the name of the factoid for which you’d like to retrieve metadata (who added it, when it was added, et cetera).</p>
+<h2>How do I use the javadoc command in javabot?</h2>
+<p>For the time-being this command is case-sensitive, so string is NOT the same as String.<br />
+To get the javadoc page for a specific class, just do <code>~javadoc String</code>.<br />
+To get the method inside a class of a javadoc page do <code>~javadoc String.split(*)</code>, you can replace the asterisk with the type parameter, such as <code>~javadoc String.split(String)</code>, String.split() takes a String as a parameter.<br />
+There may be cases where the same class name exists in different packages; for example List exists in both java.awt and java.util. You may need to actually specify which you want so do, ~javadoc java.util.List, this is most likely the one you will want, otherwise when you do ~javadoc List, both will come up.</p>
+<h2>How do I tell another user about one of the factoids or a javadoc</h2>
+<p>There are two ways:<br />
+* <code>~tell user about rbi</code> (replace rbi with the name of the factoid you’d like to give them)<br />
+* <code>~~user rbi</code> (again, replace the name of the factoid) — this is the preferred way now.<br />
+You DO NOT need to use <code>~tell</code> or the new form when telling yourself about a factoid; simply just do ~rbi.</p>
+<h2>Can I private message javabot?</h2>
+<p>Yes, in fact if you’re going to repeatedly use javabot, we recommend it. In private message, no tilde or ~ is needed. The tilde is intended to keep javabot from repeatedly responded to all of the messages in the channel.</p>
+<h2>How do I address javabot?</h2>
+<p>There are a few ways.</p>
+<ul>
+<li>You can use the signal character (the tilde, or <code>~</code>): <code>~javadoc String.split(*)</code></li>
+<li>You can address the bot by nick: <code>javabot: javadoc String.split(*)</code></li>
+<li>You can issue a private message to the bot.</li>
+</ul>
+<h2>Where can I get Javabot’s source?</h2>
+<p>You can get <a href="http://github.com/evanchooly/javabot">Javabot’s source code</a> from github.</p>
+<h2>Who wrote javabot?</h2>
+<p>Well, ricky_clarkson originally wrote it. Since then, cheeser, joed and kinabalu have been the main developers maintaining and adding nifty new features to javabot.</p>
+<h2>What framework does javabot use?</h2>
+<p>Javabot uses <a href="http://www.jibble.org/pircbot.php">PircBot</a> for its backend.</p>
+<h2>Can you put javabot in my channel?</h2>
+<p>If your channel is on freenode, then it’s a possibility. Ask and see. Alternatively, you can build the source and run your own bot. You can find the source at the project page.</p>
