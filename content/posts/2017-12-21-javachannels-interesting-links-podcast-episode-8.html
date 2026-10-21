@@ -1,0 +1,62 @@
+---
+title: "Javachannel's Interesting Links podcast, episode 8"
+date: "2017-12-21 07:36:43 -0500"
+author: "dreamreal"
+categories:
+  - "channel-news"
+  - "podcast"
+tags:
+  - "async"
+  - "dzone"
+  - "excel"
+  - "infoq"
+  - "monads"
+  - "nio"
+  - "nodejs"
+  - "podcast"
+  - "podcast-8"
+  - "poi"
+  - "postgres"
+  - "python"
+  - "valhalla"
+enclosure: "/wp-content/uploads/2017/12/javachannel-8.mp3"
+enclosure-length: 54474354
+show-enclosure: true
+wp-id: 1004
+wp-guid: "http://javachannel.org/?p=1004"
+---
+
+<p>Welcome to the eighth ##java podcast. I’m Joseph Ottinger, dreamreal on the IRC channel, and it’s Thursday, 2017 December 20. <a href="https://twitter.com/kinabalu">Andrew Lombardi</a> from <a href="https://mysticcoders.com">Mystic Coders</a> is with me again.<br />
+Please don’t forget: this is <em>your</em> podcast, with your content too. You can contribute by using a carrier pigeon and sending us notes encoded with rot13 – twice if you want to be really secure – or by using javabot on the IRC channel, with ~submit and an http link, or you can also write content for the channel blog at javachannel.org, or you can even just tell us that something’s interesting… we’ll pick it up from there.</p>
+<ol>
+<li>
+<p>“<a href="/posts/non-blocking-vs-blocking-i-o-go-with-blocking/">Non-Blocking vs. blocking I/O: Go with blocking.</a>” is an article by ##java’s surial. In it, he’s talking about asynchronous code, especially with respect to I/O… and his assertion is that you really don’t want to do it. If you decide you do (and there <em>are</em> reasons to) then you should at least rely on some of the libraries that already exist to make it easier… but he mostly points out that it isn’t worth it for most programmers. Interesting read, especially when you consider that Python and Node.JS live and die on this programming model.</p>
+</li>
+<li>
+<p>“<a href="https://medium.freecodecamp.org/to-self-doubting-developers-are-you-good-enough-13de8ebdf53a">To self-doubting developers: are you good enough?</a>” is an article meant to make you mediocre programmers feel better about yourselves. It talks about the processes and exercises that we all more or less had to go through to achieve competence. It’s not a <em>long</em> post, but it has some good points; programming is practice and art, just like athletics, really – and sometimes you lose, sometimes you plateau, sometimes you have to put in time that someone else might not have to put in. Sometimes the other guy is a natural at some things, and your effort is required to give you the edge… but the good news is that you <em>can</em> put in the effort.</p>
+</li>
+<li>
+<p>Jason Whaley posted a link called “<a href="https://gocardless.com/blog/incident-review-api-and-dashboard-outage-on-10th-october/">Incident review: API and Dashboard outage on 10 October 2017</a>” that went into a Postgres multinode deployment failure. It’s a payments company, so the outage is a pretty big deal for them; the short form is that they had a series of failures at the wrong time, and the postgres installation failed. That’s something we don’t hear about very often – either because people are ashamed of it, or hiding it, or some other more nefarious reason, perhaps. More reasons why I’m a developer and not in DevOps? Some pretty in-depth analysis on multi-master Postgres and unintended consequences of architecture. Appears that aside from the Postgres-specific things mentioned here, it probably is a good idea to regularly introduce fault into your infrastructure to test it, to see where the problems are you didn’t intend. And the automation erodes knowledge.</p>
+</li>
+<li>
+<p>“<a href="https://medium.com/@benjaminhardy/want-to-become-the-best-at-what-you-do-read-this-10b6a79feda9">Want to Become the Best at What You Do? Read this.</a>” goes over five steps to being all that you can be including quoting “Eye of the Tiger” for added insult. Several of the ideas in here are valid though, focusing on improving your skills / self-improvement and putting yourself out there in a vulnerable way. All the items have a “The Secret” type of vibe around them though, which is a bit of a turn off. Love the process, better yourself, make a positive impact on the world, sounds pretty good.</p>
+</li>
+<li>
+<p>A user on ##java posted a reference to <a href="https://github.com/creditdatamw/zerocell">zerocell</a> – a simple open source library to read Excel spreadsheets into Java POJOs. <a href="https://poi.apache.org/">Apache POI</a> is the go-to for this, but POI is a little long in the tooth; it’s always nice to see people creating new solutions. I don’t have any Excel spreadsheets that I need converted into POJOs handy – and I don’t think I’ve EVER had them… except maybe once.</p>
+</li>
+<li>
+<p>“<a href="https://dev.to/lpasqualis/understanding-and-overcoming-coders-block-5m6">Understanding and Overcoming Coder’s Block</a>” is YET ANOTHER lifestyle article for this podcast; it’s addressing those times when someone who might otherwise be a good coder – or writer, or anything – encounters the inability to write anything worthwhile. It’s focused on code, but it’s pretty general even so: reasons include a lack of clarity on what you’re trying to achieve, or a lack of decisiveness about how to solve a problem, or maybe the problem just seems too big to solve, or maybe even that you’re just not all that jazzed about the project you’re working on. It also addresses external factors – you know, real life – that might be getting in the way. Lastly, it includes some tips for each of those problems to perhaps point the way forward.</p>
+</li>
+<li>
+<p>“<a href="https://hackernoon.com/the-myth-of-the-interchangeable-developer-38d41aff563e">The Myth of the Interchangeable Developer</a>” is yet another lifestyle article that points out what we all know but that recruiters and managers seem to be ignorant about: we all have specific skillsets. If I’m a good services developer, it doesn’t necessarily follow that I’m a good UI developer, for example… it doesn’t mean that I can’t learn, but it certainly implies that there’s an extra cost in time or aptitude for me to actually design a UI.</p>
+</li>
+<li>
+<p>“<a href="https://www.infoq.com/articles/Understanding-Monads-guide-for-perplexed">Understanding Monads: a guide for the perplexed</a>” is an article trying to explain monads yet again. Maybe it’s me, but I’m thinking that monads might be one of those formal terms that’s useful but not useful enough, because they’ve been around forever but people still don’t get them. Maybe there’s a giant set of programmers who shouldn’t be allowed to program… but my feeling is that ‘monad’ is mostly jargon. To me it’s a stateless bit of code that defers state elsewhere, so it’s “functionally pure.” Lots of languages that rely on asynchronous programming have a similar concept, but they don’t necessarily call them “monads” (and they can store state elsewhere, too, so maybe they’re cheating.) It’s a decent article, but if you don’t understand monads, it may not .. actually change anything for you. But maybe it will.</p>
+</li>
+<li>
+<p>Ah, <a href="https://dzone.com/articles/what-is-project-valhalla">Project Valhalla</a>. DZone has an article – pretty old now, actually, a month or two – that talks about Valhalla. No Valkyries, unfortunately, but value types instead: object references that are referred to just like primitives. This means that Java might get some forms of reification… but it’s hard to say. The main thing I wanted to see from the article was more clear example code; there’s one that boxes an integer in a generic class, without specifying the integer type, but I’m not actually seeing where there’s a real benefit in code yet.</p>
+</li>
+<li>
+<p>One of my favorite subjects is up next: “<a href="https://hackernoon.com/why-senior-devs-write-dumb-code-and-how-to-spot-a-junior-from-a-mile-away-27fa263b101a">Why Senior Devs Write Dumb Code and How to Spot a Junior From A Mile Away</a>.” Want to find a junior developer? Find someone who spends four hours tuning a bit of code that will run … once every four hours. Overexerting yourself trying to write the perfect bit of code every time… that’s a junior developer. Of course, we all know some senior developers who do the same sort of thing… and we tolerate them, but it’s just tolerance. I don’t write supercomplicated code if I can help it, and I’d rather provide simple code to get something simple done if I can, even if that means I’m wasting a few hundred K of RAM or a few dozen milliseconds. I mean, sure, if we need those milliseconds or that RAM, we can tune for that… but we do that when necessary and not otherwise. A summary might be: hesitate to wax locquacious when your innate desire is to extrude tendrils for others to admire your skill; alternatively, allow their senses to inhale your greatness despite their inability to immediately perceive how impressive your capabilities are, especially in comparison to their own.</p>
+</li>
+</ol>

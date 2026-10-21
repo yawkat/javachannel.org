@@ -1,0 +1,50 @@
+---
+title: "Collapsing multiple ints into a long"
+date: "2014-08-15 07:03:37 -0400"
+author: "twisti"
+categories:
+  - "java-coding"
+tags:
+  - "bitpacking"
+  - "compression"
+  - "java"
+wp-id: 82
+wp-guid: "http://javachannel.org/?p=82"
+---
+
+<p>Every now and then, you may want to collapse multiple values into a <code>long</code>, to use as a key for a <code>Map</code>, for example.<br />
+The following code is an example of collapsing three <code>int</code>s into one <code>long</code>. Obvious care should be taken here: three <code>int</code>s don’t actually <em>fit</em> into one <code>long</code>, so the excess bits are just discarded. If we do this, we can afford to use the lowest 20 bits, plus the sign bit, leaving us with a data range of 1,048,576 to -1,048,575.<br />
+For each <code>int</code> we take the lower 20 bits:</p>
+<pre>  input &amp; 0xfffff</pre>
+<p>…and the sign bit, which we move to position 21:</p>
+<pre>  (input &amp; Integer.MIN_VALUE) &gt;&gt;&gt; 11</pre>
+<p>and then combine the two:</p>
+<pre>  (input &amp; 0xfffff | (input &amp; Integer.MIN_VALUE) &gt;&gt;&gt; 11)</pre>
+<p>Now, we repeat the process for all our inputs and put them in our <code>long</code>, shifting two of them by 21 and 42 respectively so they don’t overlap:</p>
+<pre>  long l = 0;
+  l |= (long)(input1 &amp; 0xfffff | (input1 &amp; Integer.MIN_VALUE) &gt;&gt;&gt; 11);
+  l |= (long)(input2 &amp; 0xfffff | (input2 &amp; Integer.MIN_VALUE) &gt;&gt;&gt; 11) &lt;&lt; 21;
+  l |= (long)(input3 &amp; 0xfffff | (input3 &amp; Integer.MIN_VALUE) &gt;&gt;&gt; 11) &lt;&lt; 42;
+</pre>
+<p>If you were to combined a higher amount of things with less bits, this loop version will probably be more concise, courtesy of Maldivia:</p>
+<pre>  public static long pack(int i1, int i2, int i3) {
+    int[] data = new int[] { i1, i2, i3 };
+    long l = 0;
+    for (int i = 0; i &lt; 3; i++) {
+       l |= (long)(data[i] &amp; 0xfffff | (data[i] &amp; Integer.MIN_VALUE) &gt;&gt;&gt; 11) &lt;&lt; (i * 21);
+    }
+    return l;
+  }</pre>
+<p>And to unpack the <code>long</code> back into pieces:</p>
+<pre>  public static int[] unpack(long l) {
+    int[] res = new int[3];
+    for (int i = 0; i &lt; 3; i++) {
+       res[i] = (int) (l &amp; 0xfffff);
+       if ((l &amp; 0x100000) != 0) {
+         res[i] |= 0xfff00000;
+       }
+       l &gt;&gt;&gt;= 21;
+    }
+    return res;
+  }
+</pre>

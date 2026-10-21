@@ -1,0 +1,98 @@
+---
+title: "Catching (and implementing) exceptions"
+date: "2014-11-10 07:30:15 -0500"
+author: "idletask"
+categories:
+  - "java-coding"
+tags:
+  - "exceptions"
+  - "l1"
+wp-id: 250
+wp-guid: "http://javachannel.org/?p=250"
+---
+
+<h2>Introduction</h2>
+<p>In a previous article on <a href="/posts/use-exceptions-correctly/">Using exceptions correctly</a>, exception propagation was explained: use runtime exceptions for situations in which the code is <em>incorrect</em>, and use checked exceptions for situations for which there is a valid recovery path internal to the application.<br />
+This article deals with two other things you will have to do with exceptions: catching them and implementing them. And in order to do both, you have to know about exception classes themselves…</p>
+<h2>Java’s Exception Classes</h2>
+<p>At the core of all exceptions is a class called <code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html" target="_blank">Throwable</a></code>. It is the superclass for both <code>Exception</code> and <code>Error</code>. (<code>OutOfMemoryError</code> is an example of an <code>Error</code>.)<br />
+The truth of the matter is you should probably never encounter code which directly handles (or throws!) a <code>Throwable</code> which is not also an <code>Exception</code>, but you should know that it exists. You never know: some inexperienced programmer might add it to his or her exception handling, and then you’d have to clean up their code.<br />
+The <code>Exception</code> class itself is the base class for all <em>checked</em> exceptions. When you want to create custom exceptions, you will probably want to extend this one (or a more specialized version: <code>IOException</code>, for instance).<br />
+The <code>RuntimeException</code> class Is the base class for all <em>unchecked</em> exceptions. If you browse the JDK javadoc, you will notice that all such niceties as the infamous <code>NullPointerException</code> (NPE for short), but also <code>IllegalArgumentException</code>, <code>IndexOutOfBoundsException</code>, etc., are all subclasses of <code>RuntimeException</code>.<br />
+But there’s a catch (pun intended): <strong>RuntimeException is also a subclass of Exception</strong>. This has an often overlooked consequence on catch statements, see below.</p>
+<h2>Catching, and the importance of exception inheritance</h2>
+<p>Since exceptions are Java classes like any other, exception classes which you can catch may inherit from other exception classes. This has an influence on how you catch them. For starters…</p>
+<h3>Catch more specific exceptions first</h3>
+<p>Let us take an example of a method doing filesystem operations using the <code><a href="http://docs.oracle.com/javase/8/docs/api/java/nio/file/package-summary.html">java.nio.file</a></code> API. Such operations can fail at two levels:</p>
+<ul>
+<li>Filesystem-level errors; the exception defined by the JDK for such errors is <code><a href="http://docs.oracle.com/javase/8/docs/api/java/nio/file/FileSystemException.html" target="_blank">FileSystemException</a></code>.</li>
+<li>I/O errors; in this case you will probably get an <code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/IOException.html" target="_blank">IOException</a></code> instead.</li>
+</ul>
+<p>From the javadoc links above, you may have noticed that <code>FileSystemException</code> inherits <code>IOException</code>. Provided you want to treat both exceptions differently, you must catch <code>FileSystemException</code> first:</p>
+<pre><code class="language-java">try {
+    something();
+} catch (FileSystemException e) {
+    // deal with filesystem level errors
+} catch (IOException e) {
+    // deal with I/O errors
+}</code></pre>
+<p>As an added benefit, you get to access all methods defined in <code>FileSystemException</code> (<code>getFile()</code>, etc) which <code>IOException</code> does not define, allowing you to (for instance) construct much more detailed error messages.<br />
+If, instead, your code was:</p>
+<pre><code class="language-java">try {
+    something();
+} catch (IOException e) {
+    // deal with it
+} catch (FileSystemException e) {
+    // NEVER REACHED!
+}</code></pre>
+<p>As explained, you will never get to deal with <code>FileSystemException</code>s separately – the more general <code>IOException</code> will match and its exception-handling block called, instead.</p>
+<h3>Catching Exception is dangerous…</h3>
+<p>Remember what was said earlier? <code>RuntimeException</code> inherits <code>Exception</code>. As such, if you simply catch Exception, you also get to catch all unchecked exceptions!<br />
+You don’t want to do that, of course… But just in case, if you want to (or, preferrably, need to) have a “one size fits all” catch block, here is an idiom you can use which will “correctly” propagate all unchecked exceptions (reminder: since they are unchecked, you needn’t declare that your method throws them):</p>
+<pre>try {
+    // some exception-heavy code throwing many exceptions
+} catch (RuntimeException oops) {
+    // Unchecked exception: rethrow!
+    throw oops;
+}
+// deal with specific exceptions if possible...
+// then:
+catch (Exception e) {
+    // One size fits all
+}</pre>
+<p>Well, that’s <em>one</em> idiom; a better way to deal with exception-heavy code is to simply reduce the amount of code in your try blocks so that the amount of exceptions you have to deal with is limited.<br />
+Alternatively, you can use <em>multicatch</em>.</p>
+<h3>“Multicatch” (since Java 7)</h3>
+<blockquote><p><strong>Editor’s Note</strong>: if you’re not on Java 7 by now, you should attempt to upgrade. Java 6 has been end-of-lifed, and it has a <a href="http://www.oracle.com/technetwork/java/eol-135779.html">support lifecycle</a> that’s not likely to be available for most users. Java 7’s been out for <strong>years</strong>, people. It’s time.</p></blockquote>
+<p>Again, in the situation where you have to deal with “exception-heavy” try blocks, you have another tool since Java 7 allowing you to treat a given set of exceptions with the same code. So, instead of, for instance, writing:</p>
+<pre><code class="language-java">try {
+    // something
+} catch (E1 e) {
+    // do x with e
+} catch (E2 e) {
+    // do x with e
+}
+// etc</code></pre>
+<p>You can instead write:</p>
+<pre><code class="language-java">try {
+    // something
+} catch (E1 | E2 e) { // | E3 | ...
+    // do x with e
+}</code></pre>
+<h2>Implementing your own exceptions: some rules</h2>
+<p>Exceptions are regular Java classes. This means that there is more to exception classes than <code>.getMessage()</code>, as we saw with <code>FileSystemException</code>.<br />
+Therefore, if you feel the need to, do not hesitate to add methods to your custom exception classes.<br />
+However, try to avoid extending <code>Exception</code> directly. The JDK defines plenty of exception classes which can serve as a useful basis for your own exception classes; for instance, if you want to relay an I/O error of your own, you will probably want to extend <code>IOException</code> instead.<br />
+<strong>Double check whether the exception class you extend inherits RuntimeException</strong>… If it does, you have just created an unchecked exception class. Is this what you want?</p>
+<h3>Side note: implementing “throwing methods”…</h3>
+<p>When implementing a method which is declared to throw an exception class, the implementation can choose to throw a subclass of this exception. So, for instance, if you have an abstract method to implement declared as:</p>
+<pre><code class="language-java">// Reminder: all declared methods in an interface are "public abstract" by default
+void foo() throws SomeException;</code></pre>
+<p>… and you have a custom exception <code>MyException</code> which extends <code>SomeException</code>, then you can implement it as such:</p>
+<pre><code class="language-java">// Note the declared exception...
+@Override
+void foo() throws MyException { /* whatever */ }</code></pre>
+<p>This is demonstrated by the JDK with <code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html" target="_blank">AutoCloseable</a></code> and <code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html" target="_blank">Closeable</a></code>: <code>Closeable</code> extends <code>AutoCloseable</code>. The <code>close()</code> method of <code>AutoCloseable</code> is declared to simply throw <code>Exception</code>, whereas its override in <code>Closeable</code> is declared to throw <code>IOException</code>.</p>
+<h2>Final words…</h2>
+<p>Hopefully, this article and the quoted article in the introduction should have provided you with enough tools, knowledge and recipes so that you are confident when it comes to dealing with exceptions in Java — whether that be in your own code, or when using other people’s code.<br />
+Happy (and fruitful) coding…</p>

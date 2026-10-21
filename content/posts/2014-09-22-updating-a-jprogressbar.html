@@ -1,0 +1,147 @@
+---
+title: "Updating a JProgressBar"
+date: "2014-09-22 08:42:56 -0400"
+author: "melkor"
+categories:
+  - "java-coding"
+tags:
+  - "edt"
+  - "java-8"
+  - "javafx"
+  - "jprogressbar"
+  - "swing"
+wp-id: 164
+wp-guid: "http://javachannel.org/?p=164"
+---
+
+<p>This is a “simple” example of how to update a progress bar in a Swing application.</p>
+<pre><code class="language-java">package org.javachannel;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+/**
+ * Created by odinsbane on 9/22/14.
+ *
+ * This is a quick example of a progress bar that updates.
+ *
+ * This code is distributed as is; without warranty; or guarantee. It can
+ * be freely used, modified and distributed without attribution.
+ */
+public class ProgressBarExample {
+  ExecutorService service = Executors.newSingleThreadExecutor();
+  /**
+   * Sets up the gui, which is just a JFrame, JButton and a JProgressBar.
+   */
+  private void buildGui() {
+    JFrame frame = new JFrame("progress bar example");
+    final JButton start = new JButton("start");
+    final JProgressBar progress = new JProgressBar();
+    start.addActionListener(
+        new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent evt) {
+            start.setEnabled(false);
+            //starts long running task off of EDT.
+            service.submit(new Runnable() {
+              public void run() {
+                for (int i = 0; i &lt; 100; i++) {
+                  //the portion of work.
+                  try {
+                    Thread.sleep(10);
+                  } catch (InterruptedException e1) {
+                    //this might be a good spot to quit working.
+                    e1.printStackTrace();
+                  }
+                  //update the progress bar on the EDT.
+                  final int j = i;
+                  EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                      progress.setValue(j);
+                    }
+                  });
+                }
+                //work finished.
+                EventQueue.invokeLater(new Runnable() {
+                  public void run() {
+                    progress.setValue(100);
+                    start.setEnabled(true);
+                  }
+                });
+              }
+            });
+          }
+        }
+    );
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setLayout(new FlowLayout());
+    frame.add(start);
+    frame.add(progress);
+    frame.pack();
+    frame.setVisible(true);
+  }
+  public static void main(String[] args) {
+    ProgressBarExample example = new ProgressBarExample();
+    //ALL gui work should be managed on the EDT.
+    EventQueue.invokeLater(new Runnable() {
+      public void run() {
+        example.buildGui();
+      }
+    });
+  }
+}</code></pre>
+<p>In this example, the ‘start’ button begins a ‘long-running’ task. The task is started using an <a href="http://docs.oracle.com/javase/8/docs/api/java/awt/event/ActionListener.html"><code>ActionListener</code></a>, which starts the task on the Event Dispatch Thread (EDT). So the first thing to do is to ‘send’ the task to another thread, this is done by creating a <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html"><code>Runnable</code></a> and submitting the <code>Runnable</code> to the <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html"><code>ExecutorService</code></a> service.<br />
+As the task runs the progress bar needs to be updated; this should be performed on the EDT. By creating a new <code>Runnable</code> and submitting via <a href="http://docs.oracle.com/javase/8/docs/api/java/awt/EventQueue.html#invokeLater-java.lang.Runnable-"><code>EventQueue.invokeLater()</code></a>, the task will be executed when Swing gets a chance, and the working thread will continue without waiting.<br />
+A small caveat is that the ‘start’ button is disabled during execution, and enabled when the task is completed. This is because when we fire the task on another thread, the EDT is not blocked and you could press the button again rather than waiting.<br />
+These concepts can still be applied to <a href="http://docs.oracle.com/javase/8/javase-clienttechnologies.htm">JavaFX</a> type applications, although the environment’s obviously different and will involve some important changes – for example, you’d use <a href="http://docs.oracle.com/javafx/2/api/javafx/application/Platform.html#runLater(java.lang.Runnable)"><code>Platform.runLater()</code></a> instead of <code>EventQueue.invokeLater()</code>.<br />
+Here’s an example of an <a title="Written by a different author">equivalent program</a>, using JavaFX instead. The layout isn’t an exact match, even with the equivalence of controls, thanks to the <a href="http://docs.oracle.com/javafx/2/api/javafx/scene/Scene.html"><code>Scene</code></a> not being packed like the <a href="http://docs.oracle.com/javase/8/docs/api/javax/swing/JFrame.html"><code>JFrame</code></a> is.<br />
+This example code relies on Java 8 and the use of <a href="http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html">lambdas</a>, which shortens the code but remains equivalent:</p>
+<pre><code class="language-java">package org.javachannel;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+public class JavaFXProgressBarExample extends Application {
+  ExecutorService service = Executors.newSingleThreadExecutor();
+  public static void main(String[] args) {
+    launch(args);
+  }
+  @Override
+  public void start(Stage primaryStage) throws Exception {
+    primaryStage.setTitle("progress bar example");
+    ProgressBar progress = new ProgressBar();
+    progress.setProgress(0.0);
+    Button start = new Button();
+    start.setText("start");
+    start.setOnAction(event -> {
+      service.submit(() -> {
+        Platform.runLater(() -> start.setDisable(true));
+        for (int i = 0; i &lt; 100; i++) {
+          //the portion of work.
+          try {
+            Thread.sleep(10);
+          } catch (InterruptedException e1) {
+            //this might be a good spot to quit working.
+            e1.printStackTrace();
+          }
+          final double j = i / 100.0;
+          Platform.runLater(() -> progress.setProgress(j));
+        }
+        Platform.runLater(() -> progress.setProgress(1.0));
+        Platform.runLater(() -> start.setDisable(false));
+      });
+    });
+    FlowPane root = new FlowPane();
+    root.getChildren().add(start);
+    root.getChildren().add(progress);
+    primaryStage.setScene(new Scene(root, 250, 40));
+    primaryStage.show();
+  }
+}</code></pre>

@@ -1,0 +1,48 @@
+---
+title: "Hibernate Ignores Entity Listeners"
+date: "2019-11-14 23:00:26 +0000"
+author: "bombe"
+categories:
+  - "uncategorized"
+wp-id: 1380
+wp-guid: "https://javachannel.org/?p=1380"
+---
+
+<p>I switched a codebase from EclipseLink as JPA provider to Hibernate and found out that with Hibernate you can not use inheritance in event listener classes. The JPA specs do not go into much detail on this topic so JPA providers are bound to handle this different from one another.</p>
+<p>I separated my entity listeners from my entities even though it is possible to add methods annotated with e.g. <code>@PostPersist</code> directly in the entity class. The entity listeners themselves were less than trivial but only slightly so: I created a generic base class for all entity listeners and specialized subclasses for each entity.</p>
+<pre><code>public class EntityListenerBase&lt;T&gt; {
+	@PostPersist
+	public void postPersisted(T object) {
+		SomeEventBus.sendEvent(createPostPersistEvent(object));
+	}
+	
+	protected abstract Event createPostPersistEvent(T object);
+}
+
+public class ThingEntityListener extends EntityListenerBase&lt;Thing&gt; {
+	@Override
+	protected Event createPostPersistEvent(Thing thing) {
+		return new ThingAdded(thing);
+	}
+}
+</code></pre>
+<p>Adding the entity listeners to the entity is straight-forward: Just add the <code>@EntityListeners</code> annotation to the entity and point it to the listener.</p>
+<pre><code>@Entity
+@EntityListeners(ThingEntityListener.class)
+public class ThingEntity implements Thing {
+	…
+}
+</code></pre>
+<p>EclipseLink had no trouble at all using event listeners like these. The problems started after I switched the JPA provider to Hibernate: at some point I realized that apparently the app was not generating any events anymore in response to persistence events. It was like the entity listeners weren’t even there!</p>
+<p>After a longer debugging session into how Hibernate manages its event listeners I discovered that my previous approach for the event listeners was no longer viable, for two reasons.</p>
+<p>The first reason is that Hibernate insists on the annotated event methods being declared directly in the entity listener class. Methods inherited from super classes are not scanned for event annotations! This is different from the behaviour when methods in the entity class itself are annotated; in that case, super classes annotated with <code>@MappedSuperclass</code> would be used to locate event listener methods as well. However, this is not the case for entity listener classes.</p>
+<p>Upon moving the <code>postPersisted</code> method down to the subclass I stumbled upon the second reason: for every event annotation Hibernate only allows a single method in the entity listener class to be annotated with it. Now, because the original <code>postPersisted</code> method has a generic parameter and the subclass has a fixed type parameter, the compiler creates two versions of the method, one with <code>Object</code> as the parameter type, and one with the actual type I want, <code>Thing</code>. One of the methods is marked as synthetic but <em>both</em> get the annotation, and Hibernate doesn’t like that. Not. One. Bit.</p>
+<p>So, the solution is simple, even if it means a little bit of code duplication over all the entity listeners: just remove the type hierarchy from the event listeners.</p>
+<pre><code>public class ThingEntityListener {
+	@PostPersist
+	public void postPersist(Thing thing) {
+		SomeEventBus.sendEvent(new ThingAdded(thing));
+	}
+}
+</code></pre>
+<p>One could argue that this is actually even better; less class hierarchy, and all relevant listener methods are right there in the class, increasing visibility and reducing complexity.</p>

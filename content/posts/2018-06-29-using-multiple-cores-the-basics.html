@@ -1,0 +1,74 @@
+---
+title: "Using multiple cores, the basics"
+date: "2018-06-29 10:32:01 -0400"
+author: "rzwitserloot"
+categories:
+  - "java-coding"
+tags:
+  - "concurrency"
+  - "memory-model"
+  - "threads"
+wp-id: 1113
+wp-guid: "https://javachannel.org/?p=1113"
+---
+
+<h2>The problem with multicore code</h2>
+<p>Having an application use more than one CPU during its execution introduces an explosion of execution paths. Instead of a simple “first Java executes the first line of this method, then, it executes the second line of this method, all the way to the end,” it becomes: “An arbitrarily chosen thread chooses an arbitrary number of instructions to execute, then the VM will make an arbitrary choice as to whether or not to make any changes to fields this thread performed visible to other threads unless you’ve done a good job on reading the Java memory model to ensure propagation of these changes.”<br />
+The former is easily understood. The latter is (largely) untestable and unfollowable, and therefore, it’s easy to write code that looks good, passes all tests, runs great on your machine… and bombs in production five days later, in a way that is utterly mystifying; no exception pointing at the problem. The problem won’t be reproducible (do the same thing, click the same buttons, feed in the same data… and now it works fine. And then tomorrow when that important customer logs in, it’ll fail again on you). Finding a bug like this is <em>literally</em> on the order of 100 to 1000 times harder to find, so avoiding even one such bug is ‘worth’ having 100 others.<br />
+Nevertheless, using all the cores in your CPU is:</p>
+<ul>
+<li><strong>Practical</strong>, in that just running it all on one can be unacceptably wasteful for performance, but more importantly</li>
+<li><strong>Inevitable</strong>, because you don’t write every line of code in your app yourself (you use libraries; the core java.* libraries at the very least), and THOSE will sometimes use threads.</li>
+</ul>
+<p>So, what is a programmer to do?<br />
+You may feel like the only right answer is for the programmer to completely understand threading and learn how to write bug free code (given that tests can’t really find these bugs anyway, and even if you so happen to run into one, they are hard to reproduce and its hard to figure out which line(s) of code are faulty when you do find them). This means reading up on the entire Thread API and reading the<a href="https://en.wikipedia.org/wiki/Java_memory_model"> Java Memory Model</a> front-to-back (If thread 1 writes some data to some field, and sometime later thread 2 reads this field, it may or may not see the change. The JMM defines when Java is, and more importantly is not,  required to have one thread ‘see’ updates of another.<br />
+But that’s a fool’s errand. You cannot guarantee writing bug free code.<br />
+Instead, anytime you have a need to have your code run on multiple cores, try to push towards going big or going small; in both cases, you NEVER call ANY method on <code>Thread</code> (possibly you do some <code>Thread.sleep</code> in the ‘going big’ style), you have no need whatsoever of <code>synchronized</code>, no state is shared between threads, and you don’t create new threads (some framework / library does this for you).</p>
+<h2>Going Big</h2>
+<p>Write or use a framework that runs your code for you and which takes care of multithreading. For example, a web framework is such a thing: You start it, and then it runs your code (and it takes care of creating whatever threads are necessary). Generally in these cases you do not write <code>public static void main</code>, or you do, but all that your <code>main</code> does is fire up the framework while you configure it or pass to it a bunch of ‘handlers’, and then the framework does the hard work for you.<br />
+Such frameworks are really good at setting up threading. This way each handler can be in its own little world; if a thread shares no data with any other, reasoning about threads is much, much simpler. Take webservers: Any given web handler simply does not get to interact with other handlers. It’s not like you can ask the web framework for a list of <em>WebHandler</em> objects that you can then call methods on.<br />
+There is often still a need to have 2 handlers interact. However, you should do this interaction by using tightly controlled communication channels where the issue of how concurrent operations interact is either irrelevant, or very well specified. There are 2 usual ways to go:</p>
+<ul>
+<li>Databases. Databases define how concurrently running operations go via transactions. So, use transactions, make your database calls, and the database takes care of it. Communications-via-database is <em>very</em> common in web frameworks. You can use <a href="http://jdbi.org/">JDBI</a> if you want to write SQL directly, or use <a href="https://hibernate.org/">Hibernate</a> if you just want to store objects persistently.</li>
+<li>Message queues, such as <a href="https://www.rabbitmq.com/">RabbitMQ</a>. The idea behind these is that one handler will tell the message queue framework that it is interesting in all ‘foo’ events, and the other will tell the message queue framework: Here’s a ‘foo’ event, please deliver it to all handlers that said they’d like to know about it. All communication between handlers goes via the message queue.</li>
+</ul>
+<blockquote><p>Editor’s note: the projects mentioned here are <em>very far</em> from being your only choices. JDBI and Hibernate are good, but note that there are projects like myBatis, jOOQ, and others for SQL-ish libraries, and Hibernate is only one JPA implementation among many. Likewise for messaging: RabbitMQ is an AMQP 0.9 server, but you don’t use the JMS standard to talk to RabbitMQ; you <em>do</em> use JMS when using ActiveMQ, HornetQ, or any other of … quite a few messaging platforms. This is not saying that RabbitMQ or Hibernate, et al, are bad – your Editor uses them daily – but remember that your choices are not limited.</p></blockquote>
+<h2>Going Small</h2>
+<p>Reduce the code that needs to run multithreaded to the smallest possible thing it can be, and then write a single stream/collection based operation that uses threading to apply this operation to a great many inputs concurrently. The <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/forkjoin.html">fork/join framework</a> is the usual go-to here.<br />
+Imagine you are writing a bitcoin miner. This operation can be described as follows:<br />
+GIVEN: A list of a few million randomly generated codes to try, and exactly 1 input block.<br />
+TASK: Write the hash into that 1 input block, hash it, and see if the hash ends up having the appropriate amount of 0s at the very end.<br />
+You can do this by going small: Write a trivial method (it won’t be larger than half a screen’s worth, common in this ‘go small’ model) which injects the code into the block, hashes it, and returns an empty string if the hash is not suitable, and if you hit the jackpot, returns the block. Then tell the framework you only want the non-empty returned values and voila, you’ve written a parallel bitcoin miner without ever having to touch <code>java.lang.Thread</code>.</p>
+<h2>Libraries</h2>
+<p>In practice, especially for the ‘going big’ route, you may need to have a cache or some such that should be shared between whatever threads your web framework is making for you, but try to find libraries for this, too.<sup><a href="#caches" name="back1">1</a></sup> There are some tricks to interacting with such libraries. Generally, you have to go ‘atomic’. For example, you can use the various collections in the <code>java.util.concurrent</code> package, but, the only guarantees it can make is that a single method call does the right thing. It cannot guarantee that a series of calls does the right thing. So, don’t do this:</p>
+<pre>if (concurrentMap.containsKey(myKey)) {
+    String v = concurrentMap.get(myKey);
+    operateOn(v);
+}
+</pre>
+<p>Instead, do this:</p>
+<pre>String v = concurrentMap.get(myKey);
+if (v != null) {
+    operateOn(v);
+}
+</pre>
+<p>The bad example can cause a problem: What if, in between the call <code>concurrentMap.containsKey</code> and the call to <code>concurrentMap.get</code>, some other thread removes the entry from the map? You’ll now call <code>operateOn</code> on a <code>null</code> value, not what was intended. Problematically, if this <em>can</em> happen, it <em>will</em> happen, but only very very rarely. Tests are unlikely to catch this problem.<br />
+Don’t do this:</p>
+<pre>String v = myCache.get(myKey);
+if (v == null) {
+    v = doExpensiveCalculationOfValue(myKey);
+    myCache.put(myKey, v);
+}
+</pre>
+<p>Instead, do this:</p>
+<pre>myCache.computeIfAbsent(myKey, k -&gt; doExpensiveCalculationOfValue(k));
+</pre>
+<p>The reason to use <code>computeIfAbsent</code> here is because the first snippet can lead to running <code>doExpensiveCalculationOfValue</code> more than once. In the first snippet, imagine two (or more) threads get to the code with the same key about the same time. They’ll both find that there is no associated value (yet), so they both call <code>doExpensibeCalculationOfValue</code> and then they both set it. With <code>computeIfAbsent</code>, provided you use a properly concurrent map, such as <code>java.util.concurrent.ConcurrentHashMap</code> for example, <code>doExpensiveCalculationOfValue</code> is only ever called once, guaranteed.</p>
+<h2>Lessons</h2>
+<ul>
+<li>Use frameworks, either large: Web frameworks, or small: fork/join.</li>
+<li>Thread-to-thread communication uses abstractions like message queues or databases. Don’t share state, don’t touch any fields from more than one thread.</li>
+<li>If you <em>must</em> have direct thread-to-thread interop, use libraries with collections types that are designed for this, such as <code>java.util.concurrent</code> and <a href="https://github.com/google/guava">guava</a>‘s <code>CacheBuilder</code> stuff. When interacting with these collections, know that consecutive method calls to them have no guarantees of internal consistency, so reduce it to one call. Be aware of methods like <code>java.util.Map</code>‘s <code>computeIfAbsent</code> to enable this.</li>
+</ul>
+<h3>Footnotes</h3>
+<p><a name="caches" href="#back1">1</a> Editor’s note: caches are nontrivial in and of themselves. Go for “transactional caches” if you can – or just trade the speed that a cache <em>would</em> give you for the reliability that using a system of record gives you. Figure out what you <em>need</em> and do what fulfills that, before thinking that a cache is magic performance sauce – and note that the whole point of this article is that “magic performance sauce” usually isn’t what it says it is.</p>

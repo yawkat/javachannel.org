@@ -1,0 +1,19 @@
+.podcast-audio audio { width: 100%; }
+.podcast-audio figcaption { font-size: 0.9em; }
+.wp-meta .post-meta { font-size: 0.9em; opacity: 0.8; }
+.archived-comments { margin-top: 2em; }
+.archived-comments .comments-note { font-size: 0.85em; opacity: 0.7; }
+.archived-comment { border-left: 3px solid #ccc; padding: 0.25em 1em; margin: 1em 0; }
+.archived-comment .comment-date { margin-left: 0.5em; font-size: 0.85em; opacity: 0.7; }
+.archive-list { list-style: none; padding-left: 0; }
+.archive-list .archive-date { font-family: monospace; opacity: 0.7; margin-right: 0.5em; }
+.wrap-content.wp-meta { padding-top: 0; }
+
+/* The three menus (main, channel rules, channel data) would push the content far down on phones: lay them out as
+   wrapped rows instead of one item per line. */
+@media (max-width: 767.98px) {
+  aside.sidebar .menu ul { display: flex; flex-wrap: wrap; justify-content: center; }
+  aside.sidebar .menu ul li { margin-left: 0; }
+  aside.sidebar .menu ul li a { padding: 0.15rem 0.5rem; font-size: 0.9rem; }
+  aside.sidebar .menu ul li a i { display: none; }
+}

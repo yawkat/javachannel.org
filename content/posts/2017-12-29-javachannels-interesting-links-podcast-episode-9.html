@@ -1,0 +1,58 @@
+---
+title: "Javachannel's Interesting Links podcast, episode 9"
+date: "2017-12-29 10:17:41 -0500"
+author: "dreamreal"
+categories:
+  - "podcast"
+tags:
+  - "async"
+  - "dsl"
+  - "jvm"
+  - "kotlin"
+  - "latency"
+  - "memory"
+  - "null"
+  - "oop"
+  - "optional"
+  - "podcast"
+  - "podcast-9"
+  - "profiler"
+  - "reactive"
+  - "rxjava"
+enclosure: "/wp-content/uploads/2017/12/javachannel-9.mp3"
+enclosure-length: 39024198
+show-enclosure: true
+comments:
+  - author: "rzwitserloot"
+    url: "http://projectlombok.org/"
+    date: "2018-01-10 16:15:00 +0000"
+    content: "<p>About adding a null-guard to methods, in order to throw an exception at the appropriate time: Lombok can make that a zero liner for you.<br />\n<a href=\"https://projectlombok.org/features/NonNull\" rel=\"nofollow ugc\">https://projectlombok.org/features/NonNull</a></p>"
+wp-id: 1012
+wp-guid: "https://javachannel.org/?p=1012"
+---
+
+<p>Welcome to the ninth ##java podcast. If we were using octal, we’d be on the eleventh podcast by now. It’s hosted by Joseph Ottinger (dreamreal) and <a href="https://twitter.com/kinabalu">Andrew Lombardi</a> (kinabalu on irc) from <a href="https://mysticcoders.com">Mystic Coders</a> and, as a guest, Tracy Snell (waz) on the IRC channel, and it’s Friday, 2017 December 29.<br />
+As always, this podcast is basically interesting content pulled from various sources, and funneled through the ##java IRC channel on freenode. You can find the show notes at the channel’s website, at javachannel.org; you can find all of the podcasts using the tag (or even “category”) “podcast”, and each podcast is tagged with its own identifier, too, so you can find this one by searching for the tag “podcast-9”. The podcast can also be found on iTunes.<br />
+You can submit to the podcast, too, by using the channel bot; ~submit, followed by an interesting url, along with maybe a comment that shows us what you think is interesting about the url. Yes, you have to have a url; this is not <em>necessarily</em> entirely sourced material, but we definitely prefer sourced material over random thoughts.</p>
+<ol>
+<li>Up first we have Eugen Paraschiv, from <a href="http://www.baeldung.com/">Baeldung</a>, with “<a href="https://stackify.com/memory-leaks-java/">How Memory Leaks Happen in a Java Application</a>“. Most Java coders don’t really think about memory leaks, because the JVM is so good at, well, not leaking memory – but it’s still doable, especially when you have long-lasting data structures sticking around, like caches, that can retain references to object trees long past their usefulness. Eugen points out the obvious suspects – the use of <code>static</code>, for example, to retain references for the duration of the reference to the class – and also points out <code>String.intern()</code> as a culprit for some. That’s more a Java 7 and earlier problem than a Java 8 problem, since Java 8 handles interned strings differently. He points out unclosed resources as an obvious problem – unreleased filehandles, et cetera – and points out badly defined classes being used in collections (as <code>Object</code>’s implementation of <code>equals()</code> and <code>hashCode()</code> make retrieval difficult and therefore those objects will last as long as the <code>Set</code> does). He follows it all up with some ways to detect memory leaks. Well done article, although some of the approaches that lead to memory leaks are a lot less of an impact than he implies, especially with the current releases of the JVM. (This does not mean that it’s okay to be ignorant.)</li>
+<li>
+<p>“<a href="https://medium.com/buildit/some-notes-on-null-intolerant-java-dc6147a870fd">Some notes on null-intolerant Java</a>,” from Dominic Fox, says that ”Null-intolerant Java is Java in which there are no internal null checks”. There are a few variants of this; there’re libraries that guarantee no methods will return null, other forms that use <code>Optional</code>, or just throw exceptions if you use a null when you’re not supposed to, or that will defensively check for null on library entry so that you fail immediately if you try to pass in a null when you’re not supposed to. He also mentions Kotlin’s null-checking – using the word “<a href="https://www.merriam-webster.com/dictionary/nugatory">nugatory</a>” for the first time in my experience. (It means “of no value,” just in case you’re wondering or you’re having difficulty inferring it from context.) His criticism of Kotlin in this case is that the null-checks are there whether you want them or not, and there’s a performance cost to them… but I’m not sure how well or deeply he’s measured. It’s actually a pretty decently written article; he <em>mentions</em> <code>Optional</code> – as he should, really – but also describes it sanely, meaning that he doesn’t say something stupid like “use <code>Optional</code> everywhere for nullable values.”</p>
+</li>
+<li>
+<p>The Java subreddit <a href="https://www.reddit.com/r/java/">r/java</a> has a comment thread called “<a href="https://www.reddit.com/r/java/comments/7m2abp/what_are_features_that_make_java_stand_apart_from/">What are features that make Java stand apart from other languages?</a>” Lots of interesting comments; the JVM features highly, the language’s simplicity features, the ecosystem, even the JCP gets a positive mention or two. It’s an interesting DISCUSSION. What do you think makes Java stand out? One of the things I’ve liked in Java that’s changing, though, is the preference for a single idiom; when you look at Scala, you can achieve a given task in eight wildly incompatible ways, but Java’s historically had ONE way to do most things, and that’s changing. I’m not suggesting that that’s a BAD thing, but it’s something that’s changing. Essential conservatism in motion, folks!</p>
+</li>
+<li>
+<p><a href="https://github.com/RubyLichtenstein/RxTest/">RxTest</a> is a Kotlin library meant to help test <a href="https://github.com/ReactiveX/RxJava">RxJava</a> flows. (Is that what RxJava calls their pipeline processing mechanisms? I don’t know.) It’s easy to test the simpler parts of event handling mechanisms – you pass it some input, see if you get the right output – but testing flows tends to be a little more involved, because most of it’s asynchronous and it’s hard to test entire streams of processes. Good idea, expressed cleanly, although if you don’t know Kotlin it might be a good time to learn some of it. (This does not mean there aren’t ways to test RxJava event handling in pure Java – it’s just neat to see DSLs for stuff like this.) Also mentioned in this section: <a href="https://github.com/awaitility/awaitility">awaitility</a>, a library whose name Joe apparently cannot pronounce.</p>
+</li>
+<li>
+<p>Along the same topic: DZone also has an article on <em>designing</em> a DSL in Kotlin, entitled “<a href="https://dzone.com/articles/kotlin-dsl-from-theory-to-practice">Kotlin DSL: From Theory to Practice</a>.” Oddly enough, it also creates a testing DSL, for a learning environment. You’d think that people would use other problem domains for DSLs more often – but it seems like most examples are build tools or testing libraries. It’s still interesting stuff. Have you ever used or implemented a DSL? How broadly used was it, how successful do you think it was, and why?</p>
+</li>
+<li>
+<p><a href="https://danluu.com/">Dan Luu</a> wrote up an article called “<a href="https://danluu.com/input-lag/">Computer latency: 1977-2017</a>” (therefore: “-40,” duh), using a keypress and the time it takes to <em>display</em> that key as a measure of latency. He goes into OS mechanics (simpler OSes display faster, regardless of processor speed) and display refresh rates… really fascinating stuff, even if it’s not Java-related at all. (I kinda wish he’d measured a JVM on some of these platforms, although that would expand his testing matrix considerably.) (Also mentioned in this section: <a href="https://en.wikipedia.org/wiki/Rastan_(video_game)">Rastan</a>, an old video game. And it’s “Rastan,” not “Rathstan,” which is what Joe was mistranslating it into. Memory is what it is, apparently.)</p>
+</li>
+<li>
+<p>DZone is back with “<a href="https://dzone.com/articles/alan-kay-was-wrong-about-him-being-wrong">Alan Kay Was Wrong (About Him Being Wrong)</a>,” an article talking about one of the primary ways to describe how objects interact: “messaging.” (<a href="https://en.wikipedia.org/wiki/Alan_Kay">Alan Kay</a> – a person, with a name – is considered one of the fathers of object-oriented programming, BTW.) It used to be that you’d describe an object as “communicating” with another object by way of method calls, so you’d say something like “the model is ‘sent to’ the renderer, with the <code>print</code> method.” Nowadays, if you’re not working with Objective C, that sounds a little quaint, I think, but it’s still a way of thinking about data flow. The article is suggesting that Kay – who questioned the analogy – was absolutely right when you think about the objects in question being representative of <em>modules</em> rather than finely-grained objects. With Java 9 supporting module granularity, who knows – this analogy may be back in vogue when people really start using Java 9 modules in practice.</p>
+</li>
+</ol>
+<p>Well, it’s the end of the calendar year – may the new year bring you health, wealth, happiness, and comfort as you attempt to spread the same. We wish you all the best in everything you do.</p>

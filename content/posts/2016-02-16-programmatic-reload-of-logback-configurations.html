@@ -1,0 +1,88 @@
+---
+title: "Programmatic Reload of Logback Configurations"
+date: "2016-02-16 10:31:53 -0500"
+author: "dreamreal"
+categories:
+  - "java-coding"
+tags:
+  - "configuration"
+  - "logback"
+  - "spring"
+wp-id: 513
+wp-guid: "http://javachannel.org/?p=513"
+---
+
+<p><a href="http://logback.qos.ch/">Logback</a> has the capability to programmatically and explicitly load various configurations. This can be useful when you need to adjust logging levels at runtime, and it’s actually pretty easy to do, as well.<br />
+You’d want to use something like this for a long-running application, or one that has an extensive load process: imagine a production environment, where you want to see details that would be hidden by convention.<br />
+For example, imagine you track a given method invocation, but your production logs don’t include the tracking, because it’s too verbose. But if a problem occurs, you want to be able to see the invocation. Changing the logging configuration and redeploying (or restarting) is an option, but it’s expensive and embarrassing, when all you really need to do is see more information.<br />
+The core operative code looks like this:</p>
+<pre><code>LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
+context.reset();
+JoranConfigurator configurator = new JoranConfigurator();
+configurator.setContext(context);
+configurator.doConfigure(this.getClass().getResourceAsStream("/logback.xml"));
+</code></pre>
+<p>Note that <code>doConfigure</code> can throw a <a href="http://logback.qos.ch/apidocs/ch/qos/logback/core/joran/spi/JoranException.html"><code>JoranException</code></a> if the configuration is invalid somehow.<br />
+I built a project (called <a href="https://github.com/jottinger/logback-reloader"><code>logback-reloader</code></a>) to demonstrate this. The project has a <a href="https://github.com/jottinger/logback-reloader/blob/master/src/main/java/com/autumncode/components/LogThing.java"><code>LogThing</code></a> interface, which provides a simple <code>doSomething()</code> method along with an accessor for a <code>Logger</code>; the <code>doSomething()</code> method simply issues a series of calls to generate log entries at different levels.</p>
+<pre>public interface LogThing {
+    Logger getLog();
+    default void doSomething() {
+        getLog().trace("trace message");
+        getLog().debug("debug message");
+        getLog().warn("warn message");
+        getLog().info("info message");
+        getLog().error("error message");
+    }
+}</pre>
+<p>I then created two different implementations – <a href="https://github.com/jottinger/logback-reloader/blob/master/src/main/java/com/autumncode/components/fine/FineLogThing.java">‘FineLogThing’</a> and <a href="https://github.com/jottinger/logback-reloader/blob/master/src/main/java/com/autumncode/components/coarse/CoarseLogThing.java">‘CoarseLogThing’</a> which are identical <em>except</em> that they’re named differently (so that I can easily tune the logging levels).<br />
+It would have been easy to use a single implementation and declare two components with <a href="http://spring.io/">Spring</a>, but then I’d be deriving the logger from the Spring name and not the package of the classes. This was just a short path to completion, not necessarily a great design.</p>
+<blockquote><p>
+  Why Spring? Because I’m using Spring at work, and I wanted my test code to be reusable.
+</p></blockquote>
+<p>Then I created a custom <a href="http://logback.qos.ch/apidocs/ch/qos/logback/core/Appender.html"><code>Appender</code></a> (<a href="https://github.com/jottinger/logback-reloader/blob/master/src/test/java/com/autumncode/logger/InMemoryAppender.java"><code>InMemoryAppender</code></a>) to provide easy access to logged information. I wanted to do this because I wanted to programmatically check that the logging levels were being changed; the idea is that my custom appender actually maintains a list of logged entries internally so I can query it later. The reason the logged entries is a <code>static List</code> is because Spring doesn’t maintain the Appenders – logback does – so again, this was a short path to completion, not necessarily a “great design.”<br />
+So to put it together, I created a <a href="http://testng.org/doc/index.html">TestNG</a> test that had two tests in it. The only difference in the tests is that one uses “<code>logback.xml</code>” – the default configuration, loaded by default but explicitly included here to remove dependency on order of execution in the tests – and the other uses “<code>logback-other.xml</code>“. (I could have parameterized the tests as well – again, shortest path, not “great design.”)<br />
+Our default logback configuration is pretty simple, albeit slightly longer than I’d like:</p>
+<pre><code>&lt;configuration&gt;
+    &lt;appender name="MEMORY" class="com.autumncode.logger.InMemoryAppender"&gt;&lt;/appender&gt;
+    &lt;logger name="com.autumncode.components.fine" level="TRACE"&gt;&lt;/logger&gt;
+    &lt;logger name="com.autumncode.components.coarse" level="INFO"&gt;&lt;/logger&gt;
+    &lt;root level="WARN"&gt;
+        &lt;appender -ref ref="MEMORY"&gt;&lt;/appender&gt;
+    &lt;/root&gt;
+&lt;/configuration&gt;
+</code></pre>
+<blockquote><p>
+  Note that it’s <code>appender-ref</code>, no spaces. The Markdown implementation from this site’s software is inserting the space before the dash.
+</p></blockquote>
+<p>The “other” logback configuration is almost identical. The only difference is in the <code>level</code> for the <code>coarse</code> package:</p>
+<pre><code>&lt;configuration&gt;
+    &lt;appender name="MEMORY" class="com.autumncode.logger.InMemoryAppender"&gt;&lt;/appender&gt;
+    &lt;logger name="com.autumncode.components.fine" level="TRACE"&gt;&lt;/logger&gt;
+    &lt;logger name="com.autumncode.components.coarse" level="TRACE"&gt;&lt;/logger&gt;
+    &lt;root level="WARN"&gt;
+        &lt;appender -ref ref="MEMORY"&gt;&lt;/appender&gt;
+    &lt;/root&gt;
+&lt;/configuration&gt;
+</code></pre>
+<p>Here’s the first test:</p>
+<pre><code>@Test
+public void testBaseConfiguration() throws JoranException {
+    LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
+    context.reset();
+    JoranConfigurator configurator = new JoranConfigurator();
+    configurator.setContext(context);
+    configurator.doConfigure(this.getClass().getResourceAsStream("/logback.xml"));
+    appender.reset();
+    fineLogThing.doSomething();
+    assertEquals(appender.getLogMessages().size(), 5);
+    appender.reset();
+    coarseLogThing.doSomething();
+    assertEquals(appender.getLogMessages().size(), 3);
+}
+</code></pre>
+<p>This verifies that the coarse logger doesn’t include as many elements as the fine logger, because the default logback configuration has a more coarse logging granularity set for its package.<br />
+The other test is almost identical, as stated: the only differences are in the logback configuration file and the number of messages the coarse logger is expected to have created.<br />
+So there you have it: a simple example of reloading logback configuration at runtime.</p>
+<blockquote><p>
+  It’s worth noting that this isn’t “new information.” It’s actually shown pretty well at sites like “<a href="http://obscuredclarity.blogspot.com/2012/06/load-logbackxml-configuration-file.html">Obscured by Clarity</a>,” for example. The only contribution here is the building of a project with running code, as well as loading the configuration from the classpath as opposed to from a filesystem.
+</p></blockquote>

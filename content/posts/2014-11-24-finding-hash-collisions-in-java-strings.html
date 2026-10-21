@@ -1,0 +1,69 @@
+---
+title: "Finding hash collisions in Java Strings"
+date: "2014-11-24 07:11:52 -0500"
+author: "stummi"
+categories:
+  - "java-coding"
+tags:
+  - "a2"
+  - "hashcode"
+  - "string"
+  - "string-hashcode"
+wp-id: 280
+wp-guid: "http://javachannel.org/?p=280"
+---
+
+<p>In ##java, a question came up about generating unique identifiers based on <code>String</code>s, with someone suggesting that <code>hashCode()</code> would generate generally usable numbers, without any guarantee of uniqueness. However, duplicate hash codes can be generated from very small strings, with ordinary character sets – see <a href="http://stackoverflow.com/questions/25799212/can-hashcodes-of-short-string-be-same/25799246#25799246">this stackoverflow answer</a> – and therefore I thought it’d be interesting to find other short strings with the same hash values.<br />
+It was discussed how prone to collisions the Strings hashCode() method is, especially when using small strings. You would naturally assume a hashCode with an int as result – and thus 2 billion possible values – will be unique for small and simple strings.<br />
+Here’s a simple class to demonstrate this:</p>
+<pre><code class="language-java">package org.javachannel.collisions;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+/**
+* Simple example class to show amount of hashCode collisions in Strings.
+*
+* TODO: Make the number of characters and the character set to be more
+* configurable
+*
+* @author Michael Stummvoll
+*/
+public class HashCodeCollision {
+  public static void main(String[] args) {
+    Map&lt;Integer, List&lt;String&gt;&gt; hashMap = new HashMap&lt;&gt;();
+    String str = "abcdefghijklmnopqrstuvwxyz";
+    str += str.toUpperCase();
+    for (char c1 : str.toCharArray()) {
+      for (char c2 : str.toCharArray()) {
+        // for (char c3 : str.toCharArray()) {
+        String s = c1 + "" + c2; // + "" + c3;
+        int code = s.hashCode();
+        if (!hashMap.containsKey(code)) {
+          hashMap.put(code, new ArrayList&lt;String&gt;());
+        }
+      hashMap.get(code).add(s);
+      // }
+    }
+  }
+  int collisions = 0;
+  int max = 0;
+  List&lt;String&gt; maxList = null;
+  for (Entry&lt;Integer, List&lt;String&gt;&gt; e : hashMap.entrySet()) {
+    List&lt;String&gt; l = e.getValue();
+    if (l.size() &gt; max) {
+      max = l.size();
+      maxList = l;
+    }
+    if (l.size() &gt; 1) {
+      System.out.println("Collision: " + l);
+      ++collisions;
+    }
+  }
+  System.out.println("collisions found: " + collisions);
+  System.out.println("biggest collision: " + maxList);
+  }
+}</code></pre>
+<p>This reveals that in all permutations of 2 letter strings consisting of letters we already have 1250 collisions (with two strings for each given hash code). When using 3 letter strings, we’d see that we have 37,500 collisions with up to four strings per hash code.<br />
+When reviewing the implementation of <code>String</code>‘s <code>hashCode()</code> method, you can conclude that it’s very easy to provoke collisions both ways, both intentionally and accidentally. So you shouldn’t rely on hash codes being unique for your <code>String</code>s.</p>

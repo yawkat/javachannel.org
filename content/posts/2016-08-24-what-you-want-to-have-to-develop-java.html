@@ -1,0 +1,69 @@
+---
+title: "What you want to have to develop Java"
+date: "2016-08-24 10:58:52 -0400"
+author: "dreamreal"
+categories:
+  - "java-coding"
+tags:
+  - "gradle"
+  - "hibernate"
+  - "java"
+  - "jdbi"
+  - "jdk"
+  - "jooq"
+  - "jpa"
+  - "libraries"
+  - "maven"
+  - "quickstart"
+wp-id: 611
+wp-guid: "http://javachannel.org/?p=611"
+---
+
+<p>Recently a user asked what they would need to know to develop a “small web application” using Java, including a database.<br />
+This is not a good question, really, but IRC user surial gave a lot of relevant information that’s worth preserving and adding to. This is not what surial said – if you’re interested in the actual content, see <a href="https://javabot.evanchooly.com/logs/%23%23java/2016-08-23#57bc8ea50a975a3776da0c21">the channel logs</a> – but this is a paraphrase that attempts to build on surial’s information.</p>
+<h1>What you need to develop in Java</h1>
+<ul>
+<li><a href="#java">Java</a></li>
+<li><a href="#editor">An Editor</a></li>
+<li><a href="#build">A Build System</a></li>
+<li><a href="#database">Talking to a Database</a></li>
+<li><a href="#libraries">Libraries</a></li>
+<li><a href="#quickstarts">Quickstarts</a></li>
+</ul>
+<h2><a name="java"></a>Java</h2>
+<p>If you’re going to develop in Java, you obviously (hopefully) need Java itself. You want the JDK, not the JRE (the JDK includes the JRE.) You can use the official <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">Oracle JDK</a>, <a href="http://developers.redhat.com/downloads/">OpenJDK</a> (from Red Hat, if only for more than Linux support), or <a href="https://www.azul.com/products/zulu/">Zulu</a> – and this is not likely to be an exhaustive list by any means.<br />
+The Oracle JDK is different from OpenJDK only in some of the libraries included. Notably, the JPEG encoder is closed source, so OpenJDK’s JPEG support is not part of OpenJDK itself. Other builds may not have the same problem.<br />
+If in doubt, use Oracle’s JDK. There’s nothing wrong with OpenJDK, but when people mention the JDK, they usually mean the official JDK in terms of features and support.<br />
+One word about versions: use Java 8. Older versions have already been end-of-lifed, even though they’re still available through <a href="http://www.oracle.com/technetwork/java/archive-139210.html">archives</a>.</p>
+<h2><a name="editor"></a>An Editor</h2>
+<p>Want to start a war? Make a firm recommendation for a development environment, and insult the other environments. The truth is, Java uses text as source; use what works for you.<br />
+Popular choices for development environments are IDEA (with both commercial and free versions, although people think of the commercial versions first), Eclipse (also with commercial and free versions, where people think of the free versions first), and Netbeans (with free versions and probably some commercial versions hanging out somewhere.)<br />
+All three are quite capable in their own ways. Eclipse is famous for having a perspectives-driven approach, where IDEA and Netbeans are more traditional. They all have free versions; try them out and see what works for you.<br />
+Of course, there’s nothing preventing you from using any <em>other</em> editor, either: Sublime Text, Atom, Brackets, vim, emacs, or anything else that can generate text.</p>
+<h2>A Build System</h2>
+<p>Strictly speaking, you don’t <em>have</em> to have a build tool. You could always compile manually, by typing <code>javac</code>, after all, and save yourself some work by maybe using a batch file.<br />
+Or, if you’re using a Java IDE like IDEA, Eclipse, or Netbeans, you could always use the IDE to build your project. In practice, your IDE will be compiling your project if only to run local tests and tell you about issues in your code, after all.<br />
+However… what you <em>should</em> be using is one of <a href="http://maven.apache.org">Maven</a>, <a href="http://gradle.org">Gradle</a>, <a href="http://www.scala-sbt.org/">SBT</a>, or <a href="http://beust.com/kobalt/home/index.html">Kobalt</a> (probably in order of desirability, and as with the other lists in this article, this is not exhaustive).<br />
+These build systems allow you to write a configuration that describes your build in such a way that the build is portable to other systems, including integration servers and, well, other users. If you rely on a batch file, you’re hoping that their filesystem and operating system match yours; if you rely on an IDE, you’re hoping that others use the same tools you do.<br />
+They don’t. Even if they do, they don’t.<br />
+A build system includes the ability to manage dependencies (the libraries your application might use) and other such things, and will also provide the ability to run tests automatically as part of your build process.<br />
+Each build system’s configuration can either be loaded by an IDE, or can export an IDE configuration, so you can use any IDE without worrying about the project.<br />
+In real terms: use Maven unless you have some process that you need fine-grained control over; if you <em>do</em> need fine-grained control over your build, use Gradle. If you’re using Scala, use SBT. If you’re interested in a new build tool’s development, try Kobalt. Don’t use Ant, make, or CMake, and for goodness’ sake don’t use <code>javac</code> directly after “Hello, World.” You’re not a barbarian.</p>
+<h2><a name="database"></a>Talking to a Database</h2>
+<p>If you’re working with a relational database (and you probably are, if you’re working with persistent data), you have a few ways to go: SQL (where you use JDBC to talk to the database in its own variant of SQL), object-relational mapping (where you use a library that manages data as if it were represented natively as Java objects), or a bridge between the two, where you sort of get objects but you are still thinking relationally.<br />
+Examples of ORM libraries: <a href="http://hibernate.org/">Hibernate</a> and <a href="http://www.eclipse.org/eclipselink/">EclipseLink</a>. You can use the JPA standard with either, although Hibernate has a native API that’s arguably more powerful. (EclipseLink probably does, too, but your author has no experience with EclipseLink’s native API, if it has one.) Note also that object-relational mapping is… imperfect. You’re gaining a lot by using Java’s data structures… and you’re losing some because those structures usually don’t map perfectly to a relational model.<br />
+Examples of others: <a href="http://www.jooq.org/">jOOQ</a> (“the easiest way to write SQL in Java,” according to their website), <a href="http://jdbi.org/">JDBI</a> (“convenient SQL for Java”), and <a href="http://projects.spring.io/spring-data/">Spring Data</a> (a flexible abstraction in front of nearly <em>any</em> persistence mechanism) – your mileage with each may vary, but they all seem to be pretty highly regarded.</p>
+<h2><a name="libraries"></a>Libraries</h2>
+<p>The Java ecosystem is one of Java’s greatest strengths. The nice thing about having a build tool is that it’s trivially easy to leverage the Java ecosystem, by simply specifying the “address” of a library, and then having the library and its dependencies included in your build by virtue of your build tool’s dependency management.<br />
+So: which libraries do you want to use?<br />
+There’s no real answer to that: “the ones you need” are probably the best candidates, and generally experience is how you learn which ones you need. Google searches for “java json parser” will give you workable answers for JSON parsing in Java, although they might not be the <em>best</em> answers – feel free to ask the ##java channel or its bot for suggestions on functionality.<br />
+However, here are some <em>common</em> libraries that many projects use without worrying about technical debt:</p>
+<ul>
+<li><a href="https://github.com/google/guava">Guava</a> (generalized utility library)</li>
+<li><a href="https://projectlombok.org/">Lombok</a> (annotations to reduce boilerplate with no runtime dependencies)</li>
+<li><a href="http://testng.org/">TestNG</a> or <a href="http://junit.org">JUnit</a> (testing frameworks)</li>
+</ul>
+<h2><a name="quickstarts"></a>Quickstarts</h2>
+<p>If you need to get your project moving quickly, ##java has <em>at least</em> two quickstart projects ready for use, with a small amount of work.<br />
+If you want a Gradle project, see <a href="https://bitbucket.org/marshallpierce/java-quickstart">https://bitbucket.org/marshallpierce/java-quickstart</a>.<br />
+For a Maven quickstart, see <a href="https://github.com/jottinger/starter-archetype">https://github.com/jottinger/starter-archetype</a>.</p>

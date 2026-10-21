@@ -1,0 +1,34 @@
+---
+title: "First steps: Structure of your first source file"
+date: "2014-11-20 09:47:07 -0500"
+author: "rzwitserloot"
+categories:
+  - "java-coding"
+tags:
+  - "a1"
+  - "first-steps-source"
+  - "java"
+  - "jcommander"
+  - "main-2"
+  - "static"
+wp-id: 276
+wp-guid: "http://javachannel.org/?p=276"
+---
+
+<p>This is what a class file ought to look like when you take your first steps writing java programs:</p>
+<pre><code class="language-java">public class YourAppNameHere {
+  public static void main(String[] args) {
+    new YourAppNameHere().go();
+  }
+  private String iAmAField;
+  void go() {
+    System.out.println("Your code goes here!");
+  }
+  void someOtherMethod() {
+    // You can call this method from 'go' with: someOtherMethod()
+    iAmAField = "Hello, World!";
+  }
+}</code></pre>
+<p>In particular, copy/paste the <code>main()</code> method verbatim and don’t touch it. If you need access to the command line arguments, pass the <code>args</code> parameter directly to your <code>go</code> method, and update the go method to take <code>String[] args</code> as parameter.</p>
+<blockquote><p>Editor’s note: Another way of handling arguments is to use <a href="http://jcommander.org/">JCommander</a>, which itself encourages the kind of object design in this post.</p></blockquote>
+<p>Why should you do it this way? The short answer is: Because <code>main()</code> has to be <code>static</code>, but the idea of static is advanced java. You will and should learn about it in time, but trying to explain it to you (so that you don’t make mistakes because you don’t understand what that means) as you take your first steps is a bit like teaching you about the fuel gauge during your first drive. It’s just not that interesting, and you don’t need to know about it to start taking your first steps. It’ll become much more obvious once you’ve done some exercises. This <code>main()</code> method will get you out of <code>static</code> immediately so that you can ignore its existence until the time comes to learn about what it’s for.</p>

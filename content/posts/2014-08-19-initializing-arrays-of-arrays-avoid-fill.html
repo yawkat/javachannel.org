@@ -1,0 +1,74 @@
+---
+title: "Initializing arrays of arrays: avoid fill()"
+date: "2014-08-19 09:32:30 -0400"
+author: "dreamreal"
+categories:
+  - "java-coding"
+tags:
+  - "arrays"
+  - "populate"
+wp-id: 116
+wp-guid: "http://javachannel.org/?p=116"
+---
+
+<p>A long, long time ago, on a <a href="http://enigmastation.com/2014/07/10/repost-rocket-java-initializing-arrays-of-arrays/">blog far, far away</a>, this horror was posted by someone who really should have known better (and who has since removed this section from the original post):</p>
+<blockquote><p>BTW: <a href="http://rickyclarkson.blogspot.com/">Ricky Clarkson</a> pointed out that I missed a golden opportunity to use Arrays.fill() to fill in the “multiple dimensions.” Even here, you get to loop some, but here’s some grin-worthy code:</p>
+<pre>int[][][] arr = new int[10][10][10];
+Arrays.fill(arr[0][0], 5);
+Arrays.fill(arr[0], arr[0][0]);
+Arrays.fill(arr, arr[0]);</pre>
+<p>Hey, it works. It’s retarded, but works. 🙂</p></blockquote>
+<p>This… doesn’t work. It actually copies references, so altering any of the deep references changes <em>all</em> of the deep references. You can see this in action with this code:</p>
+<pre>import java.util.Arrays;
+public class ArrayFillBad {
+    public static void main(String[] args) {
+        int[][] arr = new int[2][4];
+        Arrays.fill(arr[0], 5);
+        Arrays.fill(arr, arr[0]);
+        display(arr);
+        arr[1][2] = 1024;
+        display(arr);
+    }
+    private static void display(int[][] arr) {
+        for (int[] a1 : arr) {
+            String sep = "";
+            for (int a2 : a1) {
+                System.out.print(sep + a2);
+                sep = ", ";
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+}</pre>
+<p>When run, this offers this output:</p>
+<pre>5, 5, 5, 5
+5, 5, 5, 5
+5, 5, 1024, 5
+5, 5, 1024, 5</pre>
+<p>See the two new values? Only <em>one</em> is supposed to have been changed.<br />
+So what’s happening here? We’re not actually copying array <em>contents</em>, we’re copying array <em>references</em> – so we have multiple copies of one array, copied across each deep reference.<br />
+Chances are very good that this is <em>not</em> what you wanted. We can do better than that (where “better” means “actually works,” as opposed to “causes you to fail code reviews.”)<br />
+Here’s working code; it’s “uglier” but ugly trumps broken:</p>
+<pre>public class ArrayFillGood {
+    public static void main(String[] args) {
+        int[][] arr = new int[2][4];
+        for (int[] anArr : arr) {
+            Arrays.fill(anArr, 8);
+        }
+        display(arr);
+        arr[1][2] = 6;
+        display(arr);
+    }
+private static void display(int[][] arr) {
+        for (int[] a1 : arr) {
+            String sep = "";
+            for (int a2 : a1) {
+                System.out.print(sep + a2);
+                sep = ", ";
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+}</pre>

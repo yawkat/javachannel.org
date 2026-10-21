@@ -1,0 +1,21 @@
+---
+title: "Interesting Links, 20 Jan 2016"
+date: "2016-01-20 07:35:04 -0500"
+author: "dreamreal"
+categories:
+  - "channel-news"
+wp-id: 371
+wp-guid: "http://javachannel.org/?p=371"
+---
+
+<p>Sorry for the change of date format, folks. Some interesting links that came up include:</p>
+<ul>
+<li><a href="http://www.radicaljava.com/2016/01/19/reflective-construction.html">Don’t tell me what to make, tell me how to make it</a>, by David Whiting, talks about using Java 8’s <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html"><code>Supplier</code></a> to help clean up construction of objects. Actually pretty useful stuff – it’s a common pattern to use no-argument constructors with mutable objects, and <code>Supplier&lt;t&gt;</code> might help us use immutable objects more often.</li>
+<li><a href="http://shipilev.net/blog/2016/arrays-wisdom-ancients/">Arrays of Wisdom of the Ancients</a>, by Alexei Shipilev, takes on the question of <code>Collection.toArray(new T[0])</code> or <code>Collection.toArray(new T[size])</code> in a long, well-written (and well-reasoned) post. It takes a long time to get to the point (<code>Collection.toArray(new T[0])</code> wins, and has for “five years now”) but it also walks through the <em>reasoning</em> for the conclusion, and is fascinating reading.</li>
+<li><a href="https://blog.frankel.ch/java-security-manager">The Java Security Manager: Why and How</a>, by <a href="https://blog.frankel.ch/me">Nicolas Fränkel</a>, shows a use of reflection to change a reference to a <code>Character</code> to a reference to a <code>String</code> and talks a bit about how to set up your security manager to be useful in addressing potentially malicious code.</li>
+<li><a href="http://www.tomitribe.com/blog/2016/01/testing-persistence-with-arquillian-on-tomee/">Testing persistence with Arquillian on TomEE</a> describes an end-to-end test for persistence with <a href="http://arquillian.org/">Arquillian</a>. This is different from an embedded unit test for persistence in that Arquillian can actually start up an application server (<a href="http://tomee.apache.org/apache-tomee.html">TomEE</a> in this case) and run the test <em>there</em> – which serves as a better integration test than a custom persistence configuration for the testing scope.</li>
+<li><a href="http://neo4j.org">Neo4J</a> published <a href="http://neo4j.com/blog/acid-vs-base-consistency-models-explained/">Graph Databases for Beginners: ACID vs. BASE Explained</a>, explaining the two consistency models for transactions typically found in storage systems. ACID is typically trumpeted as a strength for relational databases, and stands for “Atomic, Consistent, Isolated, and Durable” transactions, and BASE stands for “Basic Availability, Soft-State, and Eventually Consistent” transactions. BASE is a strength of NoSQL datastores.</li>
+<li><a href="http://jihedamine.github.io/">Jihed Amine Maaref</a> posted <a href="http://jihedamine.github.io/docker-liferay-virtualbox/">Setup a docker environment for Liferay with MySQL inside a VirtualBox VM</a>, which walks through a Docker configuration. It’s not so much that Liferay (an open source portal) and MySQL are fascinating (although they’re useful, I guess, especially Liferay), but the walkthrough is a good read, including explanations of how and why along the way.</li>
+<li><a href="http://bytebuddy.net/#/">ByteBuddy 1.0</a> has been released. ByteBuddy is a code generation library for Java – which can be used to build mocks, interceptors, or just plain classes out of thin air. Cheesy name and logo, but it seems worthwhile.</li>
+</ul>
+<p>If you have interesting links that you’ve run across, please <a href="mailto:dreamreal@gmail.com">send them my way</a>! It’s worth noting that <a href="http://www.petrikainulainen.net/weekly/java-testing-weekly-3-2016/">Petri Kainulainen</a> noted some of the same links as being interesting – check out Petri’s stuff for more focus on testing.</p>

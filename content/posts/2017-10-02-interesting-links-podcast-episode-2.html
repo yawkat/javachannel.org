@@ -1,0 +1,46 @@
+---
+title: "Interesting Links podcast, episode 2"
+date: "2017-10-02 07:37:41 -0400"
+author: "dreamreal"
+categories:
+  - "channel-news"
+  - "podcast"
+tags:
+  - "derby"
+  - "eclipse"
+  - "ee4j"
+  - "h2"
+  - "idea"
+  - "java-9"
+  - "java-ee"
+  - "kotlin"
+  - "netbeans"
+  - "optional"
+  - "podcast"
+  - "podcast-2"
+  - "postgres"
+  - "postgresql"
+  - "spring"
+enclosure: "/wp-content/uploads/2017/10/javachannel-2.mp3"
+enclosure-length: 10019268
+show-enclosure: true
+wp-id: 920
+wp-guid: "http://javachannel.org/?p=920"
+---
+
+<p>Welcome to the second ##java podcast.<br />
+We have lots of interesting things to cover, so let’s dive in.</p>
+<ol>
+<li>Java EE development has moved to the Eclipse Foundation, under the project name “<a href="https://blogs.oracle.com/theaquarium/ee4j-eclipse-enterprise-for-java">Eclipse Enterprise for Java</a>“, or “EE4J.” Java EE is still the branding for enterprise Java. This move makes Java EE more open; we’ll have to see how well it works under the Eclipse Foundation. We’ll survive either way; it’s a good move for everyone.</li>
+<li>RebelLabs’ <a href="https://zeroturnaround.com/rebellabs/developer-productivity-report-2017-why-do-you-use-java-tools-you-use/">Developer Productivity Report 2017</a> is here, almost 72% of the developers said their main programming language is Java 8 – and about time, considering Java 7’s been <a href="https://www.infoq.com/news/2015/05/Oracle-Ends-Java-7Public-Updates">dead for two years</a>; <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> is the most popular Java IDE at 54% with the respondents, and one of the survey questions says that 91% of the people who like it said it’s because of superior functionality, as compared to 13% of <a href="http://www.eclipse.org/ide/">Eclipse users</a> and 73% of <a href="https://netbeans.org/">NetBeans</a> users. Some other things that stood out: small teams are the norm, with teams of three to nine people making up half the teams, with medium-sized teams (10-19) coming in at 22%. Hmm, maybe a team of nine people isn’t actually all that small. It’s a great report; you should check it out.</li>
+<li>Given Java 9’s release and new features, it’s expected that a lot of migration articles are coming up. Sure enough, DZone’s in play with one that shows <a href="https://dzone.com/articles/migrating-your-project-to-jigsaw-step-by-step">migrating a Spring app to Java 9</a>. It has some module-based concerns and walks through fixing them; it’s not exhaustive, but it’s likely to be representative of early adoption efforts.</li>
+<li>Nicholas Frankel discusses some <a href="https://blog.frankel.ch/lambdas-clean-code/#gsc.tab=0">clean coding standards around lambdas</a>. It’s easy to decide that a tool is available and thus must be used everywhere, he says – actually, he says that developers act like children and we have to play with our new toys, which is probably a pretty appropriate description. He shows a fairly ugly way to use lambdas primitively, then shows how it can be made a lot more developer-friendly. It’s not exhaustive, but still worth looking at. </li>
+<li>According to InfoWorld, <a href="https://www.infoworld.com/article/3223690/java/java-9-will-not-receive-long-term-support.html">Java 9 is not going to receive long-term support</a>. That doesn’t mean it’s not supported, but that the long-term support plans are different than what we’ve seen in the past. Long-term support releases are going to be made every three years, so that’s the baseline for support plans; we’ll have to see if (and how) this affects Java in the long run. </li>
+<li>Up next: another DZone link, this time on Java’s <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html"><code>Optional</code></a>. The author, Eugen Paraschiv (from <a href="http://www.baeldung.com/">Baeldung</a>) offers <a href="https://dzone.com/articles/understanding-accepting-and-leveraging-optional-in">Optional as a tool for functional programming</a>, and I suppose he’s right, in a way. The article does a good job of walking through most, if not all, of what <code>Optional</code> can do for your code, including with Java 9, and he does say that <code>Optional</code> is meant as a return type and not a property type, which is … better than he could have done. The article’s worth reading, and is done at much more depth than many similar articles. </li>
+<li>We also saw mention of <a href="https://github.com/opentable/otj-pg-embedded">OpenTable’s embedded PostgreSQL container</a>. This allows us to treat <a href="https://www.postgresql.org/">PostgreSQL</a> as if it were an embedded database (well, sort of); considering that PostgreSQL is a lot stronger for production use than, say, <a href="http://h2database.com/html/main.html">H2</a> or <a href="https://db.apache.org/derby/">Derby</a>, this is a nice way to do database-oriented integration tests on a “real database.” That’s not to say that H2 or Derby aren’t real databases, but they’re anecdotally used in the Java ecosystem more as embedded databases to help with integration testing than as production databases. Of course, now that I’ve made that assertion, I expect RebelLabs to ask something about this on their next survey and completely demolish my statement. Thanks ahead of time, guys.</li>
+<li>A bit more on Java 9. RankRed has “<a href="https://www.rankred.com/whats-new-in-java-9-added-features-changes/">What’s new in Java 9</a>,” covering a bird’s-eye view of the changes: the module system, new versioning, the Java Shell, a better mechanism for compiling for older versions of Java, JLink, compact strings, high definition graphics, new factory methods for collections – catching up to Kotlin and Scala, better networking and serialization security, Nashorn changes, a new random generator, segmented code caches, dynamic linking of object models, and an enhanced garbage collector. Whew, that’s a lot – and I left some out.  It gets better, though: The Java 9 readme points out that the default JCE policy files now <a href="http://www.oracle.com/technetwork/java/javase/terms/readme/jdk9-readme-3852447.html#jce">allow for unlimited cryptographic strengths</a>, a feature that the RankRed list left off. </li>
+<li>Spring 5.0 has <a href="https://spring.io/blog/2017/09/28/spring-framework-5-0-goes-ga">gone to general availability</a> – it’s been released, in other words. Support for Java 9, Java EE 8, functional variants, Kotlin, a new reactive web framework… all kinds of goodies for Spring fans. </li>
+<li><a href="https://blog.jetbrains.com/kotlin/2017/09/kotlin-1-2-beta-is-out/">Kotlin 1.2 Beta is out</a>. Kotlin is another JVM language; this one’s from IntelliJ, the people who bring you the IDEA editor family. There are a lot of little improvements here, including some things that can drive you crazy during normal development – there’s also multiplatform support, which is important even if you’re like me and only really deploy on the JVM. </li>
+<li>We mentioned ZeroTurnaround early in the podcast – the RebelLabs report – but it’s worth noting that in addition to the developer survey, they also <a href="https://zeroturnaround.com/rebellabs/jrebel-7-1-0-keeping-up-with-java-9-innovation/">released JRebel 7.1</a>, with Java 9 support, Spring 5 support, and a bunch of other things too.     </li>
+</ol>
+<p>Okay, that’s this week’s podcast – thanks for listening.</p>

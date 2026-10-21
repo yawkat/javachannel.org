@@ -1,0 +1,36 @@
+---
+title: "Interesting Links, 17 Mar 2016"
+date: "2016-03-17 10:33:27 -0400"
+author: "dreamreal"
+categories:
+  - "channel-news"
+tags:
+  - "abstraction"
+  - "dzone"
+  - "git"
+  - "hamcrest"
+  - "javascript"
+  - "junit"
+  - "personality"
+  - "test"
+wp-id: 576
+wp-guid: "http://javachannel.org/?p=576"
+---
+
+<p>This list was originally supposed to be published over a week ago, but life’s been busy. Sorry, folks! <span style="color: green">Happy St. Patrick’s Day!</span></p>
+<ul>
+<li><a href="https://barro.github.io/2016/02/a-succesful-git-branching-model-considered-harmful/">A succesful Git branching model considered harmful</a> is a response to <em>another</em> article, <a href="http://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a>. Both models <em>can</em> work; which one works better for you depends on a lot of factors that are likely to be unique to your development environment. (I’ve used both: I find the “cactus model” better, personally.)</li>
+<li><a href="https://www.linkedin.com/pulse/four-software-engineering-personality-types-srinath-sridhar">The Four Software Engineering Personality Types</a> describes four personalities (surprise) in development environment: Iron Man, Michaelangelo (the sculptor, not the Teenage Mutant Ninja Turtle), Yoda, and Captain America.
+<ul>
+<li>Iron Man is a tinkerer – get 90% of the project done, really quickly.</li>
+<li>Michaelangelo is the detail-oriented, deep-diving programmer – the one who spends years on a given project, working out every detail. Michaelangelos’ projects tend to be unusable until they’re done – then they’re mission-critical and awesome.</li>
+<li>Yoda is a teacher (or, if you like, a puppet with a hand up his… I mean, “a teacher.”) These are the guys who know tons of stuff, and show it to others, growing an organization and providing wisdom – and a great lever when they focus on doing specific tasks. </li>
+<li>Captain America is the workhorse, the one who’ll roll up his sleeves and do the unpleasant work. Like in the comics, Captain America and Iron Man go well together; Iron Man rockets through the stratosphere, flashy and quick, and Captain America cleans everything up and makes it work <em>well</em>.</li>
+</ul>
+</li>
+<li><a href="https://segment.com/blog/the-deep-roots-of-js-fatigue/">The Deep Roots of Javascript Fatigue</a> goes into the rather chaotic waters of JavaScript development. Java’s in a great place: it’s dynamic enough that the community finds new and interesting ways to develop software all the time, but it’s also stable enough that you’re not having to relearn how to do everything every year, which is the situation you find in JavaScript. Excellent writeup, even if JavaScript development isn’t <em>quite</em> as dire as it might sound on the surface.</li>
+<li>And now into our selection of excellent <a href="http://dzone.com">DZone</a> content: <a href="https://dzone.com/articles/abstraction-considered-harmful">Abstraction Considered Harmful..?</a> has a bit to say about abstractions: they’re good, but sometimes they’re leaky (and therefore can be bad). But mostly they’re useful. From the article: “Abstraction, in and of itself, is not harmful. On the contrary, it’s necessary for progress. What’s harmful is relying on impenetrable barriers to protect our precious programmers from hard problems. After all, the 21st-century engineer understands that in order to play in the sand, we all need to be comfortable getting our feet a little wet from time to time.”</li>
+<li>In <a href="https://dzone.com/articles/anatomy-of-a-good-java-test">Anatomy of a Good Java Test</a>, Sam Atkinson (who will show up again in this same collection of interesting links) walks through a simple recipe for good testing. It looks like it’s based around <a href="http://junit.org/">JUnit4</a> and <a href="http://hamcrest.org/">Hamcrest</a> – hardly awful choices, but also not necessarily the state of the art (or the only way to write good tests). Good baseline, though.</li>
+<li>In <a href="https://dzone.com/articles/in-defense-of-the-fifth-year-developer">In Defense of the Fifth Year Developer</a>, <a href="http://threedailythings.com/">Matthew Casperson</a> argues for some of the abstraction discussed earlier – the point’s not very clear, but complex code laden with abstractions is easier to test and verify, because it breaks problems down into identifiable units.</li>
+<li>And back to Sam Atkinson: In <a href="https://dzone.com/articles/constructor-vs-getter-a-better-way">Constructor vs. Getter: A Better Way</a> he discusses the use of no-operation classes to wrap optional behavior (thus: <code>NoOpNotifier</code>, with methods that do nothing, instead of a <code>null</code> that has to be checked). This simplifies the code path (a good thing), and also helps with that pesky abstraction thing. Good article.</li>
+</ul>

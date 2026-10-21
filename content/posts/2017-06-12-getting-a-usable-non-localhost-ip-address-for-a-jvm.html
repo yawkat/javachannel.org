@@ -1,0 +1,66 @@
+---
+title: "Getting a usable, non-localhost IP address for a JVM"
+date: "2017-06-12 18:09:28 -0400"
+author: "dreamreal"
+categories:
+  - "java-coding"
+tags:
+  - "address"
+  - "enumeration"
+  - "kotlin"
+  - "network"
+  - "stream"
+wp-id: 894
+wp-guid: "http://javachannel.org/?p=894"
+---
+
+<p>I recently had a task where I needed to inform a docker image of the host OS’ IP address. (The docker image needed to make an HTTP call to the host machine, for testing purposes.) However, it’s not trivial to find code to actually <em>get</em> a host machine’s IP address. Here’s some code in Kotlin (and in Java) to accomplish the task; I can’t say it’s perfect (and won’t) but it worked for me, and hopefully this can serve as a tentpole for perhaps better code.<br />
+There are two pieces of code here; both eliminate the <code>10.*.*.*</code> network. If you don’t need that network to be eliminated, well, remove that line.</p>
+<h1>Kotlin</h1>
+<pre>import java.net.NetworkInterface
+fun getAddress(): String {
+    return NetworkInterface.getNetworkInterfaces().toList().flatMap {
+        it.inetAddresses.toList()
+                .filter { it.address.size == 4 }
+                .filter { !it.isLoopbackAddress }
+                .filter { it.address[0] != 10.toByte() }
+                .map { it.hostAddress }
+    }.first()
+}</pre>
+<h1>Java</h1>
+<p>The Java code’s a lot more convoluted, and isn’t helped <em>at all</em> by the requirement for a means by which to convert an <code>Enumeration</code> to a <code>Stream</code> (copied shamelessly from “<a href="https://stackoverflow.com/questions/23261803/iterate-an-enumeration-in-java-8">Iterate an Enumeration in Java 8</a>“, by the way.) However, it’s functionally equivalent to the Kotlin code. If it can’t find a valid address or an internal exception is thrown, a <code>RuntimeException</code> is created and thrown.</p>
+<pre>private static <t> Stream</t><t> enumerationAsStream(Enumeration</t><t> e) {
+    return StreamSupport.stream(
+            Spliterators.spliteratorUnknownSize(
+                    new Iterator</t><t>() {
+                        public T next() {
+                            return e.nextElement();
+                        }
+                        public boolean hasNext() {
+                            return e.hasMoreElements();
+                        }
+                    },
+                    Spliterator.ORDERED), false);
+}
+public static String getAddress() {
+    try {
+        Optional<inetaddress> address = enumerationAsStream(NetworkInterface.getNetworkInterfaces())
+                .flatMap(networkInterface ->
+                        networkInterface.getInterfaceAddresses().stream()
+                )
+                .filter(ia -&gt; !ia.getAddress().isLoopbackAddress())
+                .map(InterfaceAddress::getAddress)
+                .filter(a -> a.getAddress().length == 4)
+                .filter(a -> a.getAddress()[0] != 10)
+                .findFirst();
+        if (address.isPresent()) {
+            return address.get().getHostAddress();
+        } else {
+            throw new RuntimeException("Address not accessible");
+        }
+    } catch (SocketException e) {
+        throw new RuntimeException(e);
+    }
+}</inetaddress></t></pre>
+<h1>Summary</h1>
+<p>This is not perfect code, I wouldn’t think. It was thrown together to fit a specific need, and ideally should have been easily located on <a href="https://stackoverflow.com/">StackOverflow</a> or something like that.</p>

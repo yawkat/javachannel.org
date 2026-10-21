@@ -1,0 +1,13 @@
+---
+layout: page
+page-class: page-alt page-wide
+---
+{@io.quarkiverse.roq.frontmatter.runtime.model.NormalPage page}
+
+<ul class="archive-list">
+{#for post in site.collections.get('posts')}
+{#if post.data.author?? && post.data.author == page.data.author-id}
+  <li><span class="archive-date">{=post.date.format('yyyy-MM-dd')}</span> <a href="{=post.url}">{=post.title}</a></li>
+{/if}
+{/for}
+</ul>

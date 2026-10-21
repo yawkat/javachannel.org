@@ -1,0 +1,39 @@
+---
+theme-layout: post
+---
+
+{@io.quarkiverse.roq.frontmatter.runtime.model.DocumentPage page}
+
+{! Podcast episodes whose MP3 was only attached as a feed enclosure !}
+{#if page.data.show-enclosure??}
+<figure class="podcast-audio">
+  <audio controls preload="none" src="{=page.data.enclosure}"></audio>
+  <figcaption><a href="{=page.data.enclosure}">Download episode (MP3)</a></figcaption>
+</figure>
+{/if}
+{#insert /}
+
+{#article-end}
+<section class="wrap-content wp-meta">
+  {#if page.data.categories??}
+  <p class="post-meta">
+    Posted in {#for category in page.data.categories.asStrings}<a href="{=site.url('/category/', category, '/')}">{=cdi:categories.get(category).name ?: category}</a>{#if category_hasNext}, {/if}{/for}
+  </p>
+  {/if}
+  {#if page.data.comments??}
+  <section class="archived-comments">
+    <h2>Comments</h2>
+    <p class="comments-note">Archived from the old site. Comments are closed.</p>
+    {#for comment in page.data.comments}
+    <article class="archived-comment">
+      <header>
+        <strong>{#if comment.url??}<a href="{=comment.url}" rel="nofollow ugc">{=comment.author}</a>{#else}{=comment.author}{/if}</strong>
+        <span class="comment-date">{=comment.date.substring(0, 10)}</span>
+      </header>
+      {=comment.content.raw}
+    </article>
+    {/for}
+  </section>
+  {/if}
+</section>
+{/}

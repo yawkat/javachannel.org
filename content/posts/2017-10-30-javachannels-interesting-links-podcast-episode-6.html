@@ -1,0 +1,56 @@
+---
+title: "Javachannel’s interesting links podcast, episode 6"
+date: "2017-10-30 10:18:28 -0400"
+author: "dreamreal"
+categories:
+  - "channel-news"
+  - "podcast"
+tags:
+  - "ai"
+  - "cassandra"
+  - "collections"
+  - "continuations"
+  - "fibers"
+  - "gradle"
+  - "infoq"
+  - "java-9"
+  - "junit"
+  - "mongo"
+  - "mongodb"
+  - "neo4j"
+  - "nosql"
+  - "osgi"
+  - "podcast"
+  - "podcast-6"
+  - "postgres"
+  - "postgresql"
+  - "redis"
+  - "rife"
+  - "testng"
+  - "wildfly"
+  - "zgc"
+enclosure: "/wp-content/uploads/2017/10/javachannel-6.mp3"
+enclosure-length: 15090797
+show-enclosure: true
+comments:
+  - author: "pdurbin"
+    date: "2017-11-05 16:09:10 +0000"
+    content: "<p>I enjoyed what you were saying at the beginning of this episode about the need for community: “We actually want more participation. The whole goal of this podcast is to share information about the ecosystem and really make it a community thing. And that means that we need community. We need people who actually use Java to participate and say, “Hey, this what’s interesting to me…” We’re really trying to build the ecosystem to be stronger… You don’t do that without the ecosystem being part of the podcast.”</p>"
+wp-id: 962
+wp-guid: "http://javachannel.org/?p=962"
+---
+
+<p>Welcome to the sixth ##java podcast. I’m Joseph Ottinger, dreamreal on the IRC channel, and it’s Monday, 2017 October 30. Scary! Tomorrow’s Halloween.<br />
+This podcast covers news and interesting things from the ##java IRC channel on Freenode; if you see something interesting that’s related to Java, feel free to submit it to the channel bot, with ~submit and a URL to the interesting thing, or you can also write an article for the channel blog as well; I’m pretty sure that if it’s interesting enough to write about and post on the channel blog, it’s interesting enough to include in the podcast. (And guess what? That happened this week. See entry #4!)</p>
+<ol>
+<li>First up we have two articles about <a href="https://en.wikipedia.org/wiki/NoSQL">NoSQL</a> from Matt Raible and <a href="https://developer.okta.com">Okta.com</a> – “<a href="https://developer.okta.com/blog/2017/09/08/nosql-options-for-java-developers">NoSQL Options for Java Developers</a>” and “<a href="https://developer.okta.com/blog/2017/10/10/nosql-options-for-java-developers-part-ii">NoSQL Options for Java Developers, Part II</a>.” They were published almost a month apart. In Part I, Matt mostly focuses on a very general overview of the NoSQL landscape and how he chose what NoSQL products to focus on – which ended up being <a href="https://www.mongodb.com/">MongoDB</a>, <a href="https://redis.io/">Redis</a>, <a href="http://cassandra.apache.org/">Cassandra</a>, <a href="https://neo4j.com/">Neo4J</a>, and <a href="https://www.postgresql.org/docs/10/static/datatype-json.html">Postgres JSON</a>. In Part II he encourages more of a discussion from some NoSQL luminaries about those five. They’re sharing stories and anecdotes about the databases, and it’s interesting reading, even if a little light on content – but they do have some interesting quips to throw out. One in particular stood out to me: you really should justify using something <em>other than</em> Postgres these days, and while I’m a big proponent of NoSQL, I totally agree. They also point out that some people see NoSQL as a magic bandaid for performance, and that’s simply not the case, at all.</li>
+<li>Up next we have “<a href="https://machinelearningmastery.com/gentle-introduction-bag-words-model/">A Gentle Introduction to the Bag-of-Words Model</a>.” The Bag-of-Words is a very common way to help trim down inputs for automated learning, or artificial intelligence; one of the things about AI is that it’s painfully easy to overwhelm systems with irrelevant input. This article introduces one of the most common ways to trim input, by providing a focus on words used most commonly in a bit of text – a corpus – or maybe the least common words in that corpus, too, really. (Which set of words you choose depends somewhat on what you’re trying to do.) Interesting article, fairly well done, I thought. Not heavy on code – in fact, painfully light on code – but bag-of-words is actually really easy to write, so that’s not a big deal.</li>
+<li>Java 9 is all the rage these days, even though I don’t know anyone who’s actually deploying it yet. Our next article is “<a href="https://blog.codefx.org/java/jsr-305-java-9">Making JSR 305 Work On Java 9</a>,” which focuses on using the annotations for software defect detection – <a href="http://www.jcp.org/en/jsr/detail?id=305">JSR 305</a> – along with annotations from <code>javax.annotation</code>, which apparently doesn’t work very well in Java 9, due to the packages being split across multiple jars. Part of the problem is the implementation of the JSR 305 annotations themselves; it’s not really been a problem in the non-modular world, but Java 9 is more strict (and should be) about how modules are implemented. The article shows some workarounds and actually does enable the use of the various annotations (and has some warnings along the way) but I think the greater takeaway is that Java 9 is a sea change for Java. It’s probably one that was necessary – sure, we had <a href="https://www.osgi.org/">OSGi</a> and Java EE to help modularize the JVM, but there were and are crucial limits to those approaches that Java 9 is actually trying to address – but even though it’s been necessary there’s still a lot of pain and technology transfer involved.</li>
+<li>We also have some content from ##java denizen <code>yawkat</code>: “<a href="/posts/how-not-to-extend-standard-collection-classes/">How (not) to extend standard collection classes</a>.” It came from a discussion on ##java about someone needing a bounded <code>PriorityQueue.</code> I was being really pragmatic and short-sighted, and suggested just overriding the <code>add()</code> to enforce a limit, but the truth is, that <em>is</em> short-sighted – and yawkat wrote this article discussing why and how to actually extend such classes properly. Very well done, and it’s much appreciated.</li>
+<li>Another note about future releases of Java – I was going to say “Java 9” but apparently that numbering system is endangered. There’s a JSR – <a href="https://jcp.org/aboutJava/communityprocess/edr/jsr383/index.html">JSR 383</a> – for Java 18.3, the release scheduled for March 2018. The main difference I see is in local variable type inference, <a href="http://openjdk.java.net/jeps/286">JEP 286</a>. Type inference is cool – Scala and Kotlin have it and rely on it – and it’s great that Java will get it soon too, but the “Java 18.3” name is going to take some getting used to. I still don’t like it. Maybe this is part of their Halloween pranking: “Boo! It’s Java 18.3!” to which my response is, well, “<a href="https://www.youtube.com/watch?v=drKfbbBu05w">booooo</a>.”</li>
+<li><a href="http://wildfly.org/news/2017/10/23/WildFly11-Final-Released/">WildFly 11 Final is available</a>. There are lots of improvements here – not many of them are earth-shattering, I think (and I’m waiting for them to go to WildFly Orange or WildFly Jet Fuel, following Oracle’s ridiculous naming practices – okay, I’ll shut up about how I don’t like “18.3” from here on out.) Anyway, WildFly is the fully open source version of JBossAS; it really is a great product. I prefer it to all of the other Java EE containers these days, even though I usually work on distributed services and not monolithic servers any more. I use a lot of the Java EE APIs without using an actual traditional Java EE container, and that’s the current trend I’m seeing – but I’m pretty sure that my data set is pretty constrained. Congratulations on the release, WildFly people.</li>
+<li><a href="https://www.infoq.com/">InfoQ</a> comes in with the <a href="https://www.infoq.com/news/2017/10/junit5-released">JUnit 5 release announcement</a>. <a href="http://junit.org/junit5/">JUnit5</a> changes some annotations and introduces lambdas into the testing mechanism. It also changes the runner mechanism. It requires Java 8, but that’s okay; everyone should be on Java 8 by now anyway. I really like that JUnit is moving forward; I’m mainly a <a href="http://testng.org/doc/">TestNG</a> user, but TestNG has been pushing JUnit to add features, and I imagine that JUnit will likewise push TestNG to add features. Everyone wins.</li>
+<li>Up next we have “<a href="http://cr.openjdk.java.net/~rpressler/loom/Loom-Proposal.html">Project Loom: Fibers and Continuations for the Java Virtual Machine</a>.” This feels really familiar, actually – there used to be a Continuations feature as part of <a href="http://rifers.org/">RIFE</a>, and that was around <em>years</em> ago. But here we have an official continuations and fibers suggestion; fibers are lightweight threads, and continuations allow scheduling of tasks on those lightweight threads. I’m not doing it justice here, but it looks great; it’s a long article, worth the read, notable more for its existence than its actual technical content at this point (but the technical content is a good read. Many other platforms have features like this, so it’s good that Java might get them.)</li>
+<li>The <a href="https://gradle.org/">Gradle</a> project has published “<a href="https://blog.gradle.org/java-9-support-update">The State of Gradle Java 9 Support</a>,” an article going over the increasingly popular build tool’s support for and integration with Java 9. Multi-release jars still rely on an external plugin, but the module system is supported by Gradle’s dependency resolution, from the looks of it. This is an excellent practice to have, on Gradle’s part – let people know what is supported, how it works, how to use it, and set the expectation that changes will be discussed and documented. It’s almost like open source; open discussion and knowledge transfer. </li>
+<li>Lastly, there’s a call for votes on the OpenJDK mailing lists for <a href="http://mail.openjdk.java.net/pipermail/announce/2017-October/000237.html">a new garbage collector, ZGC</a>. It’s currently a skunkworks project of sorts for Oracle, and is aimed at providing low latency for multi-<em>terabyte</em> heaps, a phrase that gives me the willies. I’ve worked with large heaps before – but mainly through things like Azul’s Zing platform. It’s really neat that the Java ecosystem keeps changing like this, though, in that we gain new feature sets all the time and Java just gets better and better. Now if we could only maintain sane version naming and remember to work together…</li>
+</ol>

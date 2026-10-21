@@ -1,0 +1,85 @@
+---
+title: "Expected Exceptions from JUnit"
+date: "2016-01-21 07:57:26 -0500"
+author: "dreamreal"
+categories:
+  - "java-coding"
+tags:
+  - "jooq"
+  - "junit"
+  - "testing"
+  - "testng"
+wp-id: 422
+wp-guid: "http://javachannel.org/?p=422"
+---
+
+<p><a href="http://blog.jooq.org/2016/01/20/use-junits-expected-exceptions-sparingly/">Use JUnit’s expected exceptions sparingly</a>, from the <a href="http://blog.jooq.org/">JOOQ blog</a>, says not to use <a href="http://junit.org">JUnit</a>‘s “expected exceptions” feature. (Or, more accurately, to use it “sparingly.”) It’s good advice, but it’s also largely limited to JUnit (with one main exception).<br />
+What they’re addressing is the transition from this pattern:</p>
+<pre><code>@Test
+public void testValueOfIntInvalid() {
+  try {
+    ubyte((UByte.MIN_VALUE) - 1);
+    fail();
+  }
+  catch (NumberFormatException e) {}
+}
+</code></pre>
+<p>To <em>this</em> pattern:</p>
+<pre><code>@Test(expected = NumberFormatException.class)
+public void testValueOfShortInvalidCase1() {
+  ubyte((short) ((UByte.MIN_VALUE) - 1));
+}
+</code></pre>
+<p>They have four reasons that this doesn’t actually get you anything:</p>
+<ul>
+<li>We’re not really gaining anything in terms of number of lines of code</li>
+<li>We’ll have to refactor it back anyway</li>
+<li>The single method call is not the unit</li>
+<li>Annotations are always a bad choice for control flow structuring</li>
+</ul>
+<p>Of these, “The single method call is not the unit” is by far the strongest point.</p>
+<h3>We’re not really gaining anything in terms of number of lines of code</h3>
+<p>It’s a matter of opinion, but we generally <em>are</em> gaining something in terms of the code. The refactored test has one line of actual code: <code>ubyte((short) ((UByte.MIN_VALUE) - 1));</code>. Everything around it is window dressing. The original test has the <code>try/catch</code> code, which adds a lot of noise – and discards the “error condition,” which is the actual metric for success (it fails the test if there’s no error.)<br />
+Is this a big deal? … No, it’s not. But it’s also not a point worth making.</p>
+<h3>We’ll have to refactor it back anyway</h3>
+<p>Here’s where <a href="http://junit.org/">JUnit</a> itself messes things up. The authors actually have a really good point, if you’re locked into JUnit:</p>
+<blockquote><p>In the annotation-driven approach, all I can do is test for the exception type. I cannot make any assumptions about the exception message for instance, in case I do want to add further tests, later on. Consider this:</p>
+<pre>try {
+    ubyte((UByte.MIN_VALUE) - 1);
+    fail("Reason for failing");
+}
+catch (NumberFormatException e) {
+    assertEquals("some message", e.getMessage());
+    assertNull(e.getCause());
+    ...
+}</pre>
+</blockquote>
+<p>Ah, <a href="http://junit.org/">JUnit</a>. JOOQ is making the assertion (see what I did there?) that they can’t examine <code>Reason for failing</code> or <code>some message</code> with the annotation.<br />
+They’re right… if you’re locked into JUnit. <a href="http://testng.org">TestNG</a> can, of course, look at the message and validate it. If the message doesn’t fit the regex, then the test fails, just as expected (and desired).</p>
+<pre><code>@Test(expectedExceptions={NumberFormatException.class},
+      expectedExceptionsMessageRegExp="Reason for failing")
+public void testThings() {
+  ...
+</code></pre>
+<h3>The single method call is not the unit</h3>
+<p>Here’s what JOOQ says:</p>
+<blockquote><p>
+  The unit test was called <code>testValueOfIntInvalid()</code>. So, the semantic “unit” being tested is that of the <code>UByte</code> type’s <code>valueOf()</code> behaviour in the event of invalid input in general. Not for a single value, such as <code>UByte.MIN_VALUE - 1</code>.
+</p></blockquote>
+<p>They’re running yet again into a limitation of JUnit. The actual point they’re making is correct, but TestNG provides a <code>@DataProvider</code> mechanism, where you’d actually give the test a signature of <code>testValueOfIntInvalid(int)</code> and pass in a set of integers. That means you can test a range and corner cases, with a single appropriate test.<br />
+People have written a data-provider-like feature for JUnit (see <a href="https://github.com/TNG/junit-dataprovider">junit-dataprovider</a>) – which only highlights how JUnit is affecting the choices made by the JOOQ team.</p>
+<h3>Annotations are always a bad choice for control flow structuring</h3>
+<p>Hard to argue with this one: Java has excellent control flow, even if it’s verbose at times. However, the annotation is direct enough (with TestNG, at least) that you aren’t really violating control flow: you’re saying “this is a test, it has these execution rules, and this is how you measure success.” With JUnit, you don’t have the same control.</p>
+<h2>JUnit.next</h2>
+<p>According to JOOQ, the <a href="http://junit.org/junit-lambda.html">next generation</a> of JUnit (<a href="(http://junit.org/junit-lambda.html)">junit-lambda</a>) fixes things a little, by offering a lambda solution to exceptions:</p>
+<pre><code>Exception e = expectThrows(NumberFormatException.class, () -&gt;
+  ubyte((UByte.MIN_VALUE) - 1));
+assertEquals("abc", e.getMessage());
+</code></pre>
+<p>That’s admirable, but they’re still behind TestNG by a few generations – and there’s still no data factory mechanism.</p>
+<h2>In Conclusion</h2>
+<p>Their closing statement is actually <em>really good</em>:</p>
+<blockquote><p>
+  <a href="http://www.annotatiomania.com/">Annotations were abused for a lot of logic</a>, mostly in the JavaEE and Spring environments, which were all too eager to move XML configuration back into Java code. This has gone the wrong way, and the example provided here clearly shows that there is almost always a better way to write out control flow logic explicitly both using object orientation or functional programming, than by using annotations.
+</p></blockquote>
+<p>It’s worth noting that the statement was actually driven by a lack of features in <a href="http://junit.org">JUnit</a> (when compared to <a href="http://testng.org">TestNG</a>) but the point remains.</p>

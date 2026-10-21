@@ -1,0 +1,59 @@
+---
+title: "Gradle Properties"
+date: "2018-08-01 10:35:50 -0400"
+author: "dreamreal"
+categories:
+  - "java-coding"
+tags:
+  - "gradle"
+  - "maven"
+wp-id: 1132
+wp-guid: "https://javachannel.org/?p=1132"
+---
+
+<p>Gradle supports properties in builds just like Maven does, but the actual documentation and examples are harder to come by. This article will show you something that actually works.<br />
+In Maven, you typically have a <code>dependencyManagement</code> section that declares the dependencies with versions; I typically put the versions in a <code>properties</code> block so that they’re all located in a nice, handy, easy-to-manage place. See https://github.com/jottinger/ml/blob/master/pom.xml for a simple example; it’s not <em>consistent</em> with the property usage, but the idea should be clear. I have my versions all coalesced into an easy place to update them, and the changes propagate through the entire project.<br />
+Gradle examples rarely do anything like this. Therefore, for your edification, here’s a simple example:<br />
+<code>gradle.properties</code>:</p>
+<pre>aws_sdk_version=1.11.377
+kotlin_version=1.2.50</pre>
+<p><code>build.gradle</code>:</p>
+<pre>buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+apply plugin: 'java'
+apply plugin: 'kotlin'
+repositories {
+    mavenCentral()
+    jcenter()
+}
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    compile "com.amazonaws:aws-java-sdk:$aws_sdk_version"
+}
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        javaParameters = true
+    }
+}</pre>
+<p>You can use a <code>constraints</code> block in the dependencies to do the same thing as <code>dependencyManagement</code> in Maven; that would look like this:</p>
+<pre>dependencies {
+    constraints {
+        implementation "com.amazonaws:aws-java-sdk:$aws_sdk_version"
+    }
+}</pre>
+<p>This would allow submodules (or <em>this</em> module) to use a simpler dependency declaration, leaving off the version, just like Maven can do:</p>
+<pre>dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    compile "com.amazonaws:aws-java-sdk"
+}</pre>
+<p>If you don’t want to use <code>gradle.properties</code>, that’s doable too (as pointed out by channel member <code>matsurago</code>) – you can put it in the <code>buildscript</code> block, as so:</p>
+<pre>buildscript {
+  ext.aws_sdk_version="1.11.377"
+}</pre>

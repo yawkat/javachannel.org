@@ -1,0 +1,124 @@
+---
+title: "Watching HotSpot in action, deductively"
+date: "2014-09-24 11:07:17 -0400"
+author: "dreamreal"
+categories:
+  - "java-coding"
+tags:
+  - "benchmark"
+  - "hotspot"
+  - "optimization"
+wp-id: 168
+wp-guid: "http://javachannel.org/?p=168"
+---
+
+<p>Today someone asked about the size of java <em>source</em> files, because they wanted to know if they could unroll a loop without making <code>javac</code> throw up, I think.  It’s an interesting question, but the main thing that caught the channel’s attention was the claim that an unrolled loop was orders of magnitude faster than the loop itself, such that the unrolled loop took 0.1 millisecond and the normal loop took 0.5 milliseconds – for a loop that simply ran 10000 times.<br />
+For one thing, the idea that a loop that runs 10000 times takes 0.1 ms sounds absurd; computers are <em>fast</em>. A Commodore 64 could run that loop in ten seconds. (Actually, after testing it ended up running in roughly twelve seconds. This is the first BASIC code I’ve written in close to thirty years.)<br />
+<a href="/wp-content/uploads/2014/09/c64timing.png"><img src="/wp-content/uploads/2014/09/c64timing-300x198.png" alt="c64timing" width="300" height="198" class="alignnone size-medium wp-image-169" /></a><br />
+Let’s clear one thing out first: java methods – not classes – can be up to 64K. (if you want to know the <em>actual details</em>, see <a href="http://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.11">Limitations of the Java Virtual Machine</a>.) I don’t know of a source limitation, although the idea of writing a 64K source file sounds horrifying and rather difficult to manage; I’m sure <a title="In other words: not me.">some enterprising soul</a> can try to determine the largest java source file that can be written such that it still compiles to a valid <code>.class</code> file.<br />
+So let’s dig in for a bit, and see what Java does, from the standpoint of observation. Let’s write a loop and time it, with a number of iterations, to see what the JVM actually does to the code as it runs.</p>
+<blockquote><p>This was run on an eight-core Windows 8.1 machine, using the Java 8 virtual machine. Your results may vary based on your clock speed, memory, system load, operating system, and JVM. This should be obvious, but it’s worth remembering.</p></blockquote>
+<p>Here’s our source code, which contains two classes:</p>
+<pre><code class="language-java">package org.javachannel;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.OptionalDouble;
+import java.util.function.Consumer;
+public class Thing {
+  public static void main(String[] args) {
+    Thing t = new Thing();
+    for (int i = 0; i &lt; 1500; i++) {
+      t.measure(i);
+    }
+    t.display();
+  }
+  private void display() {
+    SlidingAverage sa = new SlidingAverage();
+    slide.stream().forEach(sa);
+    sa.display();
+    System.out.println("sum: " +
+        artifact.stream().mapToInt(Integer::intValue).sum());
+  }
+  List&lt;Long&gt; slide = new ArrayList&lt;&gt;(2000);
+  List&lt;Integer&gt; artifact = new ArrayList&lt;&gt;(2000);
+  private void measure(int i) {
+    int sum = 0;
+    long start = System.nanoTime();
+    for (int j = 0; j &lt; 10000; j++) {
+      sum += j % 3;
+    }
+    long end = System.nanoTime();
+    slide.add((end - start));
+    artifact.add(sum);
+  }
+}
+class SlidingAverage implements Consumer&lt;Long&gt; {
+  List&lt;Long&gt; integers = new LinkedList&lt;&gt;();
+  List&lt;Long&gt; averages = new ArrayList&lt;&gt;();
+  @Override
+  public void accept(Long value) {
+    integers.add(value);
+    if (integers.size() &gt; 30) {
+      integers.remove(0);
+      OptionalDouble od = integers.stream().mapToLong(Long::longValue).average();
+      if (od.isPresent()) {
+        averages.add((long) od.getAsDouble());
+      }
+    }
+  }
+  public void display() {
+    int count = 1;
+    for (Long average : averages) {
+      if (count % 30 == 0) {
+        System.out.printf("%-5d %-7d%n", count, average);
+      }
+      count++;
+    }
+  }
+}
+</code></pre>
+<p>The most important part of all of this is the loop itself:</p>
+<pre><code class="language-java">  private void measure(int i) {
+    int sum = 0;
+    long start = System.nanoTime();
+    for (int j = 0; j &lt; 10000; j++) {
+      sum += j % 3;
+    }
+    long end = System.nanoTime();
+    slide.add((end - start));
+    artifact.add(sum);
+  }</code></pre>
+<p>This runs the inner block 10000 times, adding to the result based on the loop counter; this should prevent the JVM from optimizing the loop out of existence. It also adds a good bit to our runtime, as we'll see, but this is less of an impact than you might think.<br />
+The rest of the code is really me trying to be fancy, showing a sliding scale of averages; basically, every "average" is based on the prior thirty samples (where each sample is an iteration through the loop.)<br />
+So what did this show me when it ran? Here's some output:</p>
+<pre>30    56051
+60    53855
+90    54397
+120   55338
+150   54269
+180   55965
+210   55495
+...
+600   56820
+630   64889
+660   64304
+690   50177
+720   9536
+750   9536
+780   10448
+810   9522
+840   9536
+870   10235
+...
+1440  9508
+1470  9508
+sum: 14998500</pre>
+<p>So what this is showing us is that the <em>average</em> of our first thirty times through the loop was ~56000 nanoseconds. A nanosecond is one <em>billionth</em> of a second, so there are 1000000 nanoseconds in a single millisecond; it’s saying that it took 0.056 milliseconds to run the loop the first time through, on average.<br />
+It stabilized for a while, until it ran the loop roughly 700 times; then the average dropped down to roughly 10000 nanoseconds.<br />
+If you remove the <code>sum += j%3</code> from the loop, replacing it with <code>sum += 1</code>, the results are dramatic to say the very least: after 180 times through the loop, the average drops down to around 15 nanoseconds.</p>
+<h2>So what can we conclude?</h2>
+<p>I was actually surprised by the results; I expected the averages to fall, but not as quickly in the run as they actually did. I expected Hotspot to compile the code to machine language pessimistically, then run through two more levels of optimization before finally settling in on an optimal variation.<br />
+Instead, we saw three levels of optimization (as opposed to four). The first is difficult to see – it’s that very first value, which hides a number of calls (roughly ten) that actually took 100000 nanoseconds. We then stabilized around 56000 nanoseconds, and then dropped 80% of our runtime for each loop.<br />
+It’s safe to say that Hotspot did a good job on this code – maybe not perfect, but pretty darned close. I didn’t run this on a JVM with debugging enabled, so I don’t know what actual phases of compilation were used.<br />
+It’s also safe to say that these numbers <em>are not reliable</em>. Benchmarks are notoriously difficult to write, and even more notorious in Java (because it compiles and optimizes in multiple stages, as we see here), and even <em>more</em> notorious when it’s a microbenchmark like this one. ~10000 ns sounds like an incredibly long time for such a simple loop (“it’s only four or five lines!”) — but it really isn’t. (For reference, a normal blink of an eye takes around 300-400 milliseconds – or 300,000,000 nanoseconds.)</p>

@@ -1,0 +1,72 @@
+---
+title: "How to use Scanner"
+date: "2017-11-16 06:50:14 -0500"
+author: "rzwitserloot"
+categories:
+  - "java-coding"
+tags:
+  - "beginners"
+  - "commandline"
+  - "common-mistakes"
+  - "scanner"
+wp-id: 984
+wp-guid: "http://javachannel.org/?p=984"
+---
+
+<p>The <code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Scanner.html?is-external=true">java.util.Scanner</a></code> class built into java can be used to read inputs. It can for example be used to set up an interactive command line session, where you prompt the user for stuff and your program acts on what the user types in. You can also point it at a file or network connection if you like.</p>
+<h2>TL;DR: Do not use nextLine()</h2>
+<p>Phew, glad we got that out there. If you don’t want to read the rest, just never call that method. Instead, to read a full line of text, you call:</p>
+<pre>scanner.useDelimiter("\r?\n");
+String entireLine = scanner.next();</pre>
+<h2>Creating scanners</h2>
+<p>To create a scanner, just call its constructor, and pass in the data you want to read from. You have lots of options:</p>
+<pre>import java.util.Scanner;
+import java.io.InputStream;
+import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
+Scanner in = new Scanner(System.in);
+Scanner in = new Scanner(Paths.get("/path/to/file"), StandardCharsets.UTF_8);
+Scanner in = new Scanner("input to read");
+try (InputStream raw = MyClass.class.getResource("listOfStates.txt")) {
+  Scanner in = new Scanner(raw, StandardCharsets.UTF_8);
+}</pre>
+<p>The above code shows 4 different things you can read with scanner:</p>
+<ol>
+<li>“Standard input” – what the user types into the command line.</li>
+<li>Files. You can also pass a <code>java.io.File</code> object if you still use the old file API.</li>
+<li>A string containing data you want to read. The string is read directly; you can’t pass a file path (see the second example for reading files).</li>
+<li>Input streams, byte channels, and Readables.</li>
+</ol>
+<p>Note that in all cases where you’re dealing with byte input, you can opt not to explicitly pass along a character encoding, but <em>don’t do this!</em> – this means you get the platform default and you have no idea what that’s going to be. That is a good way to write code that works on your computer but fails elsewhere. When in doubt, pass in <code>StandardCharsets.UTF_8</code> just like in the examples above.</p>
+<h2>Reading data from a scanner</h2>
+<p>To read data from a scanner, first decide what you want to read. Then, call the right <code>next</code> method:</p>
+<h3>A whole number</h3>
+<p>Call <code>nextInt()</code>, <code>nextLong()</code>, or <code>nextBigInteger()</code>. If you don’t know what these are, call <code>nextInt()</code>.</p>
+<h3>A number in hexadecimal</h3>
+<p>Call <code>nextInt(0x10)</code>, or <code>nextLong(0x10)</code>.</p>
+<h3>A number with fractional elements (i.e., numbers after a decimal point)</h3>
+<p>Call <code>nextDouble()</code>. However, be aware that how people type floating point numbers depends on where they live. You may want to call <code>useLocale()</code> first to explicitly set the style.</p>
+<h3>A boolean value</h3>
+<p>Call <code>nextBoolean()</code></p>
+<h3>A single word</h3>
+<p>Call <code>next()</code></p>
+<h3>A whole sentence</h3>
+<p>Ah, well, that’s tricky. Do <em>not</em> call <code>nextLine()</code>, that doesn’t do what you might think based on its name. Instead, read the next section.</p>
+<h2>Tokens?</h2>
+<p>The way Scanner works is by first reading a so-called ‘token’, and then converting this into the representation you asked for. So, if you call <code>nextInt()</code>, a single token is read and this token is then parsed as an integer. If it isn’t an integer, for example because the user typed <em>hello</em> instead of <em>85</em>, an <code>InputMismatchException</code> is thrown. Catch this exception if you wish to respond to faulty inputs (I advise not calling <code>hasNextInt()</code> and friends either; but that’s for another article).<br />
+By default, ‘read the next token’ is done by reading until end-of-input, or any whitespace (tabs, spaces, enters, anything goes). This means that ‘read the next entire line’ just isn’t a thing scanner can do: That would involve reading multiple tokens.<br />
+The trick is to turn ‘the entire line’ into a single token. To do that, just tell Scanner to delimit on something else! The delimiter is what separates tokens. So, to read an entire line, first tell scanner that tokens are separated only by newlines, then just read the next token:</p>
+<pre>scanner.useDelimiter("\r?\n");
+String entireLine = scanner.next();
+</pre>
+<p>This sets the delimiter to be the newline character, optionally preceded by the carriage return character (windows formatted text files tend to put that in front of their newlines, other OSes don’t).<br />
+If you want to return to whitespace-separated tokens, you just call <code>scanner.reset()</code>, though, note, that also resets <code>useLocale</code>.</p>
+<h2>So what does nextLine do?</h2>
+<p><code>nextLine()</code> is unlike all the other <code>next</code> methods. It doesn’t read tokens. Instead, it just keeps reading characters up to the next newline character and returns what it read. It completely ignores the delimiter. This is problematic, because the <code>next</code> method family reads up to the delimiter but doesn’t ‘consume’ it. Thus, if you write this code:</p>
+<pre>Scanner scanner = new Scanner(System.in);
+System.out.print("Enter your age: ");
+int age = scanner.nextInt();
+System.out.println("Enter your name: ");
+String name = scanner.nextLine();
+</pre>
+<p>It <em>won’t</em> work: In the user types <code>5</code> and then hits enter, well, the 5 goes to <code>nextInt()</code> and that lone enter is all that <code>nextLine</code> is going to read. But if the user types <code>5 Jane Doe</code> then you’ll end up with <code>age = 5</code> and <code>name = "Jane Doe"</code>. There’s no real way to try to fix this (you can try to call <code>nextLine()</code> twice but that breaks it for those who type spaces instead of enter); just don’t use <code>nextLine</code>, and change the delimiter instead.</p>

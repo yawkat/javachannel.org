@@ -1,0 +1,45 @@
+---
+title: "Interesting Links podcast, episode 3"
+date: "2017-10-09 09:39:49 -0400"
+author: "dreamreal"
+categories:
+  - "channel-news"
+  - "podcast"
+tags:
+  - "4gl"
+  - "5gl"
+  - "aws"
+  - "curses"
+  - "eclipse"
+  - "electron"
+  - "fn"
+  - "javafx"
+  - "junit"
+  - "lambda"
+  - "livetable"
+  - "nethack"
+  - "oracle"
+  - "podcast"
+  - "podcast-3"
+  - "processing"
+  - "reverse-engineering"
+  - "testing"
+  - "zircon"
+enclosure: "/wp-content/uploads/2017/10/javachannel-3.mp3"
+enclosure-length: 11990216
+show-enclosure: true
+wp-id: 929
+wp-guid: "http://javachannel.org/?p=929"
+---
+
+<p>Welcome to the third ##java podcast. I’m your host, dreamreal on the IRC channel, and it’s Monday, 2017 October 9.<br />
+As usual, this podcast is built from interesting content submitted to the channel bot, using the ~submit command. If you’re on the channel, it’s very easy to use: ~submit and a URL is all you need, although it’s very helpful if you include a comment about what makes the content interesting. That saves your host – me – a lot of work trying to figure out why something was submitted.</p>
+<ol>
+<li>First up, we have “<a href="https://0x10f8.wordpress.com/2017/08/07/reverse-engineering-an-eclipse-plugin/">Reverse Engineering an Eclipse Plugin</a>,” a long (but good) post from someone trying to figure out a security issue in the a popular Eclipse plugin – I don’t use it, but he says that apparently the Eclipse Class Decompiler Plugin as deployed on the Eclipse Marketplace has a “phone home” feature that isn’t shown in the github repository for the plugin. The author did some basic security auditing and found that the plugin apparently does something after a number of classes have been decompiled, and that the open source version of the plugin does not show this functionality. Good call by the author; he doesn’t actually reverse engineer the plugin, but actually dives into the security aspects of it, but it’s an excellent walkthrough nonetheless.</li>
+<li><a href="https://medium.com/@jamesjefferyuk/common-excuses-why-developers-dont-test-their-software-908a465e122c">Common Excuses Why Developers Don’t Test Their Software</a>, as the title might suggest, walks through some of the reasons software tests don’t get written and run. For the most part, it’s laziness and self-deception; headings include “My code runs perfectly, why do I need to test,” “I don’t know what to test,” Barbie’s favorite excuse of “testing is hard!,” “testing increases development time.” Well worth checking out – and sending to your co-workers.</li>
+<li><a href="https://github.com/Hexworks/zircon">Zircon</a> is an extensible text UI library that targets multiple platforms and was designed specifically for game developers. It actually looks neat – you could imagine <a href="http://www.bay12games.com/dwarves/">Dwarf Fortress</a> or <a href="https://nethack.org">Nethack</a>‘s user interface with something like this. I still content that while Nethack lacks the twitchy adrenaline rush of first person shooters and other such games with high frame rates, it’s still one of the best – if not THE best – computer game ever written. And yes, I know, I sound old. Now get off my lawn.</li>
+<li>Sticking to the user interface theme, <a href="https://sites.google.com/a/athaydes.com/renato-athaydes/posts/saynotoelectronusingjavafxtowriteafastresponsivedesktopapplication">Say no to Electron! Using JavaFX to write a fast, responsive desktop application</a>, addressing the growing use of Electron. Electron is a web browser that hosts <em>only</em> your web application, leveraging a common approach these days that uses Java for a backend and renders the front end with HTML and Javascript. Electron isolates your app into its own browser window. While this gets you a lot of capabilities (people are used to how the web renders things, and it’s easier) it mostly reflects a failure on the part of Java to render cleanly and consistently on <em>every</em> platform – you can usually smell a pure Java application by the user interface features and feel it has. So people use other technologies for the user interface, which makes the apps feel more “native,” I guess, even though that’s an abuse of that term. This article actually walks through some of the alternatives to the HTML user interface in Java, and settles on JavaFX for an example. It doesn’t go very deep, but it hits the beginning aspects pretty well.</li>
+<li><a href="https://www.theatlantic.com/">The Atlantic</a> – a hotbed of coder information, I’m sure we’ll all agree – has “<a href="https://www.theatlantic.com/technology/archive/2017/09/saving-the-world-from-code/540393/">The Coming Software Apocalypse</a>,” an article going into how programmers construct code. There are people out there for whom <a href="https://en.wikipedia.org/wiki/Fourth-generation_programming_language">4GL</a> is not dead; they want to snap things together to program. It’s not a bad idea, really, and done well it even works – like everything done well. But the problem is that it’s not easy to do well; maybe they have a solution that’ll work this time. The <a href="http://www.oracle.com/technetwork/java/javase/documentation/spec-136004.html">JavaBeans specification</a> was actually meant to enable this sort of thing, even, but nobody uses it that way because it’s hard to do properly, and let’s face it, we as programmers tend to be conservative in our methods; we like writing code, we don’t care for connecting boxes to each other very much.</li>
+<li>Announced at JavaOne – or, well, exposed better at JavaOne, more like, was <a href="https://blogs.oracle.com/developers/announcing-fn">FN</a>, aan equivalent to Amazon’s <a href="https://aws.amazon.com/lambda/">Lambda</a> functionality. As a really poor summary of both Lambda and FN, what you would do is write a simple function that accepted input – presumably – and wrote output, and you’d connect these functions to build more complex functionality – almost like programming, you might say. It tends to have determinate latency (it’s not fast) and indeterminate scalability (it <em>will</em> scale out) – and with Java 9 potentially being far lighter on resources than prior JVMs thanks to things like <a href="http://openjdk.java.net/jeps/282">JLink</a>, this could be really nice to have on hand.</li>
+<li>Lastly, we have Oracle. The United States Government asked for commentary on how to <a href="https://github.com/GSA/modernization">modernize government IT</a>, and Oracle <a href="https://github.com/GSA/modernization/issues/41">responded</a> – with a long PDF. It’s an interesting paper, for various reasons, but what’s really interesting is how… outdated and self-serving it sounds. It comes off as  telling the government “you need people like us and not those silly hippies from Silicon Valley!” even though Oracle is based in Silicon Valley. Basically their paper is a repudiation of modern software practices, even though the older methods of coding are the whole reason the government is asking for how to modernize in the first place. (<a href="https://www.techdirt.com/">Techdirt</a>‘s <a href="https://www.techdirt.com/articles/20170930/00522238319/oracle-tells-white-house-stop-hiring-silicon-valley-people-ditch-open-source.shtml">article</a> on the Oracle comment points out a number of failures given us by what Oracle is propositioning.) Actually, the TechDirt article does a good job of decomposing Oracle’s commentary altogether – it’s a worthwhile read, too. Oracle comes across as whining about new-fangled, agile methodologies, saying “That’s now how we made our money back in the day! We earned it like real men, by crushing our competition because we could absorb losses they couldn’t and making sure they were iced out of big contracts. Let’s go back to that, shall we?”</li>
+</ol>

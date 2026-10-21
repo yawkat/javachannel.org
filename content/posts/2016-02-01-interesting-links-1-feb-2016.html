@@ -1,0 +1,29 @@
+---
+title: "Interesting Links, 1 Feb 2016"
+date: "2016-02-01 09:08:56 -0500"
+author: "dreamreal"
+categories:
+  - "news"
+tags:
+  - "filter"
+  - "hibernate"
+  - "imageio"
+  - "java-9"
+  - "jdbc"
+  - "png"
+  - "proxy"
+wp-id: 455
+wp-guid: "http://javachannel.org/?p=455"
+---
+
+<p>Editor’s note before we get to the links: I’ve been trying to keep the links’ length down to a manageable four or five, so the frequency’s been higher than I might otherwise have desired (roughly every two or three days). I’m going to try a longer list of interesting links, and move the frequency down – we’ll see if that’s useful and palatable. The problem is that <a href="irc://freenode.org/##java">##java</a> (and the Java community overall) just has a lot of interesting, relevant content that’s worth keeping! (Keep it up, guys. “Too much interesting stuff” is a good problem to have.)</p>
+<ul>
+<li><a href="http://wildfly.org/news/2016/01/29/WildFly10-Released/">WildFly 10</a> has been released. This is the latest version of the open source (community-supported) JBoss Application Server; it’s fully Java EE 7, and requires Java 8. Very cool stuff, congratulations to the WildFly team.</li>
+<li>Neo4J has released milestone 1 of their object/graph mapping library’s second version. (Read it with me: “<a href="http://neo4j.com/blog/neo4j-ogm-2-0-milestone-1/">Neo4J has released OGM 2.0 m1</a>.” Much simpler that way.) It sounds promising, especially since they seem to have straightened out the connection process to Neo4J instances such that both embedded and remote instances have similar capabilities.</li>
+<li>“<a href="http://blog.codefx.org/java/dev/implied-readability/">Implied Readability</a>” uses <em>readability</em> as a term to address transitive dependencies in <a href="http://openjdk.java.net/projects/jdk9/">Java 9</a>, more or less, and shows how a module can export visibility of a dependency to other modules. As stated: Java 9, not Java 8, so it’s a new feature – but it looks a little like how OSGi exports visibility rules. It might be really relevant as time goes on and Java 9 gets closer. (It’s based off of information in “<a href="http://www.infoq.com/articles/Latest-Project-Jigsaw-Usage-Tutorial">Programming with Modularity and Project Jigsaw. A Tutorial Using the Latest Early Access Build</a>” published on <a href="http://www.infoq.com">InfoQ</a>, so there may be more interesting stuff in that article.)</li>
+<li>“<a href="https://plumbr.eu/blog/io/how-we-accidentally-doubled-our-jdbc-traffic-with-hibernate">How we accidentally doubled our JDBC traffic with Hibernate</a>” discusses an obvious issue (doubling JDBC traffic!), found when <a href="http://hibernate.org/">Hibernate</a> logging was set to <code>WARN</code> – because Hibernate then re-executes <em>every</em> query in order to show the warnings associated with the query in question. The warnings can be useful, to be sure, but be wary!</li>
+<li>PNG encoding from Java’s <a href="https://docs.oracle.com/javase/8/docs/api/javax/imageio/ImageIO.html">ImageIO</a> can be slow, according to one ##java op. He said that he used <a href="http://objectplanet.com/">ObjectPlanet</a>‘s <a href="http://objectplanet.com/pngencoder/">PngEncoder</a> and got much better performance.</li>
+<li>As an update to the process by which one can examine request headers (mentioned in “<a href="/posts/interesting-links-22-january-2016/">Interesting Links, 22 Jan 2016</a>“) a ##java user mentioned <a href="http://requestb.in/">RequestBin</a>, which allows you to build a URL and issue requests against it, to examine the actual traffic data. </li>
+<li><a href="https://blogs.oracle.com/java-platform-group/entry/moving_to_a_plugin_free">Moving to a Plugin-Free Web</a> – by Oracle – says it point blank: “Oracle plans to deprecate the Java browser plugin in JDK 9. This technology will be removed from the Oracle JDK and JRE in a future Java SE release.” This makes sense – browsers are ignoring the java plugin (and should). If you’re still doing applets, stop. Oracle has spoken, and the technology is going away. (Now if we could get Oracle to get rid of <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Vector.html"><code>Vector</code></a> somehow…)</li>
+<li><a href="http://zeroturnaround.com/">ZeroTurnaround</a> – who gave the world <a href="http://zeroturnaround.com/software/jrebel/">JRebel</a> – posted <a href="http://zeroturnaround.com/rebellabs/java-8-streams-cheat-sheet/">Java 8 Streams cheat sheet</a>, which offers a one-page example of a lot of useful, relevant information around streams for handy, quick reference. I looked for a <a href="https://dzone.com">DZone</a> Refcard on streams for a point of comparison, but they didn’t have one that I saw on first scan – which is surprising, since the <a href="https://dzone.com/refcardz">Refcardz</a> are actually done really well, in general.</li>
+</ul>

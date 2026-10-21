@@ -1,0 +1,77 @@
+---
+title: "Bypassing subclass method overrides"
+date: "2015-05-13 07:28:52 -0400"
+author: "yawkat"
+categories:
+  - "java-coding"
+tags:
+  - "invokespecial-reflection-oop"
+  - "l1"
+  - "polymorphism"
+  - "reflection"
+wp-id: 326
+wp-guid: "http://javachannel.org/?p=326"
+---
+
+<p>Someone in ##java recently asked a question that may come up with beginners to OOP: How to invoke a method of a superclass from the outside. For example, if <code>ChildClass</code> extends <code>BaseClass</code> and overrides <code>BaseClass.method()</code>, how can one invoke the method of the superclass, bypassing the override in <code>ChildClass</code>?<br />
+This is not a very good idea from an OOP standpoint, because the child class might not expect the parent’s behavior to be invoked, but it’s still a very interesting question. It turns out there actually is a way to do this, too.<br />
+We will work with the following class setup:</p>
+<pre><code class="language-java">public class Test {
+  public static class BaseClass {
+    public String method() {
+      return "BaseClass.method()";
+    }
+  }
+  public static class ChildClass extends BaseClass {
+    @Override
+    public String method() {
+      return "ChildClass.method()";
+    }
+  }
+}</code></pre>
+<p>In Java bytecode, normal (not static, not an interface) method calls are made via the <code>invokevirtual</code> instruction. (As an example, <code>invokevirtual</code> is used when doing a simple <code>obj.method()</code> call.) However, this obviously will not work for <code>super.method()</code> instructions in code – the overridden method, not the superclass’ method, would be called. For this purpose, the JVM has another invoke instruction called <code>invokespecial</code>: it is used to invoke an instance method of an exact class, without respecting overridden method definitions.<br />
+Sadly, the verifier complains when we try to do load a class that does this; it throws a <code>VerifyError</code> with the message <code>Illegal use of nonvirtual function call</code>. The <code>invokespecial</code> instruction on a method can only be used from a direct subclass or the class itself, in the places where you would expect <code>super.method()</code> to work (inner classes use a bridge method). It’s probably better this way, too – if this was possible without some security checks, this could probably be easily exploited.<br />
+Method handles to the rescue! With the introduction of the <code>MethodHandles</code> API in Java 7, we have all sorts of nifty ways to bypass such measures through a bit of reflection. This API is also protected by access checks – here throwing <code>IllegalAccessException</code>s when we try to create our <code>invokespecial</code> handle.</p>
+<blockquote><p>Editor’s note: Java 7 has been end-of-lifed as of this writing – you should be using Java 8 by now, unless you have specific requirements holding you back to an older version of Java.</p></blockquote>
+<p>This is fairly easy to bypass by using normal reflection to create an instance of <code>MethodHandles.Lookup</code> that has a “Lookup Class”, meaning the permissions of a class, that is in fact allowed to <code>invokespecial</code> our target method <code>BaseClass.method()</code>. There are two candidates for this: the <em>direct</em> subclass of <code>BaseClass</code>, in our example <code>ChildClass</code> (for those <code>super.method()</code> calls mentioned above), and <code>BaseClass</code> itself (for some constructor business). For convenience we will use <code>BaseClass</code> as getting the direct child class requires a few more lines of code:</p>
+<pre>Constructor&lt;Methodhandles.Lookup&gt; methodHandlesLookupConstructor =
+  MethodHandles.Lookup.class.getDeclaredConstructor(Class.class);
+methodHandlesLookupConstructor.setAccessible(true);
+MethodHandles.Lookup lookup = methodHandlesLookupConstructor.newInstance(BaseClass.class);</pre>
+<p>Now the fun begins! We can use <code>MethodHandles.Lookup.findSpecial()</code> to create a <code>MethodHandle</code> that points towards our target method. We don’t need to worry about access checks here due to the constructor code above:</p>
+<pre><code class="language-java">MethodHandle handle = lookup.findSpecial(
+  BaseClass.class, "method", MethodType.methodType(String.class), BaseClass.class);</code></pre>
+<p>Done! Working example:</p>
+<pre><code class="language-java">import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
+import java.lang.reflect.Constructor;
+public class Test {
+  public static void main(String[] args) throws Throwable {
+    ChildClass obj = new ChildClass();
+    System.out.println(obj.method()); // prints ChildClass.method()
+    System.out.println(invokeSpecial(obj)); // prints BaseClass.method()
+  }
+  static String invokeSpecial(BaseClass obj) throws Throwable {
+    // create the lookup
+    Constructor&lt;MethodHandles.Lookup&gt; methodHandlesLookupConstructor =
+      MethodHandles.Lookup.class.getDeclaredConstructor(Class.class);
+    methodHandlesLookupConstructor.setAccessible(true);
+    MethodHandles.Lookup lookup = methodHandlesLookupConstructor.newInstance(BaseClass.class);
+    // create the method handle
+    MethodHandle handle = lookup.findSpecial(
+      BaseClass.class, "method", MethodType.methodType(String.class), BaseClass.class);
+    return (String) handle.invokeWithArguments(obj);
+  }
+  public static class BaseClass {
+    public String method() {
+      return "BaseClass.method()";
+    }
+  }
+  public static class ChildClass extends BaseClass {
+    @Override
+    public String method() {
+      return "ChildClass.method()";
+    }
+  }
+}</code></pre>

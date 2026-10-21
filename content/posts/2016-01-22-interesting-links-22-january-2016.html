@@ -1,0 +1,16 @@
+---
+title: "Interesting Links, 22 January 2016"
+date: "2016-01-22 02:45:19 -0500"
+author: "dreamreal"
+categories:
+  - "channel-news"
+wp-id: 416
+wp-guid: "http://javachannel.org/?p=416"
+---
+
+<ul>
+<li>Every so often you need to see exactly what headers your HTTP-based application is working with. One way to look at the HTTP headers is to use an HTTP proxy: possibilities in this space include <a href="http://www.telerik.com/fiddler">Fiddler</a>, <a href="https://www.charlesproxy.com/">Charles Proxy</a>, and <a href="http://sourceforge.net/projects/paros/">Paros Proxy</a> (with Paros’ website being the Sourceforge project site, which isn’t very confidence-inspiring). There are certainly others (feel free to <a href="mailto:dreamreal@gmail.com">send them to me</a>, if you’ve used one you like!). You can also use <a href="https://www.wireshark.org">Wireshark</a> if you need to examine <em>all</em> network traffic, but for HTTP Wireshark’s a bit of overkill.</li>
+<li><a href="http://zeroturnaround.com/rebellabs/fixedthreadpool-cachedthreadpool-or-forkjoinpool-picking-correct-java-executors-for-background-tasks/">Picking correct Java executors for background tasks</a>, by ZeroTurnaround (makers of <a href="http://zeroturnaround.com/software/jrebel/">JRebel</a>), goes into how (and why) you would choose specific <code>Executor</code>s. Good reading, spoken as one who more or less uses <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executors.html#newFixedThreadPool-int-"><code>Executors.newFixedThreadPool(int)</code></a> by default.</li>
+<li><a href="http://blog.jooq.org/2016/01/20/use-junits-expected-exceptions-sparingly/">Use JUnit’s expected exceptions sparingly</a>, from the JOOQ blog, talks about a feature I love from TestNG: the ability to expect exceptions from a test, as opposed to a <code>try/catch</code> block that uses <code>fail()</code> to fail the test if an exception isn’t thrown. The JOOQ people argue against using expected exceptions, and if you’re using JUnit, they’re right. TestNG, of course, has a better alternative as usual.</li>
+<li><a href="http://www.baeldung.com/database-auditing-jpa">Auditing with JPA, Hibernate, and Spring Data JPA</a> discusses writing audit data with basic <a href="http://www.oracle.com/technetwork/java/javaee/tech/persistence-jsp-140049.html">JPA</a> (which looks like a pain, relying on JPA lifecycle events) and both <a href="http://hibernate.org/orm/envers/">Hibernate Envers</a> and <a href="http://projects.spring.io/spring-data-jpa/">Spring Data JPA</a>. Spring Data JPA and JPA have difficulty auditing removals; Spring Data JPA has integration with <a href="http://projects.spring.io/spring-security/">Spring Security</a>; Hibernate Envers is probably the least intrusive, but doesn’t have Spring Security integration.</li>
+</ul>

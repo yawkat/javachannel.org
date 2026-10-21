@@ -1,0 +1,31 @@
+---
+title: "Interesting Links, 31 Oct 2016 (and 25 Dec 1038)"
+date: "2016-10-31 06:35:59 -0400"
+author: "dreamreal"
+categories:
+  - "channel-news"
+tags:
+  - "clojure"
+  - "java-ee"
+  - "jooq"
+  - "jvm"
+  - "kumuluz"
+  - "microservices"
+  - "performance"
+  - "sbt"
+  - "scala"
+  - "sql"
+wp-id: 717
+wp-guid: "http://javachannel.org/?p=717"
+---
+
+<ul>
+<li><a href="https://ee.kumuluz.com/">kumuluzEE</a> is “A lightweight framework for developing microservices using standard Java EE technologies and migrating existing Java EE applications to microservices.” It’s not immediately clear from the web page what makes it ideal for migrating to microservices, but there it is.</li>
+<li>“<a href="https://blog.jooq.org/2016/10/28/dont-even-use-count-for-primary-key-existence-checks/">Don’t Even use COUNT(*) For Primary Key Existence Checks</a>” has some valuable performance advice, and considers multiple DB implementations while offering it.</li>
+</ul>
+<p>Now for some <a href="http://scala-lang.org">Scala</a> stuff:</p>
+<ul>
+<li>“<a href="https://medium.com/sitepoint/quo-vadis-scala-60d86d10019a#.hk0dcnck9">Quo Vadis, Scala?</a>” has some considerations of the value of Scala on the larger JVM ecosystem. Turns out that Scala has more impact than some think it does, and less impact than others think. Go figure. 🙂</li>
+<li>“<a href="https://www.reddit.com/r/scala/comments/5a6muj/sbt_makes_me_want_to_give_up_scala/">Sbt makes me want to give up Scala</a>” has some well-considered criticisms of the Simple Build Tool, <a href="http://www.scala-sbt.org/">SBT</a>, Scala’s primary delivery mechanism. Well-written and justified; if a build tool is the primary contact point someone has with a language, and that build tool is slow and uncomfortable to use, well… that impression is going to stick with people. SBT is really powerful… and it sucks. This post walks through a lot of why.</li>
+<li>From user tetero, apparently inspired by the SBT link, “<a href="https://www.youtube.com/watch?v=uiJycy6dFSQ">Scala Collections: Why Not?</a>” is a video presentation by Paul Phillips that feels like it’s a rant about why he’s leaving Scala: it doesn’t do things the way he wants. Sure, what he wants would be good (simplicity, accuracy, honesty, clarity) and it highlights what people see as the worst in Scala: the community’s hardheadedness about how good Scala really is. It turns out to be an anti-Scala rant, in the end, but the truth is that Scala is better than he makes it sound <em>and</em> just as bad as he makes it sound. Use Scala if it works for you, and don’t, if it doesn’t. (The user in question said that this video was part of what led him to <a href="http://clojure.org/">Clojure</a>. There’s nothing wrong with Clojure, but like most things, it’s not perfect and Scala’s type system oddities seem like a poor sole motivator.)</li>
+</ul>

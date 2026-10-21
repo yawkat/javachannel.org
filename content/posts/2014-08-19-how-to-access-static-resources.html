@@ -1,0 +1,145 @@
+---
+title: "How to access static resources in Java"
+date: "2014-08-19 05:19:39 -0400"
+author: "rzwitserloot"
+categories:
+  - "java-coding"
+tags:
+  - "classpath"
+  - "resource"
+  - "resources"
+wp-id: 94
+wp-guid: "http://javachannel.org/?p=94"
+---
+
+<p>Your Java app may need access to data that you intend to ship directly with your code and which will not change without a version update. Examples might include a list of countries to show in a country dropdown, or icon images for a web or Swing application. The proper mechanism to access these files is:</p>
+<pre><code class="language-java">YourClass.class.getResource("file.txt");
+// or
+YourClass.class.getResourceAsStream("file.txt");</code></pre>
+<p>This mechanism is built into java and will allow you to store your data files in the same place you store your class files (so, generally, on the classpath, and usually in a jar file). <code>getResource</code> returns a <code><a href="http://docs.oracle.com/javase/8/docs/api/java/net/URL.html">URL</a></code> instance; many APIs that require a complete resource will accept these. If you wish to read the resource yourself, use <code><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#getResourceAsStream-java.lang.String-">getResourceAsStream</a></code>, which creates an <code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html">InputStream</a></code>. (remember to always close it with a <code><a href="http://docs.oracle.com/javase/specs/jls/se8/html/jls-14.html#jls-14.20">try/finally</a></code> block or <code><a href="http://projectlombok.org/features/Cleanup.html">@Cleanup</a></code>!)</p>
+<h2>Example code</h2>
+<p>Here’s some example code to read an image icon for Swing:</p>
+<pre>package example1;
+import javax.swing.*;
+import java.net.URL;
+public class GetResourceExample {
+    public static JLabel createPrintIcon() {
+        URL printIconUrl =
+                GetResourceExample.class.getResource("icons/printer63.png");
+        ImageIcon printIcon =
+                new ImageIcon(printIconUrl, "Print document");
+        return new JLabel(printIcon);
+    }
+    public static void main(String... args) {
+        JFrame frame = new JFrame("GetResourceExample");
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.add(createPrintIcon());
+        frame.pack();
+        frame.setVisible(true);
+    }
+}</pre>
+<p>In the above example, take the place <code>GetResourceExample.class</code> is located , and make sure a subdirectory called <code>icons</code> is also located there, which contains the <code>printer63.png</code> file. <code>GetResourceExample.class</code> is in a directory somewhere on your classpath, or in a jar. <code>printer63.png</code> should be in the same place.<br />
+Here’s an example to read a list of all states in the US:</p>
+<pre>package example2;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+public class PlainJavaStates {
+    private static final List&lt;String&gt; states;
+    static {
+        List&lt;String&gt; out = new ArrayList&lt;&gt;();
+        try (InputStream in =
+                     PlainJavaStates.class.getResourceAsStream("states.txt")) {
+            BufferedReader br =
+                    new BufferedReader(new InputStreamReader(in, "UTF-8"));
+            for (String line = br.readLine();
+                 line != null;
+                 line = br.readLine()) {
+                if (line.isEmpty() || line.startsWith("#")) continue;
+                out.add(line);
+            }
+        } catch (IOException e) {
+            // RuntimeException is fine; the 'states'
+            // file not existing is as likely as your States.class
+            // file not existing; your app can crash
+            // in the face of corrupt executables, which is what's happened
+            // if states.txt isn't here.
+            throw new RuntimeException("states.txt cannot be loaded.", e);
+        }
+        states = Collections.unmodifiableList(out);
+    }
+    public static List&lt;String&gt; getStates() {
+        return states;
+    }
+    public static void main(String[] args) {
+        System.out.printf("Number of states: %d%n ", getStates().size());
+    }
+}</pre>
+<p>Or, if you use <a href="https://code.google.com/p/guava-libraries/">Guava</a>, this becomes even simpler:</p>
+<pre>package example2;
+import com.google.common.base.Charsets;
+import com.google.common.collect.ImmutableList;
+import com.google.common.io.Resources;
+import java.io.IOException;
+public class GuavaStates {
+    private static final ImmutableList&lt;String&gt; states;
+    static {
+        try {
+            states = ImmutableList.copyOf(
+                    Resources.readLines(
+                            GuavaStates.class.getResource("states.txt"),
+                            Charsets.UTF_8));
+        } catch (IOException e) {
+            // RuntimeException is fine; the 'states'
+            // file not existing is as likely as your States.class
+            // file not existing; your app can crash
+            // in the face of corrupt executables, which is what's happened
+            // if states.txt isn't here.
+            throw new RuntimeException("states.txt cannot be loaded.", e);
+        }
+    }
+    public static ImmutableList&lt;String&gt; getStates() {
+        return states;
+    }
+    public static void main(String[] args) {
+        System.out.printf("Number of states: %d%n ", getStates().size());
+    }
+}</pre>
+<h2>How do those paths work?</h2>
+<p>Files are resolved relative to the location of the class file you use as context. In the ‘states’ example, <code>states.txt</code> is supposed to be located in the exact same place in the classpath as <code>PlainJavaStates.class</code>. You can also start this path with a slash to resolve relative to the root of the relevant classpath entry. For example, if your jar file looks like:</p>
+<pre>/META-INF/MANIFEST.MF
+/example2/PlainJavaStates.class
+/example2/states.txt
+/example2/foo/bar.txt
+/icons/printer63.png</pre>
+<p>Then you can get to these files in any of these ways:</p>
+<pre>PlainJavaStates.class.getResource("states.txt");
+PlainJavaStates.class.getResource("foo/bar.txt");
+PlainJavaStates.class.getResource("/example2/states.txt");
+PlainJavaStates.class.getResource("/example2/foo/bar.txt");
+PlainJavaStates.class.getResource("/icons/printer63.png");</pre>
+<h2>Why not files?</h2>
+<p>You could use <code><a href="http://docs.oracle.com/javase/8/docs/api/java/io/FileInputStream.html">FileInputStream</a></code> to just read files from somewhere, but then you would need to know exactly where your files were. The JVM starts in the ‘working directory’, which may not be the same place your jars or classpath is, and at any rate, this does not work if you ever decide to modularize your application. It is possible to figure out where your jar file is and read from there, but that’s even more effort and easy to do wrong. Why bother?</p>
+<h2>Why not the other ways to use .getResource / .getResourceAsStream</h2>
+<p>You may have read about one of these alternate forms:</p>
+<pre>getClass().getResource(...);
+getClass().getResourceAsStream(...);</pre>
+<p>This is not a good idea; <code>getClass()</code> is dynamic and resolves to the actual class of the instance. If your class is extended by some class that lives in another jar, that means all of a sudden your resources will no longer be found. You may also have read about this alternate form:</p>
+<pre>ClassLoader.getSystemClassLoader().getResource(...);</pre>
+<p>or:</p>
+<pre>getClass().getClassLoader().getResource(...);
+MyClass.class.getClassLoader().getResource(...);</pre>
+<p>Do not use those forms either; the Java specification states that the class loader of certain classes can be null. That would mean a NullPointerException will occur. Also, the above forms are needlessly wordier. Just use this one form, there is no reason to use anything else:</p>
+<pre>MyClass.class.getResource(...);
+MyClass.class.getResourceAsStream(...);</pre>
+<h2>How do I get my resource files into my jars?</h2>
+<p>Eclipse will automatically copy any non-java files that are located in the same place your source files are, to the binary directory, and thus they’ll be found by your app when running it inside your IDE. Eclipse will also package these files along with your compiled code if you tell Eclipse to make jars.<br />
+With <a href="http://maven.apache.org/">Maven</a> or <a href="http://www.gradle.org/">Gradle</a> (or any build system that follows Maven’s source directory structure), put your resources in the <code>src/main/resources</code> directory, using the same path structure as in your <code>src/main/java</code> directory. Your build system will ensure your resources and your class files end up together in the same jar file, and that it’ll work out when you tell your build system to run your application.<br />
+With <a href="http://ant.apache.org/">Ant</a> or Ant+<a href="http://ant.apache.org/ivy/">Ivy</a>, you have to explicitly add your resources. You can use the <code>&lt;copy&gt;</code> task for this, or just list them as an <code>&lt;include&gt;</code> in your <code>&lt;jar&gt;</code> task.<br />
+Lastly, you could simply put the place that holds your resource files on the classpath when you start the JVM.</p>
+<hr />
+<p>If you’re interested in seeing a working example of the project layout, this site has a <a href="/wp-content/uploads/2014/08/getresources-project.zip">zipped maven project</a> available.</p>

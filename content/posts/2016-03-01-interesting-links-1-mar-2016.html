@@ -1,0 +1,26 @@
+---
+title: "Interesting Links, 1 Mar 2016"
+date: "2016-03-01 07:20:35 -0500"
+author: "dreamreal"
+categories:
+  - "channel-news"
+tags:
+  - "c"
+  - "gradle"
+  - "hashcodes"
+  - "hashmap"
+  - "maven"
+  - "speed"
+  - "testing"
+wp-id: 534
+wp-guid: "http://javachannel.org/?p=534"
+---
+
+<p>Happy March 1, it’s April Fool’s Day! Oh, wait…</p>
+<ul>
+<li><a href="https://javabot.evanchooly.com/logs/%23%23java/2016-02-25#56cef33f0a975a566afeab11">From ##java itself</a>: <code>Anthaas_&gt; 99.7% of people who say C++ is faster are not capable of using the highly-skilled techniques required to make that true.</code> Now, about how he collected the data to validate that statement…</li>
+<li><a href="http://gradle.org">Gradle.org</a> posted “<a href="http://gradle.org/maven_vs_gradle/">Gradle vs Maven Feature Comparison</a>“, with a description of “At long last, a comprehensive feature comparison of Maven vs Gradle that shows in detail what Build Automation requires in the Age of Continuous Delivery.” Surprisingly – or not – Gradle comes out well ahead, but most of the features sound more useful than they actually are for most users. (Until, that is, you <em>really need</em> that feature.)</li>
+<li><a href="http://binkley.blogspot.com/2016/02/maven-testing-module.html">Maven Testing Module</a> describes using a Maven module solely for holding resources used for testing. It’s a module that’s included in <em>other</em> project modules at <code>test</code> scope; it has the testing frameworks and other dependencies in it, so your other modules will no longer be cluttered by test resources or artifacts. Cool idea. (For example, you can put <a href="http://www.h2database.com/html/main.html">H2</a> in your test project, along with some <a href="http://www.h2database.com/html/features.html#user_defined_functions">stored procedures</a> and a test schema for it, and import them into your application for validation… just kidding, avoid stored procedures unless they’re used for every last bit of your data manipulation. And don’t do that.)</li>
+<li>Heinz Kabutz is back, with “<a href="http://www.javaspecialists.eu/archive/Issue235.html">Checking HashMaps with MapClashInspector</a>” – which walks through some of the things you should, and could, think about when designing hash codes for your objects. Highly recommended. Precis: “Java 8 HashMap has been optimized to avoid denial of service attacks with many distinct keys containing identical hash codes. Unfortunately performance might degrade if you use your own keys. In this newsletter we show a tool that you can use to inspect your HashMap and view the key distribution within the buckets.”</li>
+<li>Of <em>course</em> the announcement propagates right after the links get published… but <a href="https://flywaydb.org">Flyway</a> 4.0 <a href="https://flywaydb.org/blog/flyway-4.0">has been released</a>. This is a database migration tool – if your schema changes during development (or for any other reason), tools like Flyway are <em>beyond</em> valuable in terms of keeping your schema versioned. Highly recommended. The main alternative to Flyway is <a href="http://www.liquibase.org/">Liquibase</a> – that’s not an endorsement of <em>either</em> project, just a plea to save your devops people by using tools designed to help them, instead of making them issue manual SQL to update a schema.</li>
+</ul>

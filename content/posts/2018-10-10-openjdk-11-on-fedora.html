@@ -1,0 +1,19 @@
+---
+title: "OpenJDK 11 on Fedora"
+date: "2018-10-10 08:20:20 -0400"
+author: "dreamreal"
+categories:
+  - "news"
+tags:
+  - "fedora"
+  - "java-11"
+  - "openjdk"
+wp-id: 1174
+wp-guid: "https://javachannel.org/?p=1174"
+---
+
+<p>Interesting in running the current version of Java (and its compiler) on your Fedora instance? It’s easy:</p>
+<pre>sudo dnf install java-11-openjdk-devel
+sudo alternatives --config java # select Java 11
+sudo alternatives --config javac # if necessary, select java 11</pre>
+<p>Note that this is still labeled as the “early access” version as of this writing – but the early access version is virtually identical to the released version.</p>

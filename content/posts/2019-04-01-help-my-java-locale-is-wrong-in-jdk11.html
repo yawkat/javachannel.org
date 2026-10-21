@@ -1,0 +1,17 @@
+---
+title: "Help! My Java Locale is Wrong in JDK11!"
+date: "2019-04-01 16:14:23 +0000"
+author: "anonymous"
+categories:
+  - "uncategorized"
+comments:
+  - author: "bendem"
+    date: "2019-04-04 13:19:42 +0000"
+    content: "<p>“CLDR” doesn’t mean “classloaded entries”, it’s the Unicode Consortium CLDR archive (the jdk 11 uses the release 33). It makes sense to keep it first since it is shared by many runtime and will be constantly updated.</p>\n<p>In the reported Netherlands case, my guess is that the developer only provided a language code without providing a country code. The country defines the first day of the week, not the language:</p>\n<p><code>for (var tag : Set.of(\"nl\", \"nl-NL\")) {<br />\n    var locale = Locale.forLanguageTag(tag);<br />\n    System.out.println(locale + \": \" + new GregorianCalendar(locale).getFirstDayOfWeek());<br />\n}</code></p>\n<p>gives</p>\n<p><code>nl: 1<br />\nnl_NL: 2</code></p>"
+wp-id: 1369
+wp-guid: "https://javachannel.org/?p=1369"
+---
+
+<p>We discovered this issue when a user from the Netherlands reported that, upon upgrading to Java 11, his application now reported that the week started on Sunday. This is incorrect for the Netherlands, but the real issue was the change of behavior.</p>
+<p>With JDK11, Java now loads locales differently. <a href="https://www.oracle.com/technetwork/java/javase/documentation/java11locales-5069639.html#providers" rel="nofollow">https://www.oracle.com/technetwork/java/javase/documentation/java11locales-5069639.html#providers</a> details the loading behavior for JDK11, and how it supersedes previous versions. Notably, CLDR, or classloaded entries, now go before COMPAT, or things included with the JDK. This can lead to incorrect behavior with complex classpaths.</p>
+<p>To supersede this setting, the <code>java.locale.providers</code> system setting is used. It’s a comma-separated list of values, where the possible values are the providers in the blog post above. The default value is CLDR,COMPAT,HOST,JRE where JRE is also COMPAT. The value that I would have expected is COMPAT,HOST,CLDR, where it uses the built-in locales first (from JDK9!), then the host locales, then the classloader locales. Setting <code>-Djava.locale.providers=COMPAT</code> will cause the JDK11 locale loader to act like the JDK9 locale loader.</p>

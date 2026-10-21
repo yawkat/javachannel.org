@@ -1,0 +1,44 @@
+---
+title: "JavaChannel’s Interesting Links podcast, episode 12"
+date: "2018-01-23 13:45:17 -0500"
+author: "dreamreal"
+categories:
+  - "podcast"
+tags:
+  - "azul"
+  - "hollow-jars"
+  - "jar"
+  - "java-9"
+  - "openjdk"
+  - "optional"
+  - "podcast"
+  - "podcast-12"
+  - "scala"
+enclosure: "/wp-content/uploads/2018/01/javachannel-12.mp3"
+enclosure-length: 47155914
+show-enclosure: true
+comments:
+  - author: "tang"
+    date: "2018-01-25 15:30:32 +0000"
+    content: "<p>In your discussion of configuration file formats, INI comes to mind. I do see those from developers who have a strong Windows background.</p>"
+wp-id: 1040
+wp-guid: "https://javachannel.org/?p=1040"
+---
+
+<p>Welcome to the twelfth ##java podcast. Your hosts are Joseph Ottinger, dreamreal on the IRC channel, and <a href="https://twitter.com/kinabalu">Andrew Lombardi</a> (kinabalu on IRC) from <a href="https://mysticcoders.com">Mystic Coders</a>. It’s Tuesday, January 23, 2018.<br />
+As always, this podcast is basically interesting content pulled from various sources, and funneled through the ##java IRC channel on freenode. You can find the show notes at the channel’s website, at javachannel.org; you can find all of the podcasts using the tag (or even “category”) “podcast”, and each podcast is tagged with its own identifier, too, so you can find this one by searching for the tag “podcast-12”.<br />
+Not an “interesting link,” but we discuss data formats – JSON, XML, HOCON, YAML, Avro, protobuff, Thrift…</p>
+<ol>
+<li>
+<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java 9.0.4 has been released</a>, as part of the scheduled January update. NOTE: This is the final planned release for JDK 9. This is scary; see also Azul’s post, “<a href="https://www.azul.com/java-stable-secure-free-choose-two-three/">Java: Stable, Secure and Free. Choose Two out of Three</a>,” which points out that with Java’s new rapid-release schedule, you’re going to have to be out of date, insecure, or financially on the hook to … someone to keep up with security releases. We’ve been wanting new features in Java for a long time; we’ve been wanting more churn in the JVM, too. Looks like we, as an ecosystem, might get to experience what Scala goes through every few months, except at least we have the option of stability somewhere.</p>
+</li>
+<li>
+<p>Speaking of Scala, we have “<a href="http://javarevisited.blogspot.com/2018/01/10-reasons-to-learn-scala-programming.html">10 reasons to Learn Scala Programming Language</a>.” It actually has some decent points to make… but makes them with Scala. That’s dumb. There’s nothing that Scala really offers you that Kotlin doesn’t, and that’s <em>assuming</em> Java 8 and Java 9’s improvements don’t turn your crank themselves. It’s almost got a point with Spark and Kafka (well, it mentions Spark, Play, and Akka, and I’m going to pretend that the author meant to say “Kafka” instead), but… when that’s your real lever for learning a language, it’s time to admit that the language was a mistake.</p>
+</li>
+<li>
+<p>DZone: “<a href="https://dzone.com/articles/java8-oogways-advise-on-optional">Java 8: Oogway’s Advice on Optional</a>” is yet another attempt to justify <code>Optional</code> in Java. It has a fair point to make: “Optional is not a replacement for the null check. Rather, it tries to tell the caller about the nature of the returned value and implicitly reminds the caller to handle the absent cases.” But … okay. So what? In the end, you still have to write what is effectively pretty simple code, and adding the semantic turns out <em>in practice</em> to mostly add noise to your code without actually making it any better.</p>
+</li>
+<li>
+<p>DZone: “<a href="https://dzone.com/articles/an-introduction-to-hollow-jars">An Introduction to Hollow Jars</a>”, which I found fascinating but I don’t know why. A “hollow jar” is apparently a deployment mechanism where you have two deployable components: the main one, the “hollow jar” basically has the <em>other</em> component – which is the actual application code – in its classpath, and serves to invoke the entry point of the application. The invoker would theoretically change very rarely, and therefore could be baked into a docker image or some other base image, and the component that changes more often would be soft-loaded at runtime.</p>
+</li>
+</ol>

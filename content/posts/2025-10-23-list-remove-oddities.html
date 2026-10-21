@@ -1,0 +1,16 @@
+---
+title: "List.remove() oddities"
+date: "2025-10-23 12:43:26 +0000"
+author: "dreamreal"
+categories:
+  - "java-coding"
+tags:
+  - "collections"
+  - "equals"
+  - "java"
+  - "reddit"
+wp-id: 1419
+wp-guid: "https://javachannel.org/?p=1419"
+---
+
+<p>From reddit’s <a href="https://www.reddit.com/r/java/">r/java</a>, a user observed that <code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html#remove(java.lang.Object)">List.remove(Object)</a></code> removes the first object whose <code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)">equals()</a></code> method returns <code>true</code>. Thus, if <em>two</em> objects have <em>object equality</em> with each other, but you wish to remove the second, you’re going to have to <em>find</em> it and return it with the indexed version of <code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html#remove(int)">remove(int)</a></code> instead of the <code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html#remove(java.lang.Object)">remove(Object)</a></code> call.<br><br>yawkat observed that you can use <code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collection.html#removeIf(java.util.function.Predicate)">Collection.removeIf()</a></code> (which <code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html">List</a></code> inherits) and get it done as well: <br><br><code>list.removeIf(o -> o == objectToRemove);</code><br><br>It’d probably <em>still</em> be better to fix <code>equals()</code> so it was more specific, but sometimes your code doesn’t always fit the circumstances you want.</p>

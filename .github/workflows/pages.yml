@@ -1,0 +1,62 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          # The sitemap uses git commit dates as <lastmod>
+          fetch-depth: 0
+
+      - name: Setup Java
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: Generate site
+        run: ./mvnw -B package quarkus:run
+        env:
+          QUARKUS_ROQ_GENERATOR_BATCH: "true"
+
+      - name: Add Cloudflare Pages configuration
+        # Roq skips files starting with "_", so these are added after generation
+        run: |
+          cat pages/_redirects.generated pages/_redirects > target/roq/_redirects
+          cp pages/_headers target/roq/_headers
+
+      - name: Verify migrated content
+        run: python3 migration/verify.py
+
+      - name: Publish
+        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4
+        id: cf_publish
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy target/roq --project-name=javachannel-org
+      - name: Check PR
+        uses: 8BitJonny/gh-get-current-pr@4056877062a1f3b624d5d4c2bedefa9cf51435c9 # 4.0.0
+        id: pr
+      - name: Comment on PR
+        if: steps.pr.outputs.pr_found == 'true'
+        uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
+        with:
+          comment-tag: deployment
+          message: ":rocket: Preview deployed to ${{ steps.cf_publish.outputs.deployment-url }}"
+          pr-number: "${{steps.pr.outputs.number}}"

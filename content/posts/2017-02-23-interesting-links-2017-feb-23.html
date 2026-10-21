@@ -1,0 +1,35 @@
+---
+title: "Interesting Links, 2017-Feb-23"
+date: "2017-02-23 08:48:03 -0500"
+author: "dreamreal"
+categories:
+  - "channel-news"
+tags:
+  - "certificate"
+  - "database"
+  - "garbage-collection"
+  - "gc"
+  - "git"
+  - "graph-database"
+  - "jep"
+  - "maven"
+  - "neo4j"
+  - "security"
+  - "titan"
+wp-id: 813
+wp-guid: "http://javachannel.org/?p=813"
+---
+
+<ul>
+<li><a href="https://dzone.com/articles/maven-polyglot-replacing-a-pom-with-a-scala-or-groovy-build-script">Maven Polyglot: replacing pom.xml with Clojure, Scala, or Groovy Script</a> shows how you can, well, replace the XML configuration for a Maven project with a configuration in another language. This also provides some imperative-ish features to Maven projects, plus no XML except for a short description of the scripting language.</li>
+<li><a href="https://vladmihalcea.com/2017/02/14/how-does-a-relational-database-work/">How does a relational database work</a> provides a (very) high level description of how a relational database does its work – and if you read carefully you can see some of the motivations behind some of the less- or non-relational database decisions out there, too.</li>
+<li>From user DerDingens: <a href="https://www.cigital.com/blog/ineffective-certificate-pinning-implementations/">An Examination of Ineffective Certificate Pinning Implementations</a>, which points out common mistakes while using certificates in Java.</li>
+<li>Maldivia pointed out a Java Enhancement Process draft, for <a href="http://openjdk.java.net/jeps/8174901">Epsilon GC: The Arbitrarily Low Overhead Garbage (Non-)Collector</a> – basically a garbage collector for Java that does <em>absolutely nothing</em>, for the purposes of tuning, testing, and in some cases, performance enhancements (if you know your job is short-lived, why bother running a GC if you don’t need to?) Fascinating stuff.</li>
+<li>From <a href="http://evanchooly.com">cheeser</a>: <a href="https://architecht.io/google-ibm-back-new-open-source-graph-database-project-janusgraph-1d74fb78db6b#.8h7tthrln">Google, IBM back new open source graph database project, JanusGraph</a>. JanusGraph is a fork of <a href="http://titan.thinkaurelius.com/">Titan</a>, but its list of backers make it worth watching. Have you used a graph database before? How? What did you think of it?</li>
+<li>Two from <a href="http://dzone.com">DZone</a> on git:
+<ul>
+<li><a href="https://dzone.com/articles/lesser-known-git-commands">Lesser Known Git Commands</a> has some handy shortcuts for git users (and chances are good that if you’re reading this, you’re a git user.)</li>
+<li><a href="https://dzone.com/articles/core-concept-workflows-and-tips">Git Submodules: Core Concept, Workflows, And Tips</a>. From the article: “Including submodules as part of your Git development allows you to include other projects in your codebase, keeping their history separate but synchronized with yours.” Great stuff.</li>
+</ul>
+</li>
+</ul>

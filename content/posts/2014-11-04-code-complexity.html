@@ -1,0 +1,50 @@
+---
+title: "Code Complexity"
+date: "2014-11-04 07:50:49 -0500"
+author: "dreamreal"
+categories:
+  - "java-coding"
+tags:
+  - "a1"
+  - "simple-code"
+wp-id: 231
+wp-guid: "http://javachannel.org/?p=231"
+---
+
+<p>This morning, a user asked a question about determining the equality of three values on ##java. The code he offered as a test was as follows, roughly:</p>
+<pre><code class="language-java">boolean a=false, b=false, c=false;
+System.out.println(a == b == c);</code></pre>
+<p>Rather than determining if the three values are equivalent, this code checks to see if <code>a</code> is the same as <code>b</code> – with the result of <code>true</code> – and then checks to see if this result is the same as <code>c</code> – so it tries to see if <code>a == b</code> is <code>false</code>. It’s not, so the result of the expression is <code>false</code>. The disassembled code shows it, too:</p>
+<pre><code class="language-java">       0: iconst_0
+       1: istore_1
+       2: iconst_0
+       3: istore_2
+       4: iconst_0
+       5: istore_3
+       6: getstatic     #2    // Field java/lang/System.out:Ljava/io/PrintStream;
+       9: iload_1
+      10: iload_2
+      11: if_icmpne     18
+      14: iconst_1
+      15: goto          19
+      18: iconst_0
+      19: iload_3
+      20: if_icmpne     27
+      23: iconst_1
+      24: goto          28
+      27: iconst_0
+      28: invokevirtual #3    // Method java/io/PrintStream.println:(Z)V
+      31: return</code></pre>
+<p>This is all well and good, and the original poster was shown code that would work: <code>(a==b &amp;&amp; b==c)</code>. However… there were other solutions offered. They include:</p>
+<ul>
+<li><code>(a == b) == c</code></li>
+<li><code>(a ^ b) == c</code></li>
+<li><code>a ^ b ^ c</code></li>
+<li><code>isSame(a,b,c)</code></li>
+</ul>
+<p>All together now: ugh.<br />
+But why? Which ones of those work? Which ones don’t work? (You should probably try to give this some thought before continuing. Be honest with yourself about your answers: nobody else is watching.)<br />
+It doesn’t matter.<br />
+The reason comes down to code complexity. The simplest solution (<code>a==b &amp;&amp; b==c</code>) lacks a certain elegance, I suppose: it’s very straightforward and very, very simple. The other solutions appeal to a certain mentality, the one that says that you have to <em>know something</em> to use this code; you have to think about them some.<br />
+You might not have to think <em>much</em> – but only one has the <em>chance</em> of being right, the <code>isSame()</code> method, and that assumes it works properly.<br />
+Smart coders will code simply; gauge code by the reward it should give. <code>isSame()</code>, if it accepts multiple types of sequences and has variable arity, might be okay if you can reuse it in multiple scenarios (and it’s needed quite a bit in your code, I guess) — but the others are too complex to really pass a good code review.</p>

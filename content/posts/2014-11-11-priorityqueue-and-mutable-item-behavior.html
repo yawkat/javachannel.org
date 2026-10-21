@@ -1,0 +1,97 @@
+---
+title: "PriorityQueue and mutable item behavior"
+date: "2014-11-11 10:58:34 -0500"
+author: "dreamreal"
+categories:
+  - "java-coding"
+tags:
+  - "a2"
+  - "collection"
+  - "mutable-keys"
+  - "priority-queue"
+  - "queue"
+wp-id: 255
+wp-guid: "http://javachannel.org/?p=255"
+---
+
+<p>From today, in Java: a user asked if changing the value of an item in a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/PriorityQueue.html"><code>PriorityQueue</code></a> would still result in the queue being correctly ordered. (He explained that he was doing this to prioritize based on counters, which makes sense. It’s worth noting that this blog entry is <em>not</em> about solving his problem, but about the behavior of <code>PriorityQueue</code>.)<br />
+Getting items out of a <code>PriorityQueue</code> requires <code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/PriorityQueue.html#peek--">peek()</a></code> and/or <code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/PriorityQueue.html#poll--">poll()</a></code>. Let’s take a look at some simple usage; first, let’s look at an object that represents something with a priority:</p>
+<pre><code class="language-java">class Container implements Comparable&lt;Container&gt; {
+  int x;
+  public Container(int x) { this.x = x; }
+  public int getX() { return x; }
+  public void setX(int x) { this.x = x; }
+  @Override
+  public String toString() { return "Container{" + "x=" + x + '}'; }
+  @Override
+  public int compareTo(Container o) {
+    return Integer.compare(getX(), o.getX());
+  }
+}</code></pre>
+<p>Let’s use this from another class. First, a utility method that builds a <code>Queue</code>, returning one element from the <code>Queue</code> for us to mutate later:</p>
+<pre><code class="language-java">private static Container buildQueue(Queue&lt;Container&gt; q) {
+  q.clear();
+  q.add(new Container(4));
+  q.add(new Container(2));
+  q.add(new Container(6));
+  Container c = new Container(5);
+  q.add(c);
+  return c;
+}</code></pre>
+<p>As stated, we need to use <code>peek()</code> or <code>poll()</code> to get results out in correct order. If we use normal iteration, our order <em>starts off</em> correctly, but fails immediately. Here’s the code:</p>
+<pre><code class="language-java">buildQueue(q);
+for(Container c1:q) {
+  System.out.println(c1);
+}</code></pre>
+<p>And the output is:</p>
+<pre>Container{x=2}
+Container{x=4}
+Container{x=6}
+Container{x=5}</pre>
+<p>The first element is in the right place – we expect <code>2</code> as the highest priority – but the others are in insertion order, not actual priority order.<br />
+If, however, we use <code>poll()</code>, we get different results. The code:</p>
+<pre><code class="language-java">buildQueue(q);
+while((c=q.poll())!=null) {
+  System.out.println(c);
+}</code></pre>
+<p>And the output:</p>
+<pre>Container{x=2}
+Container{x=4}
+Container{x=5}
+Container{x=6}</pre>
+<p>What <code>poll()</code> does is simple: it removes the head of the <code>Queue</code> – the item with priority – and then it <em>sifts</em> the queue, with the result that the <code>Queue</code>‘s order is adjusted. Depending on the nature of the queue, this may put it in proper order all the way through the queue, but this is not <em>required</em> — the actual result is that the <code>Queue</code> is <em>more</em> ordered, with the new head of the <code>Queue</code> (the result of the <em>next</em> <code>poll()</code> or <code>peek()</code>) being set properly.</p>
+<blockquote><p>If you want to see the actual code for this process, grepcode has it: see <a href="http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/8-b132/java/util/PriorityQueue.java?av=f#586">PriorityQueue.poll()</a>. Internally, “sift” is the actual term used.</p></blockquote>
+<h1>Mutating the Elements in the Queue</h1>
+<p>What happens if we mutate the priority, then?<br />
+As it turns out, the behavior of the <code>Queue</code> doesn’t change much – except that the results of the last sifting of the <code>Queue</code> are maintained. <em>This is actually a big deal.</em> <code>poll()</code> doesn’t sift the <code>Queue</code> before returning the head of the queue. Therefore, if this is our code:</p>
+<pre><code class="language-java">Container container = buildQueue(q);
+System.out.println("1: "+q);
+container.setX(3);
+System.out.println("2: "+q);
+while((c=q.poll())!=null) {
+  System.out.println(c);
+}
+</code></pre>
+<pre>1: [Container{x=2}, Container{x=4}, Container{x=6}, Container{x=5}]
+2: [Container{x=2}, Container{x=4}, Container{x=6}, Container{x=3}]
+Container{x=2}
+Container{x=3}
+Container{x=4}
+Container{x=6}</pre>
+<p>Note what happens: we modify the last element in the <code>Queue</code> to be <code>3</code>, and the <code>Queue</code> <em>maintains its order</em>, but pulling the results out via <code>poll()</code> gives us the results as we expect. But if we change the priority of the last element such that it should be <em>first</em>… let’s see what that looks like.</p>
+<pre><code class="language-java">container = buildQueue(q);
+System.out.println("1: "+q);
+container.setX(1);
+System.out.println("2: "+q);
+while((c=q.poll())!=null) {
+  System.out.println(c);
+}</code></pre>
+<p>Our output is:</p>
+<pre>1: [Container{x=2}, Container{x=4}, Container{x=6}, Container{x=5}]
+2: [Container{x=2}, Container{x=4}, Container{x=6}, Container{x=1}]
+Container{x=2}
+Container{x=1}
+Container{x=4}
+Container{x=6}</pre>
+<h1>Summary</h1>
+<p>As stated, <code>PriorityQueue</code> sifts its values <em>after</em> pulling the top element from the <code>Queue</code>. It’d be unwise to expect a <code>Queue</code> to work properly with mutable items in any case – much as using mutable keys in a <code>Map</code> would be unwise – but as you can see, mutating the priorities <em>can</em> work but can also fail if you happen to modify the priorities such that the element at the head of the list should change.</p>
