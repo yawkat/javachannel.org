@@ -1,0 +1,5 @@
+target/
+# Raw WordPress uploads fetched by migration/export.sh; convert.py copies them to public/ and media/
+migration/uploads/
+.claude/worktrees/
+node_modules/
